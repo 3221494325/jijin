@@ -1,0 +1,52 @@
+{
+  "skill": "emotion-discipline-system",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》(Reminiscences of a Stock Operator) — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "今天大跌，我心里慌，总想操作点什么，是不是该做点调整？",
+      "expected_behavior": "应激活 emotion-discipline-system：识别'必须做点什么'的内部敌人信号，执行情绪命名→冷静期→规则核对，无规则触发则不操作。",
+      "notes": "正面场景：r07 V2 验证的'大跌后总想操作'场景。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我的基金亏了8%，每天都在等回本，越等越不想动，怎么办？",
+      "expected_behavior": "应激活 emotion-discipline-system：识别 hope 拖延模式，引导对照止损规则机械执行，而不是用'等反弹'延期。",
+      "notes": "正面场景：hope 是 p10/x01 的核心内部敌人。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我知道应该拿住盈利，但每次涨一点就想卖，手痒忍不住，怎么管住自己？",
+      "expected_behavior": "应激活 emotion-discipline-system：识别恐惧驱动的过早止盈，用规则核对（趋势是否终结）与留痕档案替代意志力。",
+      "notes": "正面场景：'拿不住/手痒'对应 x06 恐惧卖飞模式。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我算一下单只基金止损线设多少合适，是-8%还是-10%？",
+      "expected_behavior": "不应激活本 skill，应激活 stop-loss-admission（止损阈值与执行规则的定义）；本技能只负责执行时的心理层。",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：规则计算 vs 情绪执行层。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我看看今天A股和港股的走势，分析一下大盘情况。",
+      "expected_behavior": "不应激活本 skill，应走市场扫描/走势分析流程（market-scan / sector-rotation-detector）。",
+      "notes": "诱饵：纯市场分析，无情绪决策成分。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我知道止损线是-10%，现在跌到-9.8%了，但我实在下不去手。",
+      "expected_behavior": "应激活 emotion-discipline-system（情绪阻断是主问题），联动 stop-loss-admission：先识别恐惧并命名，再引导按预设规则机械执行。",
+      "notes": "边界：规则已明确但情绪卡在执行点，正是心理执行层的适用场景。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "3 should_trigger + 2 should_not_trigger + 1 edge_case；should_not_trigger 含 1 条跨 skill 混淆诱饵（stop-loss-admission）。"
+}

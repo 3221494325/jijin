@@ -1,0 +1,52 @@
+{
+  "skill": "independent-judgment",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》(Reminiscences of a Stock Operator) — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "群友推荐我买一只QDII基金，说有大V在喊单，我要不要跟？",
+      "expected_behavior": "应激活 independent-judgment：拆分外部观点（主张/依据/利益关系），引导用户回到可复核证据与自身规则再决策。",
+      "notes": "正面场景：直接出现'外部建议要不要进入决策'的经典语言信号（推荐/大V/要不要跟）。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "朋友说有内幕消息，某个板块马上要重组，让我先建仓，该听他的吗？",
+      "expected_behavior": "应激活 independent-judgment：把内幕消息标为不可复核来源并降权，检查是否有价格行为/公开证据支持，再按自身规则决定。",
+      "notes": "正面场景：内幕/tips 类信源正是 f07/p09 的核心反场景。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "理财经理推荐了一个产品，说是内部渠道只有他有额度，我不好意思拒绝，能买吗？",
+      "expected_behavior": "应激活 independent-judgment：识别人情+利益冲突双重绑架，执行信源拆分与规则核对，决策权自持。",
+      "notes": "正面场景：对应 c08 Williamson 人情绑架案例，语言信号（内部渠道/不好意思拒绝）。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我核实一下今天早上这条关于半导体补贴的新闻是不是真的。",
+      "expected_behavior": "不应激活本 skill，应走 narrative-news-check / deep-news 做新闻事实核查。",
+      "notes": "诱饵：新闻真伪核查 ≠ 外部观点要不要进入决策。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我朋友都在买医药基金，群里都在晒收益，我是不是也该跟上？",
+      "expected_behavior": "不应激活本 skill，应激活 herd-contagion-check（EPD 从众检验）——这是群体行为驱动的从众，不是某个人直接给我的建议。",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：群体从众 vs 个体建议。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "券商研报说AI板块逻辑没变，但我的基金已经跌了10%，研报还能信吗？",
+      "expected_behavior": "应激活 independent-judgment（外部观点进入决策的检验），并联动 price-action-first：先做信源拆分与利益标注，再用价格行为裁决研报解释是否被市场支持。",
+      "notes": "边界：同时涉及'外部建议可信度'与'解释与走势背离'，两个技能应串联而非互斥。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "3 should_trigger + 2 should_not_trigger + 1 edge_case；should_not_trigger 含 1 条跨 skill 混淆诱饵（herd-contagion-check）。"
+}

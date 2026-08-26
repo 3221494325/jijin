@@ -1,0 +1,62 @@
+{
+ "updates": {
+  "2026-07-31": {
+   "022365": {
+    "name": "科技智选",
+    "date": "2026-07-31",
+    "day_change_pct": 5.32,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "011608": {
+    "name": "科创50联接",
+    "date": "2026-07-31",
+    "day_change_pct": 2.84,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "017641": {
+    "name": "标普500",
+    "date": "2026-07-31",
+    "day_change_pct": 1.6,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "018735": {
+    "name": "华夏绿电",
+    "date": "2026-07-31",
+    "day_change_pct": 0.23,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "019018": {
+    "name": "信息产业",
+    "date": "2026-07-31",
+    "day_change_pct": 3.72,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "019764": {
+    "name": "半导体",
+    "date": "2026-07-31",
+    "day_change_pct": 2.68,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "019172": {
+    "name": "纳斯达克100",
+    "date": "2026-07-31",
+    "day_change_pct": 3.09,
+    "source": "manual",
+    "input_time": "20:22:44"
+   },
+   "012922": {
+    "name": "全球成长",
+    "date": "2026-07-31",
+    "day_change_pct": 0.85,
+    "source": "manual",
+    "input_time": "20:22:44"
+   }
+  }
+ }
+}

@@ -1,0 +1,117 @@
+{
+  "schema_version": "fundos.daily_check.v1",
+  "checked_at": "2026-08-26T13:34:58.064225+08:00",
+  "holdings": [
+    {
+      "name": "华夏绿电",
+      "code": "018735",
+      "class": "C",
+      "nav_date": "2026-08-25",
+      "daily_change_pct": 0.29,
+      "ret_pct": -6.914755517092175,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 479.99,
+      "weight": 12.3,
+      "sector": "green"
+    },
+    {
+      "name": "全球成长",
+      "code": "012922",
+      "class": "C",
+      "nav_date": "2026-08-24",
+      "daily_change_pct": -3.13,
+      "ret_pct": -22.293747847054767,
+      "flag": "EVAL_15",
+      "advice": "体检逻辑, 反弹分批退出",
+      "cost": 390.02,
+      "weight": 8.5,
+      "sector": "qdii"
+    },
+    {
+      "name": "标普500",
+      "code": "017641",
+      "class": "A",
+      "nav_date": "2026-08-24",
+      "daily_change_pct": -0.24,
+      "ret_pct": 0.9497239864664442,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 719.97,
+      "weight": 19.7,
+      "sector": "qdii"
+    },
+    {
+      "name": "纳斯达克100",
+      "code": "019172",
+      "class": "A",
+      "nav_date": "2026-08-24",
+      "daily_change_pct": -0.88,
+      "ret_pct": -3.1295569265283096,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 419.99,
+      "weight": 11.1,
+      "sector": "qdii"
+    },
+    {
+      "name": "半导体",
+      "code": "019764",
+      "class": "C",
+      "nav_date": "2026-08-25",
+      "daily_change_pct": -2.32,
+      "ret_pct": -3.1597723604858685,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 222.98,
+      "weight": 6.0,
+      "sector": "tech"
+    },
+    {
+      "name": "科创50联接",
+      "code": "011608",
+      "class": "A",
+      "nav_date": "2026-08-25",
+      "daily_change_pct": 0.14,
+      "ret_pct": -11.827270793448207,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 382.41,
+      "weight": 9.8,
+      "sector": "tech"
+    },
+    {
+      "name": "科技智选",
+      "code": "022365",
+      "class": "C",
+      "nav_date": "2026-08-25",
+      "daily_change_pct": -0.46,
+      "ret_pct": -5.400789642824355,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 633.53,
+      "weight": 17.0,
+      "sector": "tech"
+    },
+    {
+      "name": "信息产业",
+      "code": "001513",
+      "class": "A",
+      "nav_date": "2026-08-25",
+      "daily_change_pct": -0.57,
+      "ret_pct": -1.3440557163077904,
+      "flag": "-",
+      "advice": "持有观察",
+      "cost": 554.4,
+      "weight": 15.6,
+      "sector": "tech"
+    }
+  ],
+  "total_value": 3582.9022971240297,
+  "total_ret_pct": -5.794659436329342,
+  "tech_weight": 47.430224575145324,
+  "qdii_weight": 40.09944193705201,
+  "actions": [
+    "🟡 全球成长 [012922] 体检逻辑, 反弹分批退出"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "skill": "intrinsic-value-ruler",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》 — 巴菲特 (Warren Buffett)",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的全球成长(018354)净值今天跌了19%，但它底层是医药QDII。别只看净值，帮我判断这只基金现在值不值这个价。",
+      "expected_behavior": "应激活 intrinsic-value-ruler，切回底层资产现金流视角，输出内在价值三档区间（低估/合理/高估）而非用净值涨跌下结论。",
+      "notes": "用户明确要求绕开净值、用价值标尺判断，是核心正面场景。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "标普500和纳斯达克100哪个更值得长期持有？不要只比历史涨幅，帮我从底层资产能产生多少现金的角度比较。",
+      "expected_behavior": "应激活 intrinsic-value-ruler，对两只指数底层资产的现金流特征、费后长期收益做估值式比较，给出区间结论。",
+      "notes": "用户拒绝用涨幅排名代替价值判断，直接命中本 skill。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我怎么给一只基金估值？PE、净值、历史业绩这些指标到底哪个靠谱？",
+      "expected_behavior": "应激活 intrinsic-value-ruler，解释内在价值与账面价值/净值的区别，并给出估值区间方法。",
+      "notes": "方法论求助场景，触发词“怎么估值”“PE”“净值”。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "今天大盘暴跌5%，我要不要清仓？",
+      "expected_behavior": "不应激活 intrinsic-value-ruler，应激活 mr-market-panic-buying（情绪纪律与弹药管理优先，不是估值问题）。",
+      "notes": "跨 skill 混淆诱饵: 暴跌听起来像估值话题，实际是恐慌应对。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "AI主题基金最近跌了30%，是不是可以抄底了？",
+      "expected_behavior": "不应激活 intrinsic-value-ruler 的估值流程，应先由 circle-of-competence 判定圈内外，再由 margin-of-safety 把关出价。",
+      "notes": "跨 skill 混淆诱饵: 表层是估值问题，实际先要圈内判定+出价纪律。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "这只基金净值涨了20%，但底层全是高杠杆衍生品，它算好基金吗？",
+      "expected_behavior": "应激活 intrinsic-value-ruler 但结论是“价值存疑”：先触发不做清单（杠杆/衍生品一票否决），估值标尺不能对不可评估的结构给出正面区间。",
+      "notes": "边界: 估值工具遇到不可评估资产时应拒绝估值而非强行给区间。"
+    }
+  ]
+}

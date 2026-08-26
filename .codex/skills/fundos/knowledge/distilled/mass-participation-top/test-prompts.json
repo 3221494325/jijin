@@ -1,0 +1,52 @@
+{
+  "skill": "mass-participation-top",
+  "version": "0.1.0",
+  "source_book": "《非同寻常的大众幻想与群众性癫狂》 — Charles Mackay",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "最近小区群里、同事饭桌上全在聊医药基金，连从不理财的我妈都问我'买什么基金好'，我是不是该警惕医药见顶？",
+      "expected_behavior": "应激活 mass-participation-top：收集破圈度证据、量化参与结构，结合周期定位给出减仓/观望建议",
+      "notes": "正面场景：典型的破圈度监测需求"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "科技智选上了支付宝基金热搜第1，新发的AI主题基金一天卖爆，我的科技仓位已经48%超标了，要不要趁热度减一减？",
+      "expected_behavior": "应激活 mass-participation-top：以热搜+新基抢购为破圈证据，结合48%超40%阈值给出分批减仓动作",
+      "notes": "正面场景：持仓基金全民化后的减仓决策"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我朋友说他邻居卖房买QDII，说标普500永远涨，这种'全民都在买美股'的情况是不是危险信号？",
+      "expected_behavior": "应激活 mass-participation-top：把'卖房买QDII'识别为破圈度信号，检查QDII仓位39%并给出提示",
+      "notes": "正面场景：全民化叙事的见顶预警"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "看看全球成长基金今天净值多少。",
+      "expected_behavior": "不应激活本 skill，这是纯净值查询，应走 fundos-core",
+      "notes": "诱饵：信息查询类提问"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "大家都在买医药，我也跟风买一点CXO基金吧。",
+      "expected_behavior": "不应激活本 skill；用户描述的是'我个人的跟风冲动'，应激活同书兄弟 skill herd-contagion-check",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：个人从众不应被社会破圈监测抢答"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我判断'破圈'信号出现了，但CXO才涨了两周、估值不高，机构还在加仓——是减仓还是继续持有？",
+      "expected_behavior": "应触发但输出综合结论：破圈度是顶部预警之一，需与估值/资金流/周期交叉验证；机构仍加仓时以分批减仓+设止损替代清仓",
+      "notes": "边界：单一破圈信号不足以决策，信号间存在冲突"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过（诱饵容错为 0），且其中至少 1 条是同书兄弟 skill 的场景（跨 skill 混淆测试）。"
+}

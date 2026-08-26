@@ -1,0 +1,848 @@
+rectly committed a very large amount of their own money to 
+these undertakings. In dealing with our investees, Charlie and I 
+will be supportive, analytical, and objective. We recognize that 
+we are working with experienced CEOs who are very much in command 
+of their own businesses but who nevertheless, at certain moments, 
+appreciate the chance to test  their thinking on someone without 
+ties to their industry or to decisions of the past.
+
+     As a group, these convertible preferreds will not produce 
+the returns we can achieve when we find a business with wonderful 
+economic prospects that is unappreciated by the market. Nor will 
+the returns be as attractive as those produced when we make our 
+favorite form of capital deployment, the acquisition of 80% or 
+more of a fine business with a fine management. But both 
+opportunities are rare, particularly in a size befitting our 
+present and anticipated resources. 
+
+     In summation, Charlie and I feel that our preferred stock 
+investments should produce returns moderately above those 
+achieved by most fixed-income portfolios and that we can play a 
+minor but enjoyable and constructive role in the investee 
+companies.
+Zero-Coupon Securities
+In September, Berkshire issued $902.6 million principal 
+amount of Zero-Coupon Convertible Subordinated Debentures, which 
+are now listed on the New York Stock Exchange. Salomon Brothers 
+handled the underwriting in superb fashion, providing us helpful 
+advice and a flawless execution. 
+
+     Most bonds, of course, require regular payments of interest, 
+usually semi-annually. A zero-coupon bond, conversely, requires 
+no current interest payments; instead, the investor receives his 
+yield by purchasing the security at a significant discount from 
+maturity value. The effective interest rate is determined by the 
+original issue price, the maturity value, and the amount of time 
+between issuance and maturity.
+
+     In our case, the bonds were issued at 44.314% of maturity 
+value and are due in 15 years. For investors purchasing the 
+bonds, that is the mathematical equivalent of a 5.5% current 
+payment compounded semi-annually. Because we received only 
+44.31 cents on the dollar, our proceeds from this offering were 
+$400 million (less about $9.5 million of offering expenses).
+
+     The bonds were issued in denominations of $10,000 and each 
+bond is convertible into .4515 shares of Berkshire Hathaway. 
+Because a $10,000 bond cost $4,431, this means that the 
+conversion price was $9,815 per Berkshire share, a 15% premium to 
+the market price then existing. Berkshire can call the bonds at 
+any time after  September 28, 1992 at their accreted value (the 
+original issue price plus 5.5% compounded semi-annually) and on 
+two specified days, September 28 of 1994 and 1999, the 
+bondholders can require Berkshire to buy the securities at their 
+accreted value.
+
+     For tax purposes, Berkshire is entitled to deduct the 5.5% 
+interest accrual each year, even though we make no payments to 
+the bondholders. Thus the net effect to us, resulting from the 
+reduced taxes, is positive cash flow. That is a very significant 
+benefit. Some unknowable variables prevent us from calculating 
+our exact effective rate of interest, but under all circumstances 
+it will be well below 5.5%. There is meanwhile a symmetry to the 
+tax law: Any taxable holder of the bonds must pay tax each year 
+on the 5.5% interest, even though he receives no cash.
+
+     Neither our bonds nor those of certain other companies that 
+issued similar bonds last year (notably Loews and Motorola) 
+resemble the great bulk of zero-coupon bonds that have been 
+issued in recent years. Of these, Charlie and I have been, and 
+will continue to be, outspoken critics. As I will later explain, 
+such bonds have often been used in the most deceptive of ways and 
+with deadly consequences to investors. But before we tackle that 
+subject, let's travel back to Eden, to a time when the apple had 
+not yet been bitten.
+
+     If you're my age you bought your first zero-coupon bonds 
+during World War II, by purchasing the famous Series E U. S. 
+Savings Bond, the most widely-sold bond issue in history. (After 
+the war, these bonds were held by one out of two U. S. 
+households.) Nobody, of course, called the Series E a zero-coupon 
+bond, a term in fact that I doubt had been invented. But that's 
+precisely what the Series E was.
+
+     These bonds came in denominations as small as $18.75. That 
+amount purchased a $25 obligation of the United States government 
+due in 10 years, terms that gave the buyer a compounded annual 
+return of 2.9%. At the time, this was an attractive offer: the 
+2.9% rate was higher than that generally available on Government 
+bonds and the holder faced no market-fluctuation risk, since he 
+could at any time cash in his bonds with only a minor reduction 
+in interest.
+
+     A second form of zero-coupon U. S. Treasury issue, also 
+benign and useful, surfaced in the last decade. One problem with 
+a normal bond is that even though it pays a given interest rate - 
+say 10% - the holder cannot be assured that a compounded 10% 
+return will be realized. For that rate to materialize, each semi-
+annual coupon must be reinvested at 10% as it is received. If 
+current interest rates are, say, only 6% or 7% when these coupons 
+come due, the holder will be unable to compound his money over 
+the life of the bond at the advertised rate. For pension funds or 
+other investors with long-term liabilities, "reinvestment risk" 
+of this type can be a serious problem. Savings Bonds might have 
+solved it, except that they are issued only to individuals and 
+are unavailable in large denominations. What big buyers needed 
+was huge quantities of "Savings Bond Equivalents."
+
+     Enter some ingenious and, in this case, highly useful 
+investment bankers (led, I'm happy to say, by Salomon Brothers). 
+They created the instrument desired by "stripping" the semi-
+annual coupons from standard Government issues. Each coupon, once 
+detached, takes on the essential character of a Savings Bond 
+since it represents a single sum due sometime in the future. For 
+example, if you strip the 40 semi-annual coupons from a U. S. 
+Government Bond due in the year 2010, you will have 40 zero-
+coupon bonds, with maturities from six months to 20 years, each 
+of which can then be bundled with other coupons of like maturity 
+and marketed. If current interest rates are, say, 10% for all 
+maturities, the six-month issue will sell for 95.24% of maturity 
+value and the 20-year issue will sell for 14.20%. The purchaser 
+of any given maturity is thus guaranteed a compounded rate of 10% 
+for his entire holding period. Stripping of government bonds has 
+occurred on a large scale in recent years, as long-term 
+investors, ranging from pension funds to individual IRA accounts, 
+recognized these high-grade, zero-coupon issues to be well suited 
+to their needs.
+
+     But as happens in Wall Street all too often, what the wise 
+do in the beginning, fools do in the end. In the last few years 
+zero-coupon bonds (and their functional equivalent, pay-in-kind 
+bonds, which distribute additional PIK bonds semi-annually as 
+interest instead of paying cash) have been issued in enormous 
+quantities by ever-junkier credits. To these issuers, zero (or 
+PIK) bonds offer one overwhelming advantage:  It is impossible to 
+default on a promise to pay nothing. Indeed, if LDC governments 
+had issued no debt in the 1970's other than long-term zero-coupon 
+obligations, they would now have a spotless record as debtors.
+
+     This principle at work - that you need not default for a 
+long time if you solemnly promise to pay nothing for a long time 
+- has not been lost on promoters and investment bankers seeking 
+to finance ever-shakier deals. But its acceptance by lenders took 
+a while: When the leveraged buy-out craze began some years back, 
+purchasers could borrow only on a reasonably sound basis, in 
+which conservatively-estimated
+free
+cash flow - that is, 
+operating earnings plus depreciation and amortization less 
+normalized capital expenditures - was adequate to cover both 
+interest and modest reductions in debt.
+
+     Later, as the adrenalin of deal-makers surged, businesses 
+began to be purchased at prices so high that all free cash flow 
+necessarily had to be allocated to the payment of interest. That 
+left nothing for the paydown of debt. In effect, a Scarlett 
+O'Hara "I'll think about it tomorrow" position in respect to 
+principal payments was taken by borrowers and accepted by a new 
+breed of lender, the buyer of original-issue junk bonds. Debt now 
+became something to be refinanced rather than repaid. The change 
+brings to mind a
+New Yorker
+cartoon in which the grateful 
+borrower rises to shake the hand of the bank's lending officer 
+and gushes: "I don't know how I'll ever repay you."
+
+     Soon borrowers found even the new, lax standards intolerably 
+binding. To induce lenders to finance even sillier transactions, 
+they introduced an abomination, EBDIT - Earnings Before 
+Depreciation, Interest and Taxes - as the test of a company's 
+ability to pay interest. Using this sawed-off yardstick, the 
+borrower ignored depreciation as an expense on the theory that it 
+did not require a current cash outlay. 
+
+     Such an attitude is clearly delusional. At 95% of American 
+businesses, capital expenditures that over time roughly 
+approximate depreciation are a necessity and are every bit as 
+real an expense as labor or utility costs. Even a high school 
+dropout knows that to finance a car he must have income that 
+covers not only interest and operating expenses, but also 
+realistically-calculated depreciation. He would be laughed out of 
+the bank if he started talking about EBDIT. 
+
+     Capital outlays at a business can be skipped, of course, in 
+any given month, just as a human can skip a day or even a week of 
+eating. But if the skipping becomes routine and is not made up, 
+the body weakens and eventually dies. Furthermore, a start-and-
+stop feeding policy will over time produce a less healthy 
+organism, human or corporate, than that produced by a steady 
+diet. As businessmen, Charlie and I relish having competitors who 
+are unable to fund capital expenditures.
+
+     You might think that waving away a major expense such as 
+depreciation in an attempt to make a terrible deal look like a 
+good one hits the limits of Wall Street's ingenuity. If so, you 
+haven't been paying attention during the past few years. 
+Promoters needed to find a way to justify even pricier 
+acquisitions. Otherwise, they risked - heaven forbid! - losing 
+deals to other promoters with more "imagination."
+
+     So, stepping through the Looking Glass, promoters and their 
+investment bankers proclaimed that EBDIT should now be measured 
+against cash interest only, which meant that interest accruing on 
+zero-coupon or PIK bonds could be ignored when the financial 
+feasibility of a transaction was being assessed. This approach 
+not only relegated depreciation expense to the let's-ignore-it 
+corner, but gave similar treatment to what was usually a 
+significant portion of interest expense. To their shame, many 
+professional investment managers went along with this nonsense, 
+though they usually were careful to do so only with clients' 
+money, not their own. (Calling these managers "professionals" is 
+actually too kind; they should be designated "promotees.")
+
+     Under this new standard, a business earning, say, $100 
+million pre-tax and having debt on which $90 million of interest 
+must be paid currently, might use a zero-coupon or PIK issue to 
+incur another $60 million of annual interest that would accrue 
+and compound but not come due for some years. The rate on these 
+issues would typically be very high, which means that the 
+situation in year 2 might be $90 million cash interest plus $69 
+million accrued interest, and so on as the compounding proceeds. 
+Such high-rate reborrowing schemes, which a few years ago were 
+appropriately confined to the waterfront,  soon became models of 
+modern finance at virtually all major investment banking houses.
+
+     When they make these offerings, investment bankers display 
+their humorous side: They dispense income and balance sheet 
+projections extending five or more years into the future for 
+companies they barely had heard of a few months earlier. If you 
+are shown such schedules, I suggest that you join in the fun:  
+Ask the investment banker for the
+one-year
+budgets that his own 
+firm prepared as the last few years began and then compare these 
+with what actually happened.
+
+     Some time ago Ken Galbraith, in his witty and insightful
+The Great Crash
+, coined a new economic term: "the bezzle," 
+defined as the current amount of undiscovered embezzlement. This 
+financial creature has a magical quality: The embezzlers are richer 
+by the amount of the bezzle, while the embezzlees do not yet feel 
+poorer.
+
+     Professor Galbraith astutely pointed out that this sum 
+should be added to the National Wealth so that we might know the 
+Psychic National Wealth. Logically, a society that wanted to
+feel
+enormously prosperous would both encourage its citizens to 
+embezzle and try not to detect the crime. By this means, "wealth" 
+would balloon though not an erg of productive work had been done. 
+
+     The satirical nonsense of the bezzle is dwarfed by the real-
+world nonsense of the zero-coupon bond. With zeros, one party to 
+a contract can experience "income" without his opposite 
+experiencing the pain of expenditure. In our illustration, a 
+company capable of earning only $100 million dollars annually - 
+and therefore capable of paying only that much in interest - 
+magically creates "earnings" for bondholders of $150 million. As 
+long as major investors willingly don their Peter Pan wings and 
+repeatedly say "I believe," there is no limit to how much 
+"income" can be created by the zero-coupon bond.
+
+     Wall Street welcomed this invention with the enthusiasm 
+less-enlightened folk might reserve for the wheel or the plow. 
+Here, finally, was an instrument that would let the Street make 
+deals at prices no longer limited by actual earning power. The 
+result, obviously, would be more transactions: Silly prices will 
+always attract sellers. And, as Jesse Unruh might have put it, 
+transactions are the mother's milk of finance.
+
+     The zero-coupon or PIK bond possesses one additional 
+attraction for the promoter and investment banker, which is that 
+the time elapsing between folly and failure can be stretched out. 
+This is no small benefit. If the period before all costs must be 
+faced is long, promoters can create a string of foolish deals - 
+and take in lots of fees - before any chickens come home to roost 
+from their earlier ventures. 
+
+     But in the end, alchemy, whether it is metallurgical or 
+financial, fails. A base business can not be transformed into a 
+golden business by tricks of accounting or capital structure. The 
+man claiming to be a financial alchemist may become rich. But 
+gullible investors rather than business achievements will usually 
+be the source of his wealth.
+
+     Whatever their weaknesses, we should add, many zero-coupon 
+and PIK bonds will not default. We have in fact owned some and 
+may buy more if their market becomes sufficiently distressed. 
+(We've not, however, even considered buying a new issue from a 
+weak credit.) No financial instrument is evil per se; it's just 
+that some variations have far more potential for mischief than 
+others.
+
+     The blue ribbon for mischief-making should go to the zero-
+coupon issuer unable to make its interest payments on a current 
+basis. Our advice: Whenever an investment banker starts talking 
+about EBDIT - or whenever someone creates a capital structure 
+that does not allow all interest, both payable and accrued, to be 
+comfortably met out of current cash flow
+net of ample capital 
+expenditures
+- zip up your wallet. Turn the tables by suggesting 
+that the promoter and his high-priced entourage accept zero-
+coupon fees, deferring their take until the zero-coupon bonds 
+have been paid in full. See then how much enthusiasm for the deal 
+endures.
+
+     Our comments about investment bankers may seem harsh. But 
+Charlie and I - in our hopelessly old-fashioned way - believe 
+that they should perform a gatekeeping role, guarding investors 
+against the promoter's propensity to indulge in excess. 
+Promoters, after all, have throughout time exercised the same 
+judgment and restraint in accepting money that alcoholics have 
+exercised in accepting liquor. At a minimum, therefore, the 
+banker's conduct should rise to that of a responsible bartender 
+who, when necessary, refuses the profit from the next drink to 
+avoid sending a drunk out on the highway. In recent years, 
+unfortunately, many leading investment firms have found bartender 
+morality to be an intolerably restrictive standard. Lately, those 
+who have traveled the high road in Wall Street have not 
+encountered heavy traffic.
+
+     One distressing footnote: The cost of the zero-coupon folly 
+will not be borne solely by the direct participants. Certain 
+savings and loan associations were heavy buyers of such bonds, 
+using cash that came from FSLIC-insured deposits. Straining to 
+show splendid earnings, these buyers recorded - but did not 
+receive - ultra-high interest income on these issues. Many of 
+these  associations are now in  major trouble. Had their loans to 
+shaky credits worked, the owners of the associations would have 
+pocketed the profits. In the many cases in which the loans will 
+fail, the taxpayer will pick up the bill. To paraphrase Jackie 
+Mason, at these associations it was the managers who should have 
+been wearing the ski masks.
+Mistakes of the First Twenty-five Years (A Condensed Version)
+To quote Robert Benchley, "Having a dog teaches a boy 
+fidelity, perseverance, and to turn around three times before 
+lying down." Such are the shortcomings of experience. 
+Nevertheless, it's a good idea to review past mistakes before 
+committing new ones. So let's take a quick look at the last 25 
+years.
+o
+My first mistake, of course, was in buying control of 
+Berkshire. Though I knew its business - textile manufacturing - 
+to be unpromising, I was enticed to buy because the price looked 
+cheap. Stock purchases of that kind had proved reasonably 
+rewarding in my early years, though by the time Berkshire came 
+along in 1965 I was becoming aware that the strategy was not 
+ideal.
+
+     If you buy a stock at a sufficiently low price, there will 
+usually be some hiccup in the fortunes of the business that gives 
+you a chance to unload at a decent profit, even though the long-
+term performance of the business may be terrible. I call this the 
+"cigar butt" approach to investing. A cigar butt found on the 
+street that has only one puff left in it may not offer much of a 
+smoke, but the "bargain purchase" will make that puff all profit.
+
+     Unless you are a liquidator, that kind of approach to buying 
+businesses is foolish. First, the original "bargain" price 
+probably will not turn out to be such a steal after all. In a 
+difficult business, no sooner is one problem solved than another 
+surfaces -  never is there just one cockroach in the kitchen. 
+Second, any initial advantage you secure will be quickly eroded 
+by the low return that the business earns. For example, if you 
+buy a business for $8 million that can be sold or liquidated for 
+$10 million and promptly take either course, you can realize a 
+high return. But the investment will disappoint if the business 
+is sold for $10 million in ten years and in the interim has 
+annually earned and distributed only a few percent on cost. Time 
+is the friend of the wonderful business, the enemy of the 
+mediocre.
+
+     You might think this principle is obvious, but I had to 
+learn it the hard way - in fact, I had to learn it several times 
+over. Shortly after purchasing Berkshire, I acquired a Baltimore 
+department store, Hochschild Kohn, buying through a company 
+called Diversified Retailing that later merged with Berkshire. I 
+bought at a substantial discount from book value, the people were 
+first-class, and the deal included some extras - unrecorded real 
+estate values and a significant LIFO inventory cushion. How could 
+I miss? So-o-o - three years later I was lucky to sell the 
+business for about what I had paid. After ending our corporate 
+marriage to Hochschild Kohn, I had memories like those of the 
+husband in the country song, "My Wife Ran Away With My Best 
+Friend and I Still Miss Him a Lot."
+
+     I could give you other personal examples of "bargain-
+purchase" folly but I'm sure you get the picture:  It's far 
+better to buy a wonderful company at a fair price than a fair 
+company at a wonderful price. Charlie understood this early; I 
+was a slow learner. But now, when buying companies or common 
+stocks, we look for first-class businesses accompanied by first-
+class managements.
+o
+That leads right into a related lesson: Good jockeys will 
+do well on good horses, but not on broken-down nags. Both 
+Berkshire's textile business and Hochschild, Kohn had able and 
+honest people running them. The same managers employed in a 
+business with good economic characteristics would have achieved 
+fine records. But they were never going to make any progress 
+while running in quicksand. 
+
+     I've said many times that when a management with a 
+reputation for brilliance tackles a business with a reputation 
+for bad economics, it is the reputation of the business that 
+remains intact. I just wish I hadn't been so energetic in 
+creating examples. My behavior has matched that admitted by  Mae 
+West: "I was Snow White, but I drifted."
+o
+A further related lesson: Easy does it. After 25 years of 
+buying and supervising a great variety of businesses, Charlie and 
+I have
+not
+learned how to solve difficult business problems. What 
+we have learned is to avoid them. To the extent we have been 
+successful, it is because we concentrated on identifying one-foot 
+hurdles that we could step over rather than because we acquired 
+any ability to clear seven-footers.
+
+     The finding may seem unfair, but in both business and 
+investments it is usually far more profitable to simply stick 
+with the easy and obvious than it is to resolve the difficult. On 
+occasion, tough problems
+must
+be tackled as was the case when we 
+started our Sunday paper in Buffalo. In other instances, a great 
+investment opportunity occurs when a marvelous business 
+encounters a one-time huge, but solvable, problem as was the case 
+many years back at both American Express and GEICO. Overall, 
+however, we've done better by avoiding dragons than by slaying 
+them.
+o
+My most surprising discovery: the overwhelming importance in 
+business of an unseen force that we might call "the institutional 
+imperative." In business school, I was given no hint of the 
+imperative's existence and I did not intuitively understand it 
+when I entered the business world. I thought then that decent, 
+intelligent, and experienced managers would automatically make 
+rational business decisions. But I learned over time that isn't 
+so. Instead, rationality frequently wilts when the institutional 
+imperative comes into play.
+
+     For example: (1) As if governed by Newton's First Law of 
+Motion, an institution will resist any change in its current 
+direction; (2) Just as work expands to fill available time, 
+corporate projects or acquisitions will materialize to soak up 
+available funds; (3) Any business craving of the leader, however 
+foolish, will be quickly supported by detailed rate-of-return and 
+strategic studies prepared by his troops; and (4) The behavior of 
+peer companies, whether they are expanding, acquiring, setting 
+executive compensation or whatever, will be mindlessly imitated.
+
+     Institutional dynamics, not venality or stupidity, set 
+businesses on these courses, which are too often misguided. After 
+making some expensive mistakes because I ignored the power of the 
+imperative, I have tried to organize and manage Berkshire in ways 
+that minimize its influence. Furthermore, Charlie and I have 
+attempted to concentrate our investments in companies that appear 
+alert to the problem.
+o
+After some other mistakes, I learned to go into business 
+only with people whom I like, trust, and admire. As I noted 
+before, this policy of itself will not ensure success: A second-
+class textile or department-store company won't prosper simply 
+because its managers are men that you would be pleased to see 
+your daughter marry. However, an owner - or investor - can 
+accomplish wonders if he manages to associate himself with such 
+people in businesses that possess decent economic 
+characteristics. Conversely, we do not wish to join with managers 
+who lack admirable qualities, no matter how attractive the 
+prospects of their business. We've never succeeded in making a 
+good deal with a bad person.
+o
+Some of my worst mistakes were not publicly visible. These 
+were stock and business purchases whose virtues I understood and 
+yet didn't make. It's no sin to miss a great opportunity outside 
+one's area of competence. But I have passed on a couple of really 
+big purchases that were served up to me on a platter and that I 
+was fully capable of understanding. For Berkshire's shareholders, 
+myself included, the cost of this thumb-sucking has been huge.
+o
+Our consistently-conservative financial policies may appear 
+to have been a mistake, but in my view were not. In retrospect, 
+it is clear that significantly higher, though still conventional, 
+leverage ratios at Berkshire would have produced considerably 
+better returns on equity than the 23.8% we have actually 
+averaged. Even in 1965, perhaps we could have judged there to be 
+a 99% probability that higher leverage would lead to nothing but 
+good. Correspondingly, we might have seen only a 1% chance that 
+some shock factor, external or internal, would cause a 
+conventional debt ratio to produce a result falling somewhere 
+between temporary anguish and default.
+
+     We wouldn't have liked those 99:1 odds - and never will. A 
+small chance of distress or disgrace cannot, in our view, be 
+offset by a large chance of extra returns. If your actions are 
+sensible, you are certain to get good results; in most such 
+cases, leverage just moves things along faster. Charlie and I 
+have never been in a big hurry: We enjoy the process far more 
+than the proceeds - though we have learned to live with those 
+also.
+
+              *  *  *  *  *  *  *  *  *  *  *  *
+
+     We hope in another 25 years to report on the mistakes of the 
+first 50. If we are around in 2015 to do that, you can count on 
+this section occupying many more pages than it does here.
+Miscellaneous
+We hope to buy more businesses that are similar to the ones 
+we have, and we can use some help. If you have a business that 
+fits the following criteria, call me or, preferably, write.
+
+     Here's what we're looking for:
+
+     (1)  Large purchases (at least $10 million of after-tax 
+          earnings),
+
+     (2)  demonstrated consistent earning power (future 
+          projections are of little interest to us, nor are 
+          "turnaround" situations),
+
+     (3)  businesses earning good returns on equity while 
+          employing little or no debt,
+
+     (4)  management in place (we can't supply it),
+
+     (5)  simple businesses (if there's lots of technology, we 
+          won't understand it),
+
+     (6)  an offering price  (we don't want to waste our time or 
+          that of the seller by talking,  even  preliminarily, 
+          about a transaction when price is unknown).
+
+     We will not engage in unfriendly takeovers. We can promise 
+complete confidentiality and a very fast answer - customarily 
+within five minutes - as to whether we're interested. We prefer 
+to buy for cash, but will consider issuing stock when we receive 
+as much in intrinsic business value as we give.
+
+     Our favorite form of purchase is one fitting the Blumkin-
+Friedman-Heldman mold. In cases like these, the company's owner-
+managers wish to generate significant amounts of cash, sometimes 
+for themselves, but often for their families or inactive 
+shareholders. At the same time, these managers wish to remain 
+significant owners who continue to run their companies just as 
+they have in the past. We think we offer a particularly good fit 
+for owners with such objectives. We invite potential sellers to 
+check us out by contacting people with whom we have done business 
+in the past.
+
+     Charlie and I frequently get approached about acquisitions 
+that don't come close to meeting our tests:  We've found that if 
+you advertise an interest in buying collies, a lot of people will 
+call hoping to sell you their cocker spaniels. Our interest in 
+new ventures, turnarounds, or auction-like sales can best be 
+expressed by a Goldwynism: "Please include me out."
+
+     Besides being interested in the purchase of businesses as 
+described above, we are also interested in the negotiated 
+purchase of large, but not controlling, blocks of stock 
+comparable to those we hold in Capital Cities, Salomon, Gillette, 
+USAir and Champion. Last year we said we had a special interest 
+in large purchases of convertible preferreds. We still have an 
+appetite of that kind, but it is limited since we now are close 
+to the maximum position we feel appropriate for this category of 
+investment.
+
+              *  *  *  *  *  *  *  *  *  *  *  *
+
+     Two years ago, I told you about Harry Bottle, who in 1962 
+quickly cured a major business mess at the first industrial 
+company I controlled, Dempster Mill Manufacturing (one of my 
+"bargain" purchases) and who 24 years later had reappeared to 
+again rescue me, this time from problems at K&W Products, a small 
+Berkshire subsidiary that produces automotive compounds. As I 
+reported, in short order Harry reduced capital employed at K&W, 
+rationalized production, cut costs, and quadrupled profits. You 
+might think he would then have paused for breath. But last year 
+Harry, now 70, attended a bankruptcy auction and, for a pittance, 
+acquired a product line that is a natural for K&W. That company's 
+profitability may well be increased 50% by this coup. Watch this 
+space for future bulletins on Harry's triumphs.
+
+              *  *  *  *  *  *  *  *  *  *  *  *
+
+     With more than a year behind him of trading Berkshire's 
+stock on the New York Stock Exchange, our specialist, Jim Maguire 
+of Henderson Brothers, Inc. ("HBI"), continues his outstanding 
+performance. Before we listed, dealer spreads often were 3% or 
+more of market price. Jim has maintained the spread at 50 points 
+or less, which at current prices is well under 1%. Shareholders 
+who buy or sell benefit significantly from this reduction in 
+transaction costs. 
+
+     Because we are delighted by our experience with Jim, HBI and 
+the NYSE, I said as much in ads that have been run in a series 
+placed by the NYSE. Normally I shun testimonials, but I was 
+pleased in this instance to publicly compliment the Exchange.
+
+              *  *  *  *  *  *  *  *  *  *  *  *
+
+     Last summer we sold the corporate jet that we purchased for 
+$850,000 three years ago and bought another used jet for $6.7 
+million. Those of you who recall the mathematics of the 
+multiplying bacteria on page 5 will understandably panic: If our 
+net worth continues to increase at current rates, and the cost of 
+replacing planes also continues to rise at the now-established 
+rate of 100% compounded annually, it will not be long before 
+Berkshire's entire net worth is consumed by its jet.
+
+     Charlie doesn't like it when I equate the jet with bacteria; 
+he feels it's degrading to the bacteria. His idea of traveling in 
+style is an air-conditioned bus, a luxury he steps up to only 
+when bargain fares are in effect. My own attitude toward the jet 
+can be summarized by the prayer attributed, apocryphally I'm 
+sure, to St. Augustine as he contemplated leaving a life of 
+secular pleasures to become a priest. Battling the conflict 
+between intellect and glands, he pled: "Help me, Oh Lord, to 
+become chaste - but not yet."
+
+     Naming the plane has not been easy. I initially suggested 
+"The Charles T. Munger." Charlie countered with "The Aberration." 
+We finally settled on "The Indefensible."  
+
+              *  *  *  *  *  *  *  *  *  *  *  *
+
+     About 96.9% of all eligible shares participated in 
+Berkshire's 1989 shareholder-designated contributions program. 
+Contributions made through the program were $5.9 million, and 
+2,550 charities were recipients.
+
+     We urge new shareholders to read the description of our 
+shareholder-designated contributions program that appears on 
+pages 52-53. If you wish to participate in future programs, we 
+strongly urge that you immediately make sure your shares are 
+registered in the name of the actual owner, not in the nominee 
+name of a broker, bank or depository. Shares not so registered on 
+August 31, 1990 will be ineligible for the 1990 program.
+
+              *  *  *  *  *  *  *  *  *  *  *  *
+
+     The annual meeting this year will take place at 9:30 a.m. on 
+Monday, April 30, 1990. Attendance grew last year to about 1,000, 
+very close to the seating capacity of the Witherspoon Hall at 
+Joslyn Museum. So this year's meeting will be moved to the 
+Orpheum Theatre, which is in downtown Omaha, about one-quarter of 
+a mile from the Red Lion Hotel. The Radisson-Redick Tower, a much 
+smaller but nice hotel, is located across the street from the 
+Orpheum. Or you may wish to stay at the Marriott, which is in 
+west Omaha, about 100 yards from Borsheim's. We will have buses 
+at the Marriott that will leave at 8:30 and 8:45 for the meeting 
+and return after it ends.
+
+     Charlie and I always enjoy the meeting, and we hope you can 
+make it. The quality of our shareholders is reflected in the 
+quality of the questions we get: We have never attended an annual 
+meeting anywhere that features such a consistently high level of 
+intelligent, owner-related questions. 
+
+     An attachment to our proxy material explains how you can 
+obtain the card you will need for admission to the meeting. 
+Because weekday parking can be tight around the Orpheum, we have 
+lined up a number of nearby lots for our shareholders to use. The 
+attachment also contains information about them.
+
+     As usual, we will have buses to take you to Nebraska 
+Furniture Mart and Borsheim's after the meeting and to take you 
+to downtown hotels or to the airport later. I hope that you will 
+allow plenty of time to fully explore the attractions of both 
+stores. Those of you arriving early can visit the Furniture Mart 
+any day of the week; it is open from 10 a.m. to 5:30 p.m. on 
+Saturdays, and from noon to 5:30 p.m. on Sundays.
+
+     Borsheim's normally is closed on Sunday, but we will open 
+for shareholders and their guests from noon to 6 p.m. on Sunday, 
+April 29th. Ike likes to put on a show, and you can rely on him 
+to produce something very special for our shareholders.
+
+     In this letter we've had a lot to say about rates of 
+compounding. If you can bear having your own rate turn negative 
+for a day - not a pretty thought, I admit - visit Ike on the 
+29th.
+
+
+
+							
+                                        Warren E. Buffett
+March 2, 1990                           Chairman of the Board
+
+
+===== LETTER 1990.md =====
+
+# Berkshire Hathaway Shareholder Letter 1990
+
+BERKSHIRE HATHAWAY INC.
+
+To the Shareholders of Berkshire Hathaway Inc.:
+
+Last year we made a prediction: "A reduction [in Berkshire's net worth] is almost certain in at least one of the next three years." During much of 1990's second half, we were on the road to quickly proving that forecast accurate. But some strengthening in stock prices late in the year enabled us to close 1990 with net worth up by $362 million, or 7.3%. Over the last 26 years (that is, since present management took over) our per-share book value has grown from $19.46 to $4,612.06, or at a rate of 23.2% compounded annually.
+
+Our growth rate was lackluster in 1990 because our four major common stock holdings, in aggregate, showed little change in market value. Last year I told you that though these companies - Capital Cities/ABC, Coca-Cola, GEICO, and Washington Post - had fine businesses and superb managements, widespread recognition of these attributes had pushed the stock prices of the four to lofty levels. The market prices of the two media companies have since fallen significantly - for good reasons relating to evolutionary industry developments that I will discuss later - and the price of Coca-Cola stock has increased significantly for what I also believe are good reasons. Overall, yearend 1990 prices of our "permanent four," though far from enticing, were a bit more appealing than they were a year earlier.
+
+Berkshire's 26-year record is meaningless in forecasting future results; so also, we hope, is the one-year record. We continue to aim for a 15% average annual gain in intrinsic value. But, as we never tire of telling you, this goal becomes ever more difficult to reach as our equity base, now $5.3 billion, increases.
+
+If we do attain that 15% average, our shareholders should fare well. However, Berkshire's corporate gains will produce an identical gain for a specific shareholder only if he eventually sells his shares at the same relationship to intrinsic value that existed when he bought them. For example, if you buy at a 10% premium to intrinsic value; if intrinsic value subsequently grows at 15% a year; and if you then sell at a 10% premium, your own return will correspondingly be 15% compounded. (The calculation assumes that no dividends are paid.) If, however, you buy at a premium and sell at a smaller premium, your results will be somewhat inferior to those achieved by the company.
+
+Ideally, the results of every Berkshire shareholder would closely mirror those of the company during his period of ownership. That is why Charlie Munger, Berkshire's Vice Chairman and my partner, and I hope for Berkshire to sell consistently at about intrinsic value. We prefer such steadiness to the value-ignoring volatility of the past two years: In 1989 intrinsic value grew less than did book value, which was up 44%, while the market price rose 85%; in 1990 book value and intrinsic value increased by a small amount, while the market price fell 23%.
+
+Berkshire's intrinsic value continues to exceed book value by a substantial margin. We can't tell you the exact differential because intrinsic value is necessarily an estimate; Charlie and I might, in fact, differ by 10% in our appraisals. We do know, however, that we own some exceptional businesses that are worth considerably more than the values at which they are carried on our books.
+
+Much of the extra value that exists in our businesses has been created by the managers now running them. Charlie and I feel free to brag about this group because we had nothing to do with developing the skills they possess: These superstars just came that way. Our job is merely to identify talented managers and provide an environment in which they can do their stuff. Having done it, they send their cash to headquarters and we face our only other task: the intelligent deployment of these funds.
+
+My own role in operations may best be illustrated by a small tale concerning my granddaughter, Emily, and her fourth birthday party last fall. Attending were other children, adoring relatives, and Beemer the Clown, a local entertainer who includes magic tricks in his act.
+
+Beginning these, Beemer asked Emily to help him by waving a "magic wand" over "the box of wonders." Green handkerchiefs went into the box, Emily waved the wand, and Beemer removed blue ones. Loose handkerchiefs went in and, upon a magisterial wave by Emily, emerged knotted. After four such transformations, each more amazing than its predecessor, Emily was unable to contain herself. Her face aglow, she exulted: "Gee, I'm really good at this."
+
+And that sums up my contribution to the performance of Berkshire's business magicians - the Blumkins, the Friedman family, Mike Goldberg, the Heldmans, Chuck Huggins, Stan Lipsey and Ralph Schey. They deserve your applause. Sources of Reported Earnings
+
+The table below shows the major sources of Berkshire's reported earnings. In this presentation, amortization of Goodwill and other major purchase-price accounting adjustments are not charged against the specific businesses to which they apply, but are instead aggregated and shown separately. This procedure lets you view the earnings of our businesses as they would have been reported had we not purchased them. I've explained in past reports why this form of presentation seems to us to be more useful to investors and managers than one utilizing generally accepted accounting principles (GAAP), which require purchase-price adjustments to be made on a business-by-business basis. The total net earnings we show in the table are, of course, identical to the GAAP total in our audited financial statements.
+
+Much additional information about these businesses is given on pages 39-46, where you also will find our segment earnings reported on a GAAP basis. For information on Wesco's businesses, I urge you to read Charlie Munger's letter, which starts on page 56. His letter also contains the clearest and most insightful discussion of the banking industry that I have seen.
+
+*Excludes interest expense of Scott Fetzer Financial Group and Mutual Savings & Loan.
+
+We refer you also to pages 47-53, where we have rearranged Berkshire's financial data into four segments. These correspond to the way Charlie and I think about the business and should help you more in estimating Berkshire's intrinsic value than consolidated figures would do. Shown on these pages are balance sheets and earnings statements for: (1) our insurance operations, with their major investment positions itemized; (2) our manufacturing, publishing and retailing businesses, leaving aside certain non- operating assets and purchase-price accounting adjustments; (3) our subsidiaries engaged in finance-type operations, which are Mutual Savings and Scott Fetzer Financial; and (4) an all-other category that includes the non-operating assets (primarily marketable securities) held by the companies in segment (2), all purchase- price accounting adjustments, and various assets and debts of the Wesco and Berkshire parent companies.
+
+If you combine the earnings and net worths of these four segments, you will derive totals matching those shown on our GAAP statements. However, I want to emphasize that this four-category presentation does not fall within the purview of our auditors, who in no way bless it. "Look-Through" Earnings
+
+The term "earnings" has a precise ring to it. And when an earnings figure is accompanied by an unqualified auditor's certificate, a naive reader might think it comparable in certitude to pi, calculated to dozens of decimal places.
+
+In reality, however, earnings can be as pliable as putty when a charlatan heads the company reporting them. Eventually truth will surface, but in the meantime a lot of money can change hands. Indeed, some important American fortunes have been created by the monetization of accounting mirages.
+
+Funny business in accounting is not new. For connoisseurs of chicanery, I have attached as Appendix A on page 22 a previously unpublished satire on accounting practices written by Ben Graham in 1936. Alas, excesses similar to those he then lampooned have many times since found their way into the financial statements of major American corporations and been duly certified by big-name auditors. Clearly, investors must always keep their guard up and use accounting numbers as a beginning, not an end, in their attempts to calculate true "economic earnings" accruing to them.
+
+Berkshire's own reported earnings are misleading in a different, but important, way: We have huge investments in companies ("investees") whose earnings far exceed their dividends and in which we record our share of earnings only to the extent of the dividends we receive. The extreme case is Capital Cities/ABC, Inc. Our 17% share of the company's earnings amounted to more than $83 million last year. Yet only about $530,000 ($600,000 of dividends it paid us less some $70,000 of tax) is counted in Berkshire's GAAP earnings. The residual $82 million-plus stayed with Cap Cities as retained earnings, which work for our benefit but go unrecorded on our books.
+
+Our perspective on such "forgotten-but-not-gone" earnings is simple: The way they are accounted for is of no importance, but their ownership and subsequent utilization is all-important. We care not whether the auditors hear a tree fall in the forest; we do care who owns the tree and what's next done with it.
+
+When Coca-Cola uses retained earnings to repurchase its shares, the company increases our percentage ownership in what I regard to be the most valuable franchise in the world. (Coke also, of course, uses retained earnings in many other value-enhancing ways.) Instead of repurchasing stock, Coca-Cola could pay those funds to us in dividends, which we could then use to purchase more Coke shares. That would be a less efficient scenario: Because of taxes we would pay on dividend income, we would not be able to increase our proportionate ownership to the degree that Coke can, acting for us. If this less efficient procedure were followed, however, Berkshire would report far greater "earnings."
+
+I believe the best way to think about our earnings is in terms of "look-through" results, calculated as follows: Take $250 million, which is roughly our share of the 1990 operating earnings retained by our investees; subtract $30 million, for the incremental taxes we would have owed had that $250 million been paid to us in dividends; and add the remainder, $220 million, to our reported operating earnings of $371 million. Thus our 1990 "look-through earnings" were about $590 million.
+
+As I mentioned last year, we hope to have look-through earnings grow about 15% annually. In 1990 we substantially exceeded that rate but in 1991 we will fall far short of it. Our Gillette preferred has been called and we will convert it into common stock on April 1. This will reduce reported earnings by about $35 million annually and look-through earnings by a much smaller, but still significant, amount. Additionally, our media earnings - both direct and look-through - appear sure to decline. Whatever the results, we will post you annually on how we are doing on a look-through basis. Non-Insurance Operations
+
+Take another look at the figures on page 51, which aggregate the earnings and balance sheets of our non-insurance operations. After-tax earnings on average equity in 1990 were 51%, a result that would have placed the group about 20th on the 1989 Fortune 500.
+
+Two factors make this return even more remarkable. First, leverage did not produce it: Almost all our major facilities are owned, not leased, and such small debt as these operations have is basically offset by cash they hold. In fact, if the measurement was return on assets - a calculation that eliminates the effect of debt upon returns - our group would rank in Fortune's top ten.
+
+Equally important, our return was not earned from industries, such as cigarettes or network television stations, possessing spectacular economics for all participating in them. Instead it came from a group of businesses operating in such prosaic fields as furniture retailing, candy, vacuum cleaners, and even steel warehousing. The explanation is clear: Our extraordinary returns flow from outstanding operating managers, not fortuitous industry economics. Let's look at the larger operations:
+
+o
+
+But, oh, what an establishment! We can't be sure about the fact (because most fine-jewelry retailers are privately owned) but we believe that this jewelry store does more volume than any other in the U.S., except for Tiffany's New York store.
+
+Borsheim's could not do nearly that well if our customers came only from the Omaha metropolitan area, whose population is about 600,000. We have long had a huge percentage of greater Omaha's jewelry business, so growth in that market is necessarily limited. But every year business from non-Midwest customers grows dramatically. Many visit the store in person. A large number of others, however, buy through the mail in a manner you will find interesting.
+
+These customers request a jewelry selection of a certain type and value - say, emeralds in the $10,000 -$20,000 range - and we then send them five to ten items meeting their specifications and from which they can pick. Last year we mailed about 1,500 assortments of all kinds, carrying values ranging from under $1,000 to hundreds of thousands of dollars.
+
+The selections are sent all over the country, some to people no one at Borsheim's has ever met. (They must always have been well recommended, however.) While the number of mailings in 1990 was a record, Ike has been sending merchandise far and wide for decades. Misanthropes will be crushed to learn how well our "honor-system" works: We have yet to experience a loss from customer dishonesty.
+
+We attract business nationwide because we have several advantages that competitors can't match. The most important item in the equation is our operating costs, which run about 18% of sales compared to 40% or so at the typical competitor. (Included in the 18% are occupancy and buying costs, which some public companies include in "cost of goods sold.") Just as Wal-Mart, with its 15% operating costs, sells at prices that high-cost competitors can't touch and thereby constantly increases its market share, so does Borsheim's. What works with diapers works with diamonds.
+
+Our low prices create huge volume that in turn allows us to carry an extraordinarily broad inventory of goods, running ten or more times the size of that at the typical fine-jewelry store. Couple our breadth of selection and low prices with superb service and you can understand how Ike and his family have built a national jewelry phenomenon from an Omaha location.
+
+And family it is. Ike's crew always includes son Alan and sons-in-law Marvin Cohn and Donald Yale. And when things are busy - that's often - they are joined by Ike's wife, Roz, and his daughters, Janis and Susie. In addition, Fran Blumkin, wife of Louie (Chairman of Nebraska Furniture Mart and Ike's cousin), regularly pitches in. Finally, you'll find Ike's 89-year-old mother, Rebecca, in the store most afternoons, Wall Street Journal in hand. Given a family commitment like this, is it any surprise that Borsheim's runs rings around competitors whose managers are thinking about how soon 5 o'clock will arrive? o While Fran Blumkin was helping the Friedman family set records at Borsheim's, her sons, Irv and Ron, along with husband Louie, were setting records at The Nebraska Furniture Mart. Sales at our one-and-only location were $159 million, up 4% from 1989. Though again the fact can't be conclusively proved, we believe NFM does close to double the volume of any other home furnishings store in the country.
+
+The NFM formula for success parallels that of Borsheim's. First, operating costs are rock-bottom - 15% in 1990 against about 40% for Levitz, the country's largest furniture retailer, and 25% for Circuit City Stores, the leading discount retailer of electronics and appliances. Second, NFM's low costs allow the business to price well below all competitors. Indeed, major chains, knowing what they will face, steer clear of Omaha. Third, the huge volume generated by our bargain prices allows us to carry the broadest selection of merchandise available anywhere.
+
+Some idea of NFM's merchandising power can be gleaned from a recent report of consumer behavior in Des Moines, which showed that NFM was Number 3 in popularity among 20 furniture retailers serving that city. That may sound like no big deal until you consider that 19 of those retailers are located in Des Moines, whereas our store is 130 miles away. This leaves customers driving a distance equal to that between Washington and Philadelphia in order to shop with us, even though they have a multitude of alternatives next door. In effect, NFM, like Borsheim's, has dramatically expanded the territory it serves - not by the traditional method of opening new stores but rather by creating an irresistible magnet that employs price and selection to pull in the crowds.
+
+Last year at the Mart there occurred an historic event: I experienced a counterrevelation. Regular readers of this report know that I have long scorned the boasts of corporate executives about synergy, deriding such claims as the last refuge of scoundrels defending foolish acquisitions. But now I know better: In Berkshire's first synergistic explosion, NFM put a See's candy cart in the store late last year and sold more candy than that moved by some of the full-fledged stores See's operates in California. This success contradicts all tenets of retailing. With the Blumkins, though, the impossible is routine. o At See's, physical volume set a record in 1990 - but only barely and only because of good sales early in the year. After the invasion of Kuwait, mall traffic in the West fell. Our poundage volume at Christmas dropped slightly, though our dollar sales were up because of a 5% price increase.
+
+That increase, and better control of expenses, improved profit margins. Against the backdrop of a weak retailing environment, Chuck Huggins delivered outstanding results, as he has in each of the nineteen years we have owned See's. Chuck's imprint on the business - a virtual fanaticism about quality and service - is visible at all of our 225 stores.
+
+One happening in 1990 illustrates the close bond between See's and its customers. After 15 years of operation, our store in Albuquerque was endangered: The landlord would not renew our lease, wanting us instead to move to an inferior location in the mall and even so to pay a much higher rent. These changes would have wiped out the store's profit. After extended negotiations got us nowhere, we set a date for closing the store.
+
+On her own, the store's manager, Ann Filkins, then took action, urging customers to protest the closing. Some 263 responded by sending letters and making phone calls to See's headquarters in San Francisco, in some cases threatening to boycott the mall. An alert reporter at the Albuquerque paper picked up the story. Supplied with this evidence of a consumer uprising, our landlord offered us a satisfactory deal. (He, too, proved susceptible to a counterrevelation.)
+
+Chuck subsequently wrote personal letters of thanks to every loyalist and sent each a gift certificate. He repeated his thanks in a newspaper ad that listed the names of all 263. The sequel: Christmas sales in Albuquerque were up substantially. o Charlie and I were surprised at developments this past year in the media industry, including newspapers such as our Buffalo News. The business showed far more vulnerability to the early stages of a recession than has been the case in the past. The question is whether this erosion is just part of an aberrational cycle - to be fully made up in the next upturn - or whether the business has slipped in a way that permanently reduces intrinsic business values.
+
+Since I didn't predict what has happened, you may question the value of my prediction about what will happen. Nevertheless, I'll proffer a judgment: While many media businesses will remain economic marvels in comparison with American industry generally, they will prove considerably less marvelous than I, the industry, or lenders thought would be the case only a few years ago.
+
+The reason media businesses have been so outstanding in the past was not physical growth, but rather the unusual pricing power that most participants wielded. Now, however, advertising dollars are growing slowly. In addition, retailers that do little or no media advertising (though they sometimes use the Postal Service) have gradually taken market share in certain merchandise categories. Most important of all, the number of both print and electronic advertising channels has substantially increased. As a consequence, advertising dollars are more widely dispersed and the pricing power of ad vendors has diminished. These circumstances materially reduce the intrinsic value of our major media investments and also the value of our operating unit, Buffalo News - though all remain fine businesses.
+
+Notwithstanding the problems, Stan Lipsey's management of the News continues to be superb. During 1990, our earnings held up much better than those of most metropolitan papers, falling only 5%. In the last few months of the year, however, the rate of decrease was far greater.
+
+I can safely make two promises about the News in 1991: (1) Stan will again rank at the top among newspaper publishers; and (2) earnings will fall substantially. Despite a slowdown in the demand for newsprint, the price per ton will average significantly more in 1991 and the paper's labor costs will also be considerably higher. Since revenues may meanwhile be down, we face a real squeeze.
+
+Profits may be off but our pride in the product remains. We continue to have a larger "news hole" - the portion of the paper devoted to news - than any comparable paper. In 1990, the proportion rose to 52.3% against 50.1% in 1989. Alas, the increase resulted from a decline in advertising pages rather than from a gain in news pages. Regardless of earnings pressures, we will maintain at least a 50% news hole. Cutting product quality is not a proper response to adversity. o The news at Fechheimer, our manufacturer and retailer of uniforms, is all good with one exception: George Heldman, at 69, has decided to retire. I tried to talk him out of it but he had one irrefutable argument: With four other Heldmans - Bob, Fred, Gary and Roger - to carry on, he was leaving us with an abundance of managerial talent.
+
+Fechheimer's operating performance improved considerably in 1990, as many of the problems we encountered in integrating the large acquisition we made in 1988 were moderated or solved. However, several unusual items caused the earnings reported in the "Sources" table to be flat. In the retail operation, we continue to add stores and now have 42 in 22 states. Overall, prospects appear excellent for Fechheimer. o At Scott Fetzer, Ralph Schey runs 19 businesses with a mastery few bring to running one. In addition to overseeing three entities listed on page 6 - World Book, Kirby, and Scott Fetzer Manufacturing - Ralph directs a finance operation that earned a record $12.2 million pre-tax in 1990.
+
+Were Scott Fetzer an independent company, it would rank close to the top of the Fortune 500 in terms of return on equity, although it is not in businesses that one would expect to be economic champs. The superior results are directly attributable to Ralph.
+
+At World Book, earnings improved on a small decrease in unit volume. The costs of our decentralization move were considerably less in 1990 than 1989 and the benefits of decentralization are being realized. World Book remains far and away the leader in United States encyclopedia sales and we are growing internationally, though from a small base.
+
+Kirby unit volume grew substantially in 1990 with the help of our new vacuum cleaner, The Generation 3, which was an unqualified success. Earnings did not grow as fast as sales because of both start-up expenditures and "learning-curve" problems we encountered in manufacturing the new product. International business, whose dramatic growth I described last year, had a further 20% sales gain in 1990. With the aid of a recent price increase, we expect excellent earnings at Kirby in 1991.
+
+Within the Scott Fetzer Manufacturing Group, Campbell Hausfeld, its largest unit, had a particularly fine year. This company, the country's leading producer of small and medium-sized air compressors, achieved record sales of $109 million, more than 30% of which came from products introduced during the last five years.
+
+* * * * * * * * * * * *
+
+In looking at the figures for our non-insurance operations, you will see that net worth increased by only $47 million in 1990 although earnings were $133 million. This does not mean that our managers are in any way skimping on investments that strengthen their business franchises or that promote growth. Indeed, they diligently pursue both goals.
+
+But they also never deploy capital without good reason. The result: In the past five years they have funneled well over 80% of their earnings to Charlie and me for use in new business and investment opportunities. Insurance Operations
+
+Shown below is an updated version of our usual table presenting key figures for the property-casualty insurance industry:
+
+Source: A.M. Best Co.
+
+The combined ratio represents total insurance costs (losses incurred plus expenses) compared to revenue from premiums: A ratio below 100 indicates an underwriting profit, and one above 100 indicates a loss. The higher the ratio, the worse the year. When the investment income that an insurer earns from holding policyholders' funds ("the float") is taken into account, a combined ratio in the 107 - 111 range typically produces an overall breakeven result, exclusive of earnings on the funds provided by shareholders.
+
+For the reasons laid out in previous reports, we expect the industry's incurred losses to grow at an average of 10% annually, even in periods when general inflation runs considerably lower. (Over the last 25 years, incurred losses have in reality grown at a still faster rate, 11%.) If premium growth meanwhile materially lags that 10% rate, underwriting losses will mount, though the industry's tendency to under-reserve when business turns bad may obscure their size for a time.
+
+Last year premium growth fell far short of the required 10% and underwriting results therefore worsened. (In our table, however, the severity of the deterioration in 1990 is masked because the industry's 1989 losses from Hurricane Hugo caused the ratio for that year to be somewhat above trendline.) The combined ratio will again increase in 1991, probably by about two points.
+
+Results will improve only when most insurance managements become so fearful that they run from business, even though it can be done at much higher prices than now exist. At some point these managements will indeed get the message: The most important thing to do when you find yourself in a hole is to stop digging. But so far that point hasn't gotten across: Insurance managers continue to dig - sullenly but vigorously.
+
+The picture would change quickly if a major physical or financial catastrophe were to occur. Absent such a shock, one to two years will likely pass before underwriting losses become large enough to raise management fear to a level that would spur major price increases. When that moment arrives, Berkshire will be ready - both financially and psychologically - to write huge amounts of business.
+
+In the meantime, our insurance volume continues to be small but satisfactory. In the next section of this report we will give you a framework for evaluating insurance results. From that discussion, you will gain an understanding of why I am so enthusiastic about the performance of our insurance manager, Mike Goldberg, and his cadre of stars, Rod Eldred, Dinos Iordanou, Ajit Jain, and Don Wurster.
+
+In assessing our insurance results over the next few years, you should be aware of one type of business we are pursuing that could cause them to be unusually volatile. If this line of business expands, as it may, our underwriting experience will deviate from the trendline you might expect: In most years we will somewhat exceed expectations and in an occasional year we will fall far below them.
+
+The volatility I predict reflects the fact that we have become a large seller of insurance against truly major catastrophes ("super-cats"), which could for example be hurricanes, windstorms or earthquakes. The buyers of these policies are reinsurance companies that themselves are in the business of writing catastrophe coverage for primary insurers and that wish to "lay off," or rid themselves, of part of their exposure to catastrophes of special severity. Because the need for these buyers to collect on such a policy will only arise at times of extreme stress - perhaps even chaos - in the insurance business, they seek financially strong sellers. And here we have a major competitive advantage: In the industry, our strength is unmatched.
+
+A typical super-cat contract is complicated. But in a plain- vanilla instance we might write a one-year, $10 million policy providing that the buyer, a reinsurer, would be paid that sum only if a catastrophe caused two results: (1) specific losses for the reinsurer above a threshold amount; and (2) aggregate losses for the insurance industry of, say, more than $5 billion. Under virtually all circumstances, loss levels that satisfy the second condition will also have caused the first to be met.
+
+For this $10 million policy, we might receive a premium of, say, $3 million. Say, also, that we take in annual premiums of $100 million from super-cat policies of all kinds. In that case we are very likely in any given year to report either a profit of close to $100 million or a loss of well over $200 million. Note that we are not spreading risk as insurers typically do; we are concentrating it. Therefore, our yearly combined ratio on this business will almost never fall in the industry range of 100 - 120, but will instead be close to either zero or 300%.
+
+Most insurers are financially unable to tolerate such swings. And if they have the ability to do so, they often lack the desire. They may back away, for example, because they write gobs of primary property insurance that would deliver them dismal results at the very time they would be experiencing major losses on super- cat reinsurance. In addition, most corporate managements believe that their shareholders dislike volatility in results.
+
+We can take a different tack: Our business in primary property insurance is small and we believe that Berkshire shareholders, if properly informed, can handle unusual volatility in profits so long as the swings carry with them the prospect of superior long-term results. (Charlie and I always have preferred a lumpy 15% return to a smooth 12%.)
+
+We want to emphasize three points: (1) While we expect our super-cat business to produce satisfactory results over, say, a decade, we're sure it will produce absolutely terrible results in at least an occasional year; (2) Our expectations can be based on little more than subjective judgments - for this kind of insurance, historical loss data are of very limited value to us as we decide what rates to charge today; and (3) Though we expect to write significant quantities of super-cat business, we will do so only at prices we believe to be commensurate with risk. If competitors become optimistic, our volume will fall. This insurance has, in fact, tended in recent years to be woefully underpriced; most sellers have left the field on stretchers.
+
+At the moment, we believe Berkshire to be the largest U.S. writer of super-cat business. So when a major quake occurs in an urban area or a winter storm rages across Europe, light a candle for us. Measuring Insurance Performance
+
+In the previous section I mentioned "float," the funds of others that insurers, in the conduct of their business, temporarily hold. Because these funds are available to be invested, the typical property-casualty insurer can absorb losses and expenses that exceed premiums by 7% to 11% and still be able to break even on its business. Again, this calculation excludes the earnings the insurer realizes on net worth - that is, on the funds provided by shareholders.
+
+However, many exceptions to this 7% to 11% range exist. For example, insurance covering losses to crops from hail damage produces virtually no float at all. Premiums on this kind of business are paid to the insurer just prior to the time hailstorms are a threat, and if a farmer sustains a loss he will be paid almost immediately. Thus, a combined ratio of 100 for crop hail insurance produces no profit for the insurer.
+
+At the other extreme, malpractice insurance covering the potential liabilities of doctors, lawyers and accountants produces a very high amount of float compared to annual premium volume. The float materializes because claims are often brought long after the alleged wrongdoing takes place and because their payment may be still further delayed by lengthy litigation. The industry calls malpractice and certain other kinds of liability insurance "long- tail" business, in recognition of the extended period during which insurers get to hold large sums that in the end will go to claimants and their lawyers (and to the insurer's lawyers as well).
+
+In long-tail situations a combined ratio of 115 (or even more) can prove profitable, since earnings produced by the float will exceed the 15% by which claims and expenses overrun premiums. The catch, though, is that "long-tail" means exactly that: Liability business written in a given year and presumed at first to have produced a combined ratio of 115 may eventually smack the insurer with 200, 300 or worse when the years have rolled by and all claims have finally been settled.
+
+The pitfalls of this business mandate an operating principle that too often is ignored: Though certain long-tail lines may prove profitable at combined ratios of 110 or 115, insurers will invariably find it unprofitable to price using thos

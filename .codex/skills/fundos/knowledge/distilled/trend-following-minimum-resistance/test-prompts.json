@@ -1,0 +1,52 @@
+{
+  "skill": "trend-following-minimum-resistance",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》 — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "科创50联接横盘快两个月了，半导体也在区间震荡，我要不要先买一点等突破？",
+      "expected_behavior": "应激活 trend-following-minimum-resistance，判定当前为震荡状态、方向未明，给出区间上下沿观察位，不给出买入建议",
+      "notes": "典型的方向未明+手痒想进场场景，核心是等最小阻力线自我定义"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "光伏板块今天反弹5个点，是不是右侧启动了？现在进场还是等突破确认？",
+      "expected_behavior": "应激活本技能，检查是否收盘站上区间上沿/关键点，未确认则提示等待确认",
+      "notes": "突破确认判断，正是最小阻力线与关键点的应用场景"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "听说美股指数的 line of least resistance 还是向上的，纳斯达克100现在该拿还是该加？",
+      "expected_behavior": "应激活本技能，先判断趋势方向（顺势）再回答拿/加问题，未破位不因价格高而卖出",
+      "notes": "英文 trigger 词 + 趋势方向判断"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "全球成长已经亏了19%了，要不要止损？还是等回本？",
+      "expected_behavior": "不应激活本技能，应激活 stop-loss-admission",
+      "notes": "诱饵: 跨技能混淆——浮亏止损问题属于止损纪律，不是方向判断"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "信息产业涨了4.38%，要不要先落袋一部分？",
+      "expected_behavior": "不应激活本技能，应激活 hold-winners",
+      "notes": "诱饵: 跨技能混淆——盈利仓止盈问题属于拿住盈利纪律"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "医药板块连续两天大涨但还没突破前高，我该现在追还是等回踩？",
+      "expected_behavior": "激活本技能判定方向状态: 未突破前高=方向未确认，结论是'不追、等突破确认或回踩观察'；若用户追问'买多少'则转 right-side-entry-pyramid",
+      "notes": "边界: 单日大涨与突破确认混在一起，先定方向状态再谈动作"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}

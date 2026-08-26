@@ -1,0 +1,52 @@
+{
+  "skill": "narrative-news-check",
+  "version": "0.1.0",
+  "source_book": "《非同寻常的大众幻想与群众性癫狂》 — Charles Mackay",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "半导体设备板块今天大涨，消息说是国产替代新政策落地，我手里半导体基金-0.82%没怎么动，这条消息是真利好还是炒作？能加仓吗？",
+      "expected_behavior": "应激活 narrative-news-check：先查政策是否落地（事实层），再拆叙事层与杠杆层，输出能否加仓的判定",
+      "notes": "正面场景：重大政策新闻+加仓决策"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "光伏BC电池出了新技术突破的新闻，华夏绿电还在-5.05%的坑里，这条消息能不能帮我回本？要不要追？",
+      "expected_behavior": "应激活 narrative-news-check：拆解新技术消息的事实/叙事/杠杆三层，结合-5%持仓判断是否值得加仓摊薄",
+      "notes": "正面场景：用新闻检查指导回本路径"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "黄金连涨4天到6.75万、金价$4370，新闻天天吹'历史性牛市'，我该不该追买黄金主题基金？",
+      "expected_behavior": "应激活 narrative-news-check：区分'金价上涨事实'与'历史性牛市叙事'，提示叙事驱动的追高风险",
+      "notes": "正面场景：热门叙事下的追高检查"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "今天科技智选又跌了0.71%，帮我看看整体持仓亏了多少。",
+      "expected_behavior": "不应激活本 skill，这是组合盈亏查询，应走 fundos-core",
+      "notes": "诱饵：信息查询类提问"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "新闻说CXO+11.6%是医药新主线，我是不是该把科技减掉换医药？",
+      "expected_behavior": "不应激活本 skill；用户问的是'换仓方向'而非'消息真假'，应激活同书/基金组合 skill sector-rotation-detector 与 fundos-core",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：轮动/换仓决策不应被叙事检查抢答"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "一条消息既有真实订单落地（事实），又有媒体夸大渲染（叙事），还伴随融资盘进场（杠杆）——三层信号混杂，怎么定？",
+      "expected_behavior": "应触发但输出分层结论：三层分别打分，事实层支持、叙事层夸大、杠杆层放大——上涨确定性打折扣，给出'可小仓参与但严设止损'的谨慎结论",
+      "notes": "边界：真实世界消息通常三层混杂，不能一刀切"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过（诱饵容错为 0），且其中至少 1 条是同书兄弟 skill 的场景（跨 skill 混淆测试）。"
+}

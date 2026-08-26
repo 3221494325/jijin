@@ -1,0 +1,229 @@
+{
+  "schema_version": "fundos.news.v1",
+  "collected_at": "2026-08-26T13:35:02.235466",
+  "source_status": {
+    "快讯": {
+      "status": "ok",
+      "items": 15,
+      "error": ""
+    },
+    "cls_telegram": {
+      "status": "error",
+      "items": 0,
+      "calls": 23,
+      "elapsed_ms": 10280,
+      "error": "HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E9%9D%9E%E5%86%9C&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A1%AC%E7%A7%91%E6%8A%80&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%BA%B3%E6%96%AF%E8%BE%BE%E5%85%8B&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E6%A0%87%E6%99%AE500&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=ChatGPT&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%AE%97%E5%8A%9B&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%85%89%E4%BC%8F&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=DeepSeek&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=HBM&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E9%A3%8E%E7%94%B5&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%85%89%E5%88%BB%E6%9C%BA&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E6%99%B6%E5%9C%86&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%85%88%E8%BF%9B%E5%B0%81%E8%A3%85&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=CPI&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A7%91%E5%88%9B%E6%9D%BF&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A2%B3%E4%B8%AD%E5%92%8C&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%8D%8A%E5%AF%BC%E4%BD%93&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%A4%A7%E6%A8%A1%E5%9E%8B&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A7%91%E5%88%9B50&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%BE%8E%E8%81%94%E5%82%A8&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E8%8A%AF%E7%89%87&type=telegram&page=0&rn=15"
+    },
+    "wallstreetcn_live": {
+      "status": "ok",
+      "items": 345,
+      "calls": 23,
+      "elapsed_ms": 9559,
+      "error": ""
+    },
+    "eastmoney_news": {
+      "status": "error",
+      "items": 0,
+      "calls": 23,
+      "elapsed_ms": 9646,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    }
+  },
+  "news": [
+    {
+      "id": "华尔街见闻:即梦AI推出影视内容厂牌“即梦片场” 8月26日，即梦AI正式推出影视内容厂牌“即梦片场”，面向电影、剧集项目开放征集，入选项目将获得算力、技术、资金、行业资源等多维支持。电影项目面向时长90分钟以",
+      "title": "即梦AI推出影视内容厂牌“即梦片场” 8月26日，即梦AI正式推出影视内容厂牌“即梦片场”，面向电影、剧集项目开放征集，入选项目将获得算力、技术、资金、行业资源等多维支持。电影项目面向时长90分钟以",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155054",
+      "published_at": "08-26 13:31",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:欧洲央行执委Schnabel：紧缩程度将取决于即将出炉的数据。\n\n通胀率可能在较长时间内超过2%。",
+      "title": "欧洲央行执委Schnabel：紧缩程度将取决于即将出炉的数据。\n\n通胀率可能在较长时间内超过2%。",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155053",
+      "published_at": "08-26 13:18",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:A股电力股再度拉升，立新能源直线涨停。",
+      "title": "A股电力股再度拉升，立新能源直线涨停。",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155052",
+      "published_at": "08-26 13:16",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "🟢略偏多",
+      "sentiment_score": 1,
+      "reference_signal": "🟢略偏多"
+    },
+    {
+      "id": "华尔街见闻:欧洲央行执委Schnabel：利率必须进一步上调 欧洲央行执行委员会成员Schnabel表示，由于中东冲突带来的通胀上行风险以及欧元区经济的强劲表现，利率必须进一步上调。Schnabel警告称，受能源成本高企影",
+      "title": "欧洲央行执委Schnabel：利率必须进一步上调 欧洲央行执行委员会成员Schnabel表示，由于中东冲突带来的通胀上行风险以及欧元区经济的强劲表现，利率必须进一步上调。Schnabel警告称，受能源成本高企影",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155050",
+      "published_at": "08-26 13:15",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:媒体称美国政府暂停处理移民签证申请 据多家媒体25日报道，美国政府已暂停处理全球范围内的移民签证申请，同时向美国领事官员就处理签证申请提供培训。",
+      "title": "媒体称美国政府暂停处理移民签证申请 据多家媒体25日报道，美国政府已暂停处理全球范围内的移民签证申请，同时向美国领事官员就处理签证申请提供培训。",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155049",
+      "published_at": "08-26 13:09",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:安踏体育港股午后直线拉升，涨超5%，公司2026年上半年收入人民币435.07亿元，同比增长12.9%。",
+      "title": "安踏体育港股午后直线拉升，涨超5%，公司2026年上半年收入人民币435.07亿元，同比增长12.9%。",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155048",
+      "published_at": "08-26 13:04",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "🟢略偏多",
+      "sentiment_score": 2,
+      "reference_signal": "🟢略偏多"
+    },
+    {
+      "id": "华尔街见闻:对冲基金SPX Capital两名投资组合经理离职 伦敦办公室据悉亦关闭 巴西对冲基金SPX Capital正在重新审视全球业务之际，两名驻新加坡的主要投资组合经理已经离职。根据监管文件显示，Predee Anuvatnujotiku",
+      "title": "对冲基金SPX Capital两名投资组合经理离职 伦敦办公室据悉亦关闭 巴西对冲基金SPX Capital正在重新审视全球业务之际，两名驻新加坡的主要投资组合经理已经离职。根据监管文件显示，Predee Anuvatnujotiku",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155046",
+      "published_at": "08-26 12:59",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "🔴略偏空",
+      "sentiment_score": 1,
+      "reference_signal": "🔴略偏空"
+    },
+    {
+      "id": "华尔街见闻:报道：软银考虑发行不超过200亿美元债券为OpenAI融资 据知情人士透露，软银集团正与投资银行洽谈潜在的100亿至200亿美元债券发行，以帮助为其对OpenAI的投资贷款进行再融资。此次发行可能以美元和欧元计价，最早可",
+      "title": "报道：软银考虑发行不超过200亿美元债券为OpenAI融资 据知情人士透露，软银集团正与投资银行洽谈潜在的100亿至200亿美元债券发行，以帮助为其对OpenAI的投资贷款进行再融资。此次发行可能以美元和欧元计价，最早可",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155045",
+      "published_at": "08-26 12:56",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:南京1宗宅地13.52亿元底价成交 8月26日，南京出让1宗江宁区宅地，规划建筑面积15.08万平方米，容积率1.6，起始价13.52亿元，起始楼面价8966元/平方米。最终南京市卓学置业有限公司",
+      "title": "南京1宗宅地13.52亿元底价成交 8月26日，南京出让1宗江宁区宅地，规划建筑面积15.08万平方米，容积率1.6，起始价13.52亿元，起始楼面价8966元/平方米。最终南京市卓学置业有限公司",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155044",
+      "published_at": "08-26 12:46",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:青少年社交媒体案构成巨大风险 Meta与美国州检察长讨论和解可能 知情人士称，Meta Platforms Inc.与美国多个州的检察长已就一宗引发轰动的诉讼案进行庭审期间和解的可能性进行过讨论，该案指控Meta故意将Face",
+      "title": "青少年社交媒体案构成巨大风险 Meta与美国州检察长讨论和解可能 知情人士称，Meta Platforms Inc.与美国多个州的检察长已就一宗引发轰动的诉讼案进行庭审期间和解的可能性进行过讨论，该案指控Meta故意将Face",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155043",
+      "published_at": "08-26 12:42",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:早间要闻汇总 深成指、创业板指均涨超1%，大金融、有色板块集体走强。\n\n恒指半日涨0.68%，恒生科技指数涨1.58%，小鹏涨超7%，华虹宏力涨近7%。\n\n国际油价跌超2%，",
+      "title": "早间要闻汇总 深成指、创业板指均涨超1%，大金融、有色板块集体走强。\n\n恒指半日涨0.68%，恒生科技指数涨1.58%，小鹏涨超7%，华虹宏力涨近7%。\n\n国际油价跌超2%，",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155041",
+      "published_at": "08-26 12:30",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "🟢略偏多",
+      "sentiment_score": 1,
+      "reference_signal": "🟢略偏多"
+    },
+    {
+      "id": "华尔街见闻:正荣地产称，公司正在与境外债权人就重组计划进行协商。",
+      "title": "正荣地产称，公司正在与境外债权人就重组计划进行协商。",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155040",
+      "published_at": "08-26 12:27",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:碧桂园服务上半年净利润9.503亿元人民币，同比-4.6%。\n\n上半年营收245.0亿元人民币，同比+5.7%，预估231.7亿元人民币。\n\n上半年营业利润12",
+      "title": "碧桂园服务上半年净利润9.503亿元人民币，同比-4.6%。\n\n上半年营收245.0亿元人民币，同比+5.7%，预估231.7亿元人民币。\n\n上半年营业利润12",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155039",
+      "published_at": "08-26 12:26",
+      "collected_at": "2026-08-26T13:35:02.282242+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:MSCI亚太指数上涨1%至278.01点。",
+      "title": "MSCI亚太指数上涨1%至278.01点。",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155037",
+      "published_at": "08-26 12:26",
+      "collected_at": "2026-08-26T13:35:02.282747+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    },
+    {
+      "id": "华尔街见闻:提醒：日内请重点关注（以下均为北京时间） ① 港股盘后 理想汽车发布业绩报告；\n\n② 18:10 欧洲央行执委Piero Cipollone在德意志银行一场关于支付的活动上讲话；\n\n③ 20:30 美国",
+      "title": "提醒：日内请重点关注（以下均为北京时间） ① 港股盘后 理想汽车发布业绩报告；\n\n② 18:10 欧洲央行执委Piero Cipollone在德意志银行一场关于支付的活动上讲话；\n\n③ 20:30 美国",
+      "content": "",
+      "source": "华尔街见闻",
+      "url": "https://wallstreetcn.com/livenews/3155036",
+      "published_at": "08-26 12:25",
+      "collected_at": "2026-08-26T13:35:02.282747+08:00",
+      "dimension": "快讯",
+      "sentiment": "⚪中性",
+      "sentiment_score": 0,
+      "reference_signal": "⚪中性"
+    }
+  ]
+}

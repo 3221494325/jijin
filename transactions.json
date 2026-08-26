@@ -1,0 +1,340 @@
+{
+  "date": "2026-08-08",
+  "funds": {
+    "012922": {
+      "name": "全球成长",
+      "tx": [
+        {
+          "date": "2026-05-28",
+          "type": "buy",
+          "amount": 20.0,
+          "nav": 4.3573,
+          "shares": 4.59
+        },
+        {
+          "date": "2026-06-02",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.505,
+          "shares": 4.4395
+        },
+        {
+          "date": "2026-06-03",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.6077,
+          "shares": 4.3406
+        },
+        {
+          "date": "2026-06-04",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.5626,
+          "shares": 4.3835
+        },
+        {
+          "date": "2026-06-05",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.2463,
+          "shares": 4.71
+        },
+        {
+          "date": "2026-06-08",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.269,
+          "shares": 4.6849
+        },
+        {
+          "date": "2026-06-09",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.3665,
+          "shares": 4.5803
+        },
+        {
+          "date": "2026-06-10",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.2339,
+          "shares": 4.7238
+        },
+        {
+          "date": "2026-06-11",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.414,
+          "shares": 4.531
+        },
+        {
+          "date": "2026-06-12",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.4703,
+          "shares": 4.474
+        },
+        {
+          "date": "2026-06-15",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.8029,
+          "shares": 4.1642
+        },
+        {
+          "date": "2026-06-16",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.7333,
+          "shares": 4.2254
+        },
+        {
+          "date": "2026-06-17",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.8416,
+          "shares": 4.1309
+        },
+        {
+          "date": "2026-06-18",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 5.1004,
+          "shares": 3.9213
+        },
+        {
+          "date": "2026-06-22",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 5.2737,
+          "shares": 3.7924
+        },
+        {
+          "date": "2026-06-23",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.8619,
+          "shares": 4.1136
+        },
+        {
+          "date": "2026-06-24",
+          "type": "dca",
+          "amount": 20.0,
+          "nav": 4.9026,
+          "shares": 4.0795
+        },
+        {
+          "date": "2026-06-25",
+          "type": "dca",
+          "amount": 10.0,
+          "nav": 5.1693,
+          "shares": 1.9345
+        },
+        {
+          "date": "2026-06-26",
+          "type": "dca",
+          "amount": 10.0,
+          "nav": 4.9191,
+          "shares": 2.0329
+        },
+        {
+          "date": "2026-06-29",
+          "type": "dca",
+          "amount": 10.0,
+          "nav": 4.9668,
+          "shares": 2.0134
+        },
+        {
+          "date": "2026-06-30",
+          "type": "dca",
+          "amount": 10.0,
+          "nav": 5.1797,
+          "shares": 1.9306
+        },
+        {
+          "date": "2026-07-01",
+          "type": "dca",
+          "amount": 10.0,
+          "nav": 4.9294,
+          "shares": 2.0286
+        },
+        {
+          "date": "2026-07-02",
+          "type": "dca",
+          "amount": 10.0,
+          "nav": 4.5346,
+          "shares": 2.2053
+        }
+      ],
+      "total_in": 400.0,
+      "total_out": 0.0,
+      "held_shares": 86.0302,
+      "avg_cost_nav": 4.6495,
+      "pct_free_30d": 100.0,
+      "last_buy_date": "2026-07-02",
+      "penalty_lots": []
+    },
+    "019764": {
+      "name": "半导体",
+      "tx": [
+        {
+          "date": "2026-06-01",
+          "type": "buy",
+          "amount": 50.0,
+          "nav": 1.9903,
+          "shares": 0.0
+        },
+        {
+          "date": "2026-06-04",
+          "type": "dca",
+          "amount": 25.0,
+          "nav": 2.1496,
+          "shares": 0.0
+        },
+        {
+          "date": "2026-06-05",
+          "type": "buy",
+          "amount": 100.0,
+          "nav": 2.0521,
+          "shares": 35.7316
+        },
+        {
+          "date": "2026-06-11",
+          "type": "dca",
+          "amount": 25.0,
+          "nav": 2.1568,
+          "shares": 11.5912
+        },
+        {
+          "date": "2026-06-17",
+          "type": "sell",
+          "amount": 120.85,
+          "nav": 2.4291,
+          "shares": 49.7509
+        },
+        {
+          "date": "2026-06-18",
+          "type": "dca",
+          "amount": 25.0,
+          "nav": 2.4804,
+          "shares": 10.079
+        },
+        {
+          "date": "2026-06-25",
+          "type": "dca",
+          "amount": 25.0,
+          "nav": 2.7968,
+          "shares": 8.9388
+        },
+        {
+          "date": "2026-07-02",
+          "type": "dca",
+          "amount": 25.0,
+          "nav": 2.9195,
+          "shares": 8.5631
+        },
+        {
+          "date": "2026-07-16",
+          "type": "buy",
+          "amount": 51.0,
+          "nav": 2.5437,
+          "shares": 20.0495
+        }
+      ],
+      "total_in": 326.0,
+      "total_out": 120.85,
+      "held_shares": 94.9532,
+      "avg_cost_nav": 2.3625,
+      "pct_free_30d": 78.9,
+      "last_buy_date": "2026-07-16",
+      "penalty_lots": [
+        [
+          "2026-07-16",
+          51.0,
+          23
+        ]
+      ]
+    },
+    "022365": {
+      "name": "科技智选",
+      "tx": [
+        {
+          "date": "2026-05-28",
+          "type": "dca",
+          "amount": 50.0,
+          "nav": 5.9362,
+          "shares": 8.4229
+        },
+        {
+          "date": "2026-06-04",
+          "type": "dca",
+          "amount": 50.0,
+          "nav": 6.0043,
+          "shares": 8.3274
+        },
+        {
+          "date": "2026-06-11",
+          "type": "dca",
+          "amount": 50.0,
+          "nav": 5.7265,
+          "shares": 8.7313
+        },
+        {
+          "date": "2026-06-18",
+          "type": "dca",
+          "amount": 50.0,
+          "nav": 6.2276,
+          "shares": 8.0288
+        },
+        {
+          "date": "2026-06-25",
+          "type": "dca",
+          "amount": 50.0,
+          "nav": 6.312,
+          "shares": 7.9214
+        },
+        {
+          "date": "2026-07-02",
+          "type": "dca",
+          "amount": 50.0,
+          "nav": 5.7269,
+          "shares": 8.7307
+        },
+        {
+          "date": "2026-06-05",
+          "type": "buy",
+          "amount": 50.0,
+          "nav": 5.8332,
+          "shares": 8.5716
+        },
+        {
+          "date": "2026-07-06",
+          "type": "buy",
+          "amount": 50.0,
+          "nav": 5.7642,
+          "shares": 8.6742
+        },
+        {
+          "date": "2026-07-28",
+          "type": "convert_in",
+          "amount": 233.55,
+          "nav": 4.8284,
+          "shares": 48.3701
+        }
+      ],
+      "total_in": 633.55,
+      "total_out": 0.0,
+      "held_shares": 115.7784,
+      "avg_cost_nav": 5.4721,
+      "pct_free_30d": 58.2,
+      "last_buy_date": "2026-07-28",
+      "penalty_lots": [
+        [
+          "2026-07-28",
+          233.55,
+          11
+        ]
+      ]
+    }
+  }
+}

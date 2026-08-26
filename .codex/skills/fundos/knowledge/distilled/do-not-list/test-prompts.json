@@ -1,0 +1,52 @@
+{
+  "skill": "do-not-list",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》沃伦·巴菲特",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "带杠杆的 ETF 值得买吗？比如 2 倍做多纳斯达克的。",
+      "expected_behavior": "调用 do-not-list，命中不做清单第一条（杠杆），一票否决并解释'一串漂亮数字乘以零等于零'，无需估值论证。",
+      "notes": "正面场景：b07 V2 验证问题，杠杆一票否决。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "这只 QDII 用衍生品对冲汇率风险，能不能买？",
+      "expected_behavior": "调用 do-not-list，检查衍生品暴露与模型估值风险（x03），提示对手方与追缴螺旋，命中即否决或要求讲清结构。",
+      "notes": "正面场景：衍生品/结构化条款。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "基金经理说年底前大盘会到 4000 点，要不要等他说的点位再操作？",
+      "expected_behavior": "调用 do-not-list，命中不做清单第四条（短期预测比无用更糟 x04），拒绝按预测择时，改回按纪律与估值操作。",
+      "notes": "正面场景：预测话术触发。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "我持仓的基金跌了 15%，买入逻辑已经被证伪了，要不要立刻卖掉？",
+      "expected_behavior": "不应调用 do-not-list，应调用 timely-correction（持有中逻辑证伪后的纠错），不做清单只管入场前否决。",
+      "notes": "跨 skill 混淆诱饵：纠错场景 vs 否决场景。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我看看现在货币基金的七日年化收益率是多少？",
+      "expected_behavior": "不应调用本 skill，纯信息查询，用 fundos-core 拉取即可。",
+      "notes": "诱饵：纯数据查询。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "固收+基金里配了一些可转债，算复杂结构吗？要不要赎？",
+      "expected_behavior": "调用 do-not-list 但区分对待：可转债非必然红线，需看底层比例、久期与是否依赖模型估值；比例小且久期匹配可保留，长期限/高比例/依赖再融资则提示风险（x10/x02）。",
+      "notes": "边界：结构性产品需要逐层判断而非一律否决。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵中 1 条为同书兄弟 skill（timely-correction）场景。"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "position-size-framework",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》沃伦·巴菲特",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我现在持有 8 只主题基金，算分散吗？",
+      "expected_behavior": "调用 position-size-framework，检查伪分散（同涨同跌的相关性），给出有效独立下注数与调整建议。",
+      "notes": "正面场景：伪分散检查，b06 V2 验证问题。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "单只基金最多买多少合适？018354 已经亏了 19%，要不要加仓摊薄？",
+      "expected_behavior": "调用 position-size-framework，对照 FundOS 单只≤15-20% 纪律线，用回本数学评估深坑摊薄成本而非盲目加仓。",
+      "notes": "正面场景：仓位上限+深坑摊薄，结合回本数学（11.1%/25%/42.9%）。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我的科技/AI/TMT 已经占 48% 了，还要不要再买？",
+      "expected_behavior": "调用 position-size-framework，对照单板块≤40% 纪律线，提示集中度超限并给出分批降低建议。",
+      "notes": "正面场景：板块集中度超限。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "018354 亏了 19%，我的买入逻辑已经被证伪了，要不要等回本再止损？",
+      "expected_behavior": "不应调用 position-size-framework，应调用 timely-correction（逻辑证伪后的纠错决策）。",
+      "notes": "跨 skill 混淆诱饵：问的是纠错时机而非仓位结构。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我算一下今天这个组合一共涨了还是跌了？",
+      "expected_behavior": "不应调用本 skill，纯净值/组合涨跌计算用 fundos-core。",
+      "notes": "诱饵：纯数据查询。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我是新手，只有 2 万块，买 3 只基金好还是买 1 只好？",
+      "expected_behavior": "调用 position-size-framework 但先确认认知定位：新手无法评估底层 → 按 know-nothing 处理，建议低费率宽基指数+定投，而非纠结只数。",
+      "notes": "边界：小额新手场景，认知定位决定结论。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵中 1 条为同书兄弟 skill（timely-correction）场景。"
+}

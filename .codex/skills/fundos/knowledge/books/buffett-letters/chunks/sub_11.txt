@@ -1,0 +1,738 @@
+stothreedaysin1995.
+Derivatives contracts, in contrast, often go unsettled for years, or even decades, with counterparties
+building up huge claims against each other. “Paper” assets and liabilities – often hard to quantify – become
+important parts of financial statements though these items will not be validated for many years. Additionally, a
+frightening webof mutual dependence develops among huge financial institutions. Receivables and payables by
+the billions become concentrated in the hands ofafewlarge dealers whoareapttobehighly-leveraged inother
+waysaswell.Participantsseekingtododgetroublesfacethesameproblemassomeoneseekingtoavoidvenereal
+disease:It’snotjustwhomyousleepwith,butalsowhomtheyaresleepingwith.
+17
+
+Sleepingaround,tocontinueourmetaphor,canactuallybeusefulforlargederivativesdealersbecause
+it assures them government aid if trouble hits. In other words, only companies having problems that can infect
+theentireneighborhood–Iwon’tmentionnames–arecertaintobecomeaconcernofthestate(anoutcome,I’m
+sad to say, that is proper). From this irritating reality comes The First Law of Corporate Survival for ambitious
+CEOs who pile on leverage and run large and unfathomable derivatives books: Modest incompetence simply
+won’tdo;it’smindbogglingscrew-upsthatarerequired.
+Considering the ruin I’ve pictured, you may wonder why Berkshire is a party to 251 derivatives
+contracts (other than those used for operational purposes at MidAmerican and the few left over at GenRe).The
+answer is simple: I believe each contract we own was mispriced at inception, sometimes dramatically so. I both
+initiatedthesepositionsandmonitorthem,asetofresponsibilitiesconsistentwithmybeliefthattheCEOofany
+largefinancialorganizationmustbetheChiefRiskOfficeraswell.Ifwelosemoneyonourderivatives,itwillbe
+myfault.
+Our derivatives dealings require our counterparties to make payments to us when contracts are
+initiated. Berkshire therefore always holds the money, which leaves us assuming no meaningful counterparty
+risk. As of yearend, the payments made to us less losses we have paid – our derivatives “float,” so to speak –
+totaled$8.1billion.Thisfloatissimilartoinsurancefloat:Ifwebreakevenonanunderlyingtransaction,wewill
+haveenjoyedtheuseoffreemoneyforalongtime.Ourexpectation,thoughitisfarfromasurething,isthatwe
+willdobetterthanbreakevenandthatthesubstantialinvestmentincomeweearnonthefundswillbefrostingon
+thecake.
+Only a small percentage of our contracts call for any posting of collateral when the market moves
+againstus.Evenunderthechaoticconditionsexistinginlastyear’sfourthquarter,wehadtopostlessthan1%of
+our securities portfolio. (When we post collateral, we deposit it with third parties, meanwhile retaining the
+investment earnings on the deposited securities.) In our 2002 annual report, we warned of the lethal threat that
+posting requirements create, real-life illustrations of which we witnessed last year at a variety of financial
+institutions (and, for that matter, at Constellation Energy, which was within hours of bankruptcy when
+MidAmericanarrivedtoeffectarescue).
+Our contracts fall into four major categories. With apologies to those who are not fascinated by
+financialinstruments,Iwillexplaintheminexcruciatingdetail.
+• Wehaveaddedmodestlytothe“equityput”portfolioIdescribedinlastyear’sreport.Someofour
+contracts come due in 15 years, others in 20. We must make a payment to our counterparty at
+maturityifthereferenceindextowhichtheputistiedisthenbelowwhatitwasattheinceptionof
+thecontract.Neitherpartycanelecttosettleearly;it’sonlythepriceonthefinaldaythatcounts.
+Toillustrate, wemight sell a$1billion15-yearputcontractontheS&P500whenthatindexisat,
+say,1300.Iftheindexisat1170–down10%–onthedayofmaturity,wewouldpay$100million.
+Ifitisabove1300,weowenothing.Forustolose$1billion,theindexwouldhavetogotozero.In
+the meantime, the sale of the put would have delivered us a premium – perhaps $100 million to
+$150million–thatwewouldbefreetoinvestaswewish.
+Our put contracts total $37.1 billion (at current exchange rates) and are spread among four major
+indices: the S&P500in the U.S.,the FTSE100in the U.K.,the Euro Stoxx 50in Europe,andthe
+Nikkei225inJapan.OurfirstcontractcomesdueonSeptember9,2019andourlastonJanuary24,
+2028.We have received premiums of $4.9billion, moneywehaveinvested. We,meanwhile, have
+paid nothing, since all expiration dates are far in the future. Nonetheless, we have used Black-
+Scholes valuation methods to record a yearend liability of $10 billion, an amount that will change
+oneveryreportingdate.Thetwofinancialitems–thisestimatedlossof$10billionminusthe$4.9
+billion in premiums we have received – means that we have so far reported a mark-to-market loss
+of$5.1billionfromthesecontracts.
+18
+
+We endorse mark-to-market accounting. I will explain later, however, why I believe the Black-
+Scholes formula, even though it is the standard for establishing the dollar liability for options,
+producesstrangeresultswhenthelong-termvarietyarebeingvalued.
+Onepointaboutourcontractsthatissometimesnotunderstood:Forustolosethefull$37.1billion
+wehave at risk, all stocks in all four indices wouldhave to gotozeroontheir various termination
+dates. If, however – as an example – all indices fell 25% from their value at the inception of each
+contract, and foreign-exchange rates remained as they are today, we would owe about $9 billion,
+payable between 2019 and 2028. Between the inception of the contract and those dates, we would
+haveheldthe$4.9billionpremiumandearnedinvestmentincomeonit.
+• The second category we described in last year’s report concerns derivatives requiring us to pay
+whencreditlossesoccuratcompaniesthatareincludedinvarioushigh-yieldindices.Ourstandard
+contractcoversafive-yearperiodandinvolves100companies.Wemodestlyexpandedourposition
+last year in this category. But, of course, the contracts on the books at the end of 2007 moved one
+yearclosertotheirmaturity.Overall,ourcontractsnowhaveanaveragelifeof21⁄ 3years,withthe
+firstexpirationduetooccuronSeptember20,2009andthelastonDecember20,2013.
+By yearend we had received premiums of $3.4 billion on these contracts and paid losses of $542
+million.Usingmark-to-market principles,wealsosetupaliabilityforfuturelossesthatatyearend
+totaled $3.0 billion. Thus wehad to that point recorded a loss of about $100million, derived from
+our $3.5 billion total in paid and estimated future losses minus the $3.4 billion of premiums we
+received. In our quarterly reports, however, the amount of gain or loss has swung wildly from a
+profitof$327millioninthesecondquarterof2008toalossof$693millioninthefourthquarterof
+2008.
+Surprisingly, we made payments on these contracts of only $97 million last year, far below the
+estimate I used when I decided to enter into them. This year, however, losses have accelerated
+sharplywiththemushroomingoflargebankruptcies.Inlastyear’sletter,ItoldyouIexpectedthese
+contracts to show a profit at expiration. Now, with the recession deepening at a rapid rate, the
+possibilityofaneventuallosshasincreased.Whatevertheresult,Iwillkeepyouposted.
+• In 2008 we began to write “credit default swaps” on individual companies. This is simply credit
+insurance, similar to what we write in BHAC, except that here we bear the credit risk of
+corporationsratherthanoftax-exemptissuers.
+If, say, the XYZ company goes bankrupt, and we have written a $100 million contract, we are
+obligated to pay an amount that reflects the shrinkage in value of a comparable amount of XYZ’s
+debt. (If, for example, the company’s bonds are selling for 30 after default, we would owe $70
+million.) For the typical contract, we receive quarterly payments for five years, after which our
+insuranceexpires.
+At yearend we had written $4 billion of contracts covering 42 corporations, for which we receive
+annual premiums of $93 million. This is the only derivatives business we write that has any
+counterpartyrisk;thepartythatbuysthecontractfromusmustbegoodforthequarterlypremiums
+it will owe us over the five years. We are unlikely to expand this business to any extent because
+most buyers of this protection now insist that the seller post collateral, and we will not enter into
+suchanarrangement.
+• At the request of our customers, we write a few tax-exempt bond insurance contracts that are
+similar to those written at BHAC, but that are structured as derivatives. The only meaningful
+difference between the two contracts is that mark-to-market accounting is required for derivatives
+whereasstandardaccrualaccountingisrequiredatBHAC.
+19
+
+But this difference can produce some strange results. The bonds covered – in effect, insured – by
+thesederivativesarelargelygeneralobligationsofstates,andwefeelgoodaboutthem.Atyearend,
+however, mark-to-market accounting required us to record a loss of $631 million on these
+derivativescontracts.HadweinsteadinsuredthesamebondsatthesamepriceinBHAC,andused
+theaccrualaccountingrequiredatinsurancecompanies,wewouldhaverecordedasmallprofitfor
+the year. The two methods by which we insure the bonds will eventually produce the same
+accountingresult.Intheshortterm,however,thevarianceinreportedprofitscanbesubstantial.
+We have told you before that our derivative contracts, subject as they are to mark-to-market
+accounting, will produce wild swings in the earnings we report. The ups and downs neither cheer nor bother
+Charlie and me. Indeed, the “downs” can be helpful in that they give us an opportunity to expand a position on
+favorableterms.Ihopethisexplanationofourdealingswillleadyoutothinksimilarly.
+************
+The Black-Scholes formula has approached the status of holy writ in finance, and we use it when
+valuingourequityputoptionsforfinancialstatementpurposes.Keyinputstothecalculationincludeacontract’s
+maturityandstrikeprice,aswellastheanalyst’sexpectationsforvolatility,interestratesanddividends.
+If the formula is applied to extended time periods, however, it can produce absurd results. In fairness,
+Black and Scholes almost certainly understood this point well. But their devoted followers may be ignoring
+whatevercaveatsthetwomenattachedwhentheyfirstunveiledtheformula.
+It’softenusefulintestingatheorytopushittoextremes.Solet’spostulatethatwesella100-year$1
+billion put option on the S&P 500 at a strike price of 903 (the index’s level on 12/31/08). Using the implied
+volatility assumption for long-dated contracts that we do, and combining that with appropriate interest and
+dividendassumptions,wewouldfindthe“proper”Black-Scholespremiumforthiscontracttobe$2.5million.
+To judge the rationality of that premium, we need to assess whether the S&Pwill be valued a century
+from nowat lessthantoday.Certainly thedollar willthenbeworthasmall fraction ofitspresent value(atonly
+2% inflation it will be worth roughly 14¢). So that will be a factor pushing the stated value of the index higher.
+Far more important, however, is that one hundred years of retained earnings will hugely increase the value of
+most of the companies in the index. In the 20th Century, the Dow-Jones Industrial Average increased by about
+175-fold,mainlybecauseofthisretained-earningsfactor.
+Considering everything, I believe the probability of a decline in the index over a one-hundred-year
+periodtobefarless than1%.Butlet’s usethat figureandalsoassumethatthemostlikelydecline–shouldone
+occur – is 50%. Under these assumptions, the mathematical expectation of loss on our contract would be $5
+million($1billionX1%X50%).
+But if we had received our theoretical premium of $2.5 million up front, we would have only had to
+invest it at 0.7% compounded annually to cover this loss expectancy. Everything earned above that would have
+beenprofit.Wouldyouliketoborrowmoneyfor100yearsata0.7%rate?
+Let’slookatmyexamplefromaworst-casestandpoint.Rememberthat99%ofthetimewewouldpay
+nothingifmyassumptionsarecorrect.Butevenintheworstcaseamongtheremaining1%ofpossibilities–that
+is, one assuming a total loss of $1 billion – our borrowing cost would come to only 6.2%. Clearly, either my
+assumptionsarecrazyortheformulaisinappropriate.
+20
+
+Theridiculous premium that Black-Scholesdictates inmyextremeexampleiscausedbytheinclusion
+of volatility in the formula andbythefact thatvolatility isdetermined byhowmuchstockshavemovedaround
+in some past period of days, months or years. This metric is simply irrelevant in estimating the probability-
+weightedrangeofvaluesofAmericanbusiness100yearsfromnow.(Imagine,ifyouwill,gettingaquoteevery
+day on a farm from a manic-depressive neighbor and then using the volatility calculated from these changing
+quotesasanimportantingredientinanequationthatpredictsaprobability-weightedrangeofvaluesforthefarm
+acenturyfromnow.)
+Thoughhistoricalvolatilityisauseful–butfarfromfoolproof–conceptinvaluingshort-termoptions,
+itsutilitydiminishesrapidlyasthedurationoftheoptionlengthens.Inmyopinion,thevaluationsthattheBlack-
+Scholes formula now place on our long-term put options overstate our liability, though the overstatement will
+diminishasthecontractsapproachmaturity.
+Even so, we will continue to use Black-Scholes when we are estimating our financial-statement
+liability for long-term equity puts. The formula represents conventional wisdom and any substitute that I might
+offer would engender extreme skepticism. That would be perfectly understandable: CEOs who have concocted
+their own valuations for esoteric financial instruments have seldom erred onthe side of conservatism. That club
+ofoptimistsisonethatCharlieandIhavenodesiretojoin.
+TheAnnualMeeting
+Our meeting this year will be held on Saturday, May 2nd. As always, the doors will open at the Qwest
+Center at 7 a.m., and a new Berkshire movie will be shown at 8:30. At 9:30 we will go directly to the
+question-and-answerperiod,which(withabreakforlunchattheQwest’sstands)willlastuntil3:00.Then,after
+a short recess, Charlie and I will convene the annual meeting at 3:15. If you decide to leave during the day’s
+questionperiods,pleasedosowhileCharlieistalking.
+The best reason to exit, of course, is to shop. We will help you do that by filling the 194,300-square-
+foot hall that adjoins the meeting area with the products of Berkshire subsidiaries. Last year, the 31,000 people
+whocametothemeetingdidtheirpart,andalmosteverylocationrackeduprecordsales.Butyoucandobetter.
+(Afriendlywarning:IfIfindsalesarelagging,Ilocktheexits.)
+ThisyearClaytonwillshowcaseitsnewi-housethatincludesShawflooring,JohnsManvilleinsulation
+and MiTek fasteners. This innovative “green” home, featuring solar panels and numerous other energy-saving
+products, is truly a home of the future. Estimated costs for electricity and heating total only about $1 per day
+whenthehomeissitedinanarealikeOmaha.Afterpurchasingthei-house,youshouldnextconsidertheForest
+RiverRVandpontoonboatondisplaynearby.Makeyourneighborsjealous.
+GEICO will have a booth staffed by a number of its top counselors from around the country, all of
+them ready to supply you with auto insurance quotes. In most cases, GEICO will be able to give you a
+shareholder discount (usually 8%). This special offer is permitted by 44 of the 50 jurisdictions in which we
+operate. (One supplemental point: The discount is not additive if you qualify for another, such as that given
+certain groups.)Bringthedetails ofyourexisting insurance andcheckoutwhetherwecansaveyoumoney.For
+atleast50%ofyou,Ibelievewecan.
+On Saturday, at the Omaha airport, we will have the usual array of NetJets aircraft available for your
+inspection. StopbytheNetJets boothattheQwesttolearn aboutviewingtheseplanes.CometoOmahabybus;
+leaveinyournewplane.Andtakealong–withnofearofastripsearch–theGinsuknivesthatyou’vepurchased
+attheexhibitofourQuikutsubsidiary.
+Next, if you have any money left, visit the Bookworm, which will be selling about 30 books and
+DVDs.Ashippingservicewillbeavailableforthosewhosethirstforknowledgeexceedstheircarryingcapacity.
+21
+
+Finally,wewillhavethreefascinatingcarsontheexhibitionfloor,includingonefromthepastandone
+of the future. Paul Andrews, CEO of our subsidiary, TTI, will bring his 1935 Duesenberg, a car that once
+belonged to Mrs. Forrest Mars, Sr., parent and grandparent of our new partners in the Wrigley purchase. The
+future will be represented by a new plug-in electric car developed by BYD, an amazing Chinese company in
+whichwehavea10%interest.
+An attachment to the proxy material that is enclosed with this report explains how you can obtain the
+credential you will need for admission to the meeting and other events. Asfor plane, hotel and car reservations,
+we have again signed up American Express (800-799-6634) to give you special help. Carol Pedersen, who
+handlesthesematters,doesaterrificjobforuseachyear,andIthankherforit.Hotelroomscanbehardtofind,
+butworkwithCarolandyouwillgetone.
+At Nebraska Furniture Mart, located on a 77-acre site on 72nd Street between Dodge and Pacific, we
+willagainbehaving“BerkshireWeekend”discountpricing.WeinitiatedthisspecialeventatNFMtwelveyears
+ago, and sales during the “Weekend” grew from $5.3 million in 1997 to a record $33.3 million in 2008. On
+Saturdayofthatweekend,wealsosetasingledayrecordof$7.2million.Askanyretailerwhathethinksofsuch
+volume.
+To obtain the Berkshire discount, you must make your purchases between Thursday, April 30th and
+Monday, May 4th inclusive, and also present your meeting credential. The period’s special pricing will even
+apply to the products of several prestigious manufacturers that normally have ironclad rules against discounting
+but which, in the spirit of our shareholder weekend, have made an exception for you. We appreciate their
+cooperation. NFM is open from 10 a.m. to 9 p.m. Monday through Saturday, and 10 a.m. to 6 p.m. on Sunday.
+OnSaturdaythisyear,from5:30p.m.to8p.m.,NFMishavingawesterncookouttowhichyouareallinvited.
+At Borsheims, we will again have two shareholder-only events. The first will be a cocktail reception
+from 6 p.m. to 10 p.m. on Friday, May 1st. The second, the main gala, will be held on Sunday, May 3rd, from 9
+a.m.to4p.m.OnSaturday,wewillbeopenuntil6p.m.
+We will have huge crowds at Borsheims throughout the weekend. For your convenience, therefore,
+shareholder prices will be available from Monday, April 27th through Saturday, May 9th. During that period,
+please identify yourself as a shareholder by presenting your meeting credentials or a brokerage statement that
+showsyouareaBerkshireholder.
+OnSunday,inthemalloutsideofBorsheims,ablindfoldedPatrickWolff,twiceU.S.chesschampion,
+will take on all comers – who will have their eyes wide open – in groups of six. Nearby, Norman Beck, a
+remarkablemagicianfromDallas,willbewilderonlookers.Additionally,wewillhaveBobHammanandSharon
+Osberg, two of the world’s top bridge experts, available to play bridge with our shareholders on Sunday
+afternoon.
+Gorat’s will again be open exclusively for Berkshire shareholders on Sunday, May 3rd, and will be
+servingfrom1p.m.until10p.m.LastyearGorat’s,whichseats240,served975dinnersonShareholderSunday.
+Thethree-daytotalwas2,448including702T-bonesteaks,theentréepreferredbythecognoscenti.Pleasedon’t
+embarrassmebyorderingfoiegras.Remember:TocometoGorat’sonthatday,youmusthaveareservation.To
+makeone,call402-551-3733onApril1st(butnotbefore).
+We will again have a reception at4p.m.onSaturdayafternoon forshareholders whohavecomefrom
+outside North America. Every year our meeting draws many people from around the globe, and Charlie and I
+wanttobesurewepersonallygreetthosewhohavecomesofar.Lastyearweenjoyedmeetingmorethan700of
+youfrommanydozensofcountries.AnyshareholderwhocomesfromoutsidetheU.S.orCanadawillbegivena
+specialcredentialandinstructionsforattendingthisfunction.
+************
+22
+
+This year we will be making important changes in how we handle the meeting’s question periods. In
+recent years, we have received only a handful of questions directly related to Berkshire and its operations. Last
+yeartherewerepracticallynone.SoweneedtosteerthediscussionbacktoBerkshire’sbusinesses.
+Inarelatedproblem,therehasbeenamadrushwhenthedoorsopenat7a.m.,ledbypeoplewhowish
+to be first in line at the 12microphones available for questioners. This is notdesirable from asafety standpoint,
+nordowebelievethatsprintingabilityshouldbethedeterminantofwhogetstoposequestions.(Atage78,I’ve
+concludedthatspeedafootisaridiculouslyoverratedtalent.)Again,anewprocedureisdesirable.
+In our first change, several financial journalists from organizations representing newspapers,
+magazinesandtelevisionwillparticipateinthequestion-and-answerperiod,askingCharlieandmequestionsthat
+shareholdershavesubmittedbye-mail.Thejournalistsandtheire-mailaddressesare:CarolLoomis,ofFortune,
+who may be emailed at cloomis@fortunemail.com; Becky Quick, of CNBC, at BerkshireQuestions@cnbc.com,
+and Andrew Ross Sorkin, of The New York Times, at arsorkin@nytimes.com. From the questions submitted,
+each journalist will choose the dozen or so he or she decides are the most interesting and important. (In your
+e-mail,letthejournalistknowifyouwouldlikeyournamementionedifyourquestionisselected.)
+Neither Charlie nor I will get so much as a clue about the questions to be asked. We know the
+journalistswillpicksometoughonesandthat’sthewaywelikeit.
+In our second change, we will have a drawing at 8:15 at each microphone for those shareholders
+hoping to ask questions themselves. At the meeting, I will alternate the questions asked by the journalists with
+those from the winning shareholders. At least half the questions – those selected by the panel from your
+submissions–arethereforecertaintobeBerkshire-related. Wewillmeanwhilecontinuetogetsomegood–and
+perhapsentertaining–questionsfromtheaudienceaswell.
+SojoinusatourWoodstockforCapitalistsandletusknowhowyoulikethenewformat.CharlieandI
+lookforwardtoseeingyou.
+February27,2009 WarrenE.Buffett
+ChairmanoftheBoard
+23
+
+
+===== LETTER 2016 =====
+
+# Berkshire Hathaway Shareholder Letter 2016
+
+Berkshire’sPerformancevs.theS&P500
+AnnualPercentageChange
+inPer-Share inPer-Share inS&P500
+BookValueof MarketValueof withDividends
+Year Berkshire Berkshire Included
+1965........................................................................... 23.8 49.5 10.0
+1966........................................................................... 20.3 (3.4) (11.7)
+1967........................................................................... 11.0 13.3 30.9
+1968........................................................................... 19.0 77.8 11.0
+1969........................................................................... 16.2 19.4 (8.4)
+1970........................................................................... 12.0 (4.6) 3.9
+1971........................................................................... 16.4 80.5 14.6
+1972........................................................................... 21.7 8.1 18.9
+1973........................................................................... 4.7 (2.5) (14.8)
+1974........................................................................... 5.5 (48.7) (26.4)
+1975........................................................................... 21.9 2.5 37.2
+1976........................................................................... 59.3 129.3 23.6
+1977........................................................................... 31.9 46.8 (7.4)
+1978........................................................................... 24.0 14.5 6.4
+1979........................................................................... 35.7 102.5 18.2
+1980........................................................................... 19.3 32.8 32.3
+1981........................................................................... 31.4 31.8 (5.0)
+1982........................................................................... 40.0 38.4 21.4
+1983........................................................................... 32.3 69.0 22.4
+1984........................................................................... 13.6 (2.7) 6.1
+1985........................................................................... 48.2 93.7 31.6
+1986........................................................................... 26.1 14.2 18.6
+1987........................................................................... 19.5 4.6 5.1
+1988........................................................................... 20.1 59.3 16.6
+1989........................................................................... 44.4 84.6 31.7
+1990........................................................................... 7.4 (23.1) (3.1)
+1991........................................................................... 39.6 35.6 30.5
+1992........................................................................... 20.3 29.8 7.6
+1993........................................................................... 14.3 38.9 10.1
+1994........................................................................... 13.9 25.0 1.3
+1995........................................................................... 43.1 57.4 37.6
+1996........................................................................... 31.8 6.2 23.0
+1997........................................................................... 34.1 34.9 33.4
+1998........................................................................... 48.3 52.2 28.6
+1999........................................................................... 0.5 (19.9) 21.0
+2000........................................................................... 6.5 26.6 (9.1)
+2001........................................................................... (6.2) 6.5 (11.9)
+2002........................................................................... 10.0 (3.8) (22.1)
+2003........................................................................... 21.0 15.8 28.7
+2004........................................................................... 10.5 4.3 10.9
+2005........................................................................... 6.4 0.8 4.9
+2006........................................................................... 18.4 24.1 15.8
+2007........................................................................... 11.0 28.7 5.5
+2008........................................................................... (9.6) (31.8) (37.0)
+2009........................................................................... 19.8 2.7 26.5
+2010........................................................................... 13.0 21.4 15.1
+2011........................................................................... 4.6 (4.7) 2.1
+2012........................................................................... 14.4 16.8 16.0
+2013........................................................................... 18.2 32.7 32.4
+2014........................................................................... 8.3 27.0 13.7
+2015........................................................................... 6.4 (12.5) 1.4
+2016........................................................................... 10.7 23.4 12.0
+CompoundedAnnualGain–1965-2016............................ 19.0% 20.8% 9.7%
+OverallGain–1964-2016............................................... 884,319% 1,972,595% 12,717%
+Notes: Data are for calendar years with these exceptions: 1965 and 1966, year ended 9/30; 1967, 15 months ended 12/31. Starting in 1979,
+accountingrulesrequiredinsurancecompaniestovaluetheequitysecuritiestheyholdatmarketratherthanatthelowerofcostormarket,which
+was previouslytherequirement. In thistable, Berkshire’s resultsthrough1978have been restated toconform tothechangedrules.Inallother
+respects,theresultsarecalculatedusingthenumbersoriginallyreported.TheS&P500numbersarepre-taxwhereastheBerkshirenumbersare
+after-tax.IfacorporationsuchasBerkshireweresimplytohaveownedtheS&P500andaccruedtheappropriatetaxes,itsresultswouldhave
+laggedtheS&P500inyearswhenthatindexshowedapositivereturn,butwouldhaveexceededtheS&P500inyearswhentheindexshoweda
+negativereturn.Overtheyears,thetaxcostswouldhavecausedtheaggregatelagtobesubstantial.
+2
+
+BERKSHIREHATHAWAYINC.
+TotheShareholdersofBerkshireHathawayInc.:
+Berkshire’s gain in net worth during 2016 was $27.5 billion, which increased the per-share book value
+ofbothourClassAandClassBstockby10.7%.Overthelast 52years(that is,sincepresentmanagementtook
+over),per-sharebookvaluehasgrownfrom$19to$172,108,arateof19%compoundedannually.*
+During the first half of those years, Berkshire’s net worth was roughly equal to the number that really
+counts: the intrinsic value of the business. The similarity of the two figures existed then because most of our
+resourcesweredeployedinmarketable securities thatwereregularlyrevaluedtotheirquotedprices(lessthetax
+thatwouldbeincurrediftheyweretobesold).InWallStreetparlance,ourbalancesheetwastheninverylarge
+part“markedtomarket.”
+By the early 1990s, however, our focus was changing to the outright ownership of businesses, a shift
+that materially diminished the relevance of balance sheet figures. That disconnect occurred because the
+accountingrules(commonlyreferredtoas“GAAP”)thatapplytocompanieswecontroldifferinimportantways
+from those used to value marketable securities. Specifically, the accounting for businesses we own requires that
+the carrying value of “losers” be written down when their failures become apparent. “Winners,” conversely, are
+neverrevaluedupwards.
+We’ve experienced both outcomes: As is the case in marriage, business acquisitions often deliver
+surprises after the“Ido’s.”I’vemadesomedumbpurchases, payingfartoomuchfortheeconomic goodwillof
+companies we acquired. That later led to goodwill write-offs and to consequent reductions in Berkshire’s book
+value. We’ve also had some winners among the businesses we’ve purchased – a few of the winners very big –
+buthavenotwrittenthoseupbyapenny.
+We have no quarrel with the asymmetrical accounting that applies here. But, over time, it necessarily
+widens the gap between Berkshire’s intrinsic value and its book value. Today, the large – and growing –
+unrecorded gains at our winners produce an intrinsic value for Berkshire’s shares that far exceeds their book
+value. The overage is truly huge in our property/casualty insurance business and significant also in many other
+operations.
+Over time, stock prices gravitate toward intrinsic value. That’s what has happened at Berkshire, a fact
+explaining why the company’s 52-year market-price gain – shown on the facing page – materially exceeds its
+book-valuegain.
+*Allper-share figures usedinthisreportapplytoBerkshire’sAshares.FiguresfortheBsharesare1/1500thof
+thoseshownforA.
+3
+
+WhatWeHopetoAccomplish
+Charlie Munger, Berkshire’s Vice Chairman and my partner, and I expect Berkshire’s normalized
+earning power per share to increase every year. Actual earnings, of course, will sometimes decline because of
+periodic weakness in the U.S. economy. In addition, insurance mega-catastrophes or other industry-specific
+eventsmayoccasionallyreduceearningsatBerkshire,evenwhenmostAmericanbusinessesaredoingwell.
+It’sourjob,though,toovertimedeliversignificantgrowth,bumpyornot.Afterall,asstewardsofyour
+capital, Berkshire directors have opted to retain all earnings. Indeed, in both 2015 and 2016 Berkshire ranked
+first among American businesses in the dollar volume of earnings retained, in each year reinvesting many
+billionsofdollarsmorethandidtherunner-up.Thosereinvesteddollarsmustearntheirkeep.
+Some years, the gains in underlying earning power we achieve will be minor; very occasionally, the
+cash register will ring loud. Charlie and I have no magic plan to add earnings except to dream big and to be
+prepared mentally and financially to act fast when opportunities present themselves. Every decade or so, dark
+clouds will fill the economic skies, and they will briefly rain gold. When downpours of that sort occur, it’s
+imperativethatwerushoutdoorscarryingwashtubs,notteaspoons.Andthatwewilldo.
+I earlier described our gradual shift from a company obtaining most of its gains from investment
+activities to one that grows in value by owning businesses. Launching that transition, we took baby steps –
+making small acquisitions whose impact on Berkshire’s profits was dwarfed by our gains from marketable
+securities. Despite that cautious approach, I made one particularly egregious error, acquiring Dexter Shoe for
+$434millionin1993.Dexter’svaluepromptlywenttozero.Thestorygetsworse:Iusedstockforthepurchase,
+givingthesellers25,203sharesofBerkshirethatatyearend2016wereworthmorethan$6billion.
+That wreck was followed by three key happenings – two positive, one negative – that set us firmly on
+our present course. At the beginning of 1996, we acquired the half of GEICO we didn’t already own, a cash
+transaction that changed our holding from a portfolio investment into a wholly-owned operating business.
+GEICO,withitsalmostunlimitedpotential,quicklybecamethecenterpiecearoundwhichwebuiltwhatIbelieve
+isnowtheworld’spremierproperty/casualtybusiness.
+Unfortunately, I followed the GEICO purchase by foolishly using Berkshire stock – a boatload of
+stock – to buy General Reinsurance in late 1998. After some early problems, General Re has become a fine
+insurance operation that we prize. It was, nevertheless, a terrible mistake on my part to issue 272,200 shares of
+Berkshire in buying General Re, an act that increased our outstanding shares by a whopping 21.8%. My error
+caused Berkshire shareholders to give far more than they received (a practice that – despite the Biblical
+endorsement–isfarfromblessedwhenyouarebuyingbusinesses).
+Early in 2000, I atoned for that folly by buying 76% (since grown to 90%) of MidAmerican Energy, a
+brilliantly-managed utility business that has delivered us many large opportunities to make profitable and
+socially-useful investments. The MidAmerican cash purchase – I was learning – firmly launched us on our
+presentcourseof(1)continuingtobuildourinsuranceoperation;(2)energeticallyacquiringlargeanddiversified
+non-insurancebusinessesand(3)largelymakingourdealsfrominternally-generatedcash.(Today,Iwouldrather
+prepforacolonoscopythanissueBerkshireshares.)
+Ourportfolioofbondsandstocks,de-emphasized thoughitis,hascontinuedinthepost-1998periodto
+grow and to deliver us hefty capital gains, interest, and dividends. Those portfolio earnings have provided us
+major help in financing the purchase of businesses. Though unconventional, Berkshire’s two-pronged approach
+tocapitalallocationgivesusarealedge.
+4
+
+Here’s our financial record since 1999, when the redirection of our business began in earnest. During
+the 18-year period covered, Berkshire’s outstanding shares grew by only 8.3%, with most of the increase
+occurringwhenwepurchasedBNSF.That,I’mhappytosay,wasoneissuanceofstockthatmadegoodsense.
+After-TaxEarnings
+(inbillionsofdollars)
+Capital Capital
+Year Operations(1) Gains(2) Year Operations(1) Gains(2)
+1999 0.67 0.89 2008 9.64 (4.65)
+2000 0.94 2.39 2009 7.57 0.49
+2001 (0.13) 0.92 2010 11.09 1.87
+2002 3.72 0.57 2011 10.78 (0.52)
+2003 5.42 2.73 2012 12.60 2.23
+2004 5.05 2.26 2013 15.14 4.34
+2005 5.00 3.53 2014 16.55 3.32
+2006 9.31 1.71 2015 17.36 6.73
+2007 9.63 3.58 2016 17.57 6.50
+(1) Includinginterestanddividendsfrominvestments,butexcludingcapitalgainsorlosses.
+(2) In very large part, this tabulation includes only realized capital gains or losses. Unrealized gains and
+lossesarealsoincluded,however,whenGAAPrequiresthattreatment.
+Our expectation is that investment gains will continue to be substantial – though totally random as to
+timing – and that these will supply significant funds for business purchases. Concurrently, Berkshire’s superb
+corps of operating CEOs will focus on increasing earnings at the individual businesses they manage, sometimes
+helping them to grow by making bolt-on acquisitions. By our avoiding the issuance of Berkshire stock, any
+improvementinearningswilltranslateintoequivalentper-sharegains.
+************
+OureffortstomateriallyincreasethenormalizedearningsofBerkshirewillbeaided–astheyhavebeen
+throughout our managerial tenure – by America’s economic dynamism. One word sums up our country’s
+achievements: miraculous. From a standing start 240 years ago – a span of time less than triple my days on
+earth – Americans have combined human ingenuity, a market system, a tide of talented and ambitious
+immigrants,andtheruleoflawtodeliverabundancebeyondanydreamsofourforefathers.
+You need not be an economist to understand how well our system has worked. Just look around you.
+Seethe75millionowner-occupiedhomes,thebountifulfarmland,the260millionvehicles,thehyper-productive
+factories, the great medical centers, the talent-filled universities, you name it – they all represent a net gain for
+Americansfromthebarrenlands,primitivestructuresandmeageroutputof1776.Startingfromscratch,America
+hasamassedwealthtotaling$90trillion.
+5
+
+It’strue,ofcourse,thatAmericanownersofhomes,autosandotherassetshaveoftenborrowedheavily
+to finance their purchases. If an owner defaults, however, his or her asset does not disappear or lose its
+usefulness.Rather,ownershipcustomarilypassestoanAmericanlendinginstitutionthatthendisposesofittoan
+American buyer. Our nation’s wealth remains intact. As Gertrude Stein put it, “Money is always there, but the
+pocketschange.”
+Above all, it’s our market system – an economic traffic cop ably directing capital, brains and labor –
+that has created America’s abundance. This system has also been the primary factor in allocating rewards.
+Governmentalredirection,throughfederal,stateandlocaltaxation,hasinadditiondeterminedthedistributionof
+asignificantportionofthebounty.
+America has,forexample,decidedthatthosecitizensintheirproductiveyearsshouldhelpboththeold
+andtheyoung.Suchformsofaid–sometimesenshrinedas“entitlements”–aregenerallythoughtofasapplying
+totheaged.Butdon’tforgetthatfourmillionAmericanbabiesareborneachyearwithanentitlementtoapublic
+education. That societal commitment, largely financed at the local level, costs about $150,000 per baby. The
+annualcosttotalsmorethan$600billion,whichisabout31⁄ 2%ofGDP.
+However our wealth may be divided, the mind-boggling amounts you see around you belong almost
+exclusively to Americans. Foreigners, of course, own or have claims on a modest portion of our wealth. Those
+holdings,however,areoflittleimportancetoournationalbalancesheet:Ourcitizensownassetsabroadthatare
+roughlycomparableinvalue.
+Early Americans, weshould emphasize, were neither smarter normorehardworkingthanthosepeople
+who toiled century after century before them. But those venturesome pioneers crafted a system that unleashed
+humanpotential,andtheirsuccessorsbuiltuponit.
+This economic creation will deliver increasing wealth to our progeny far into the future. Yes, the
+build-up of wealth will be interrupted for short periods from time to time. It will not, however, be stopped. I’ll
+repeat what I’ve both said in the past and expect to say in future years: Babies born in America today are the
+luckiestcropinhistory.
+************
+America’s economic achievements have led to staggering profits for stockholders. During the 20th
+century the Dow-Jones Industrials advanced from 66 to 11,497, a 17,320% capital gain that was materially
+boosted by steadily increasing dividends. The trend continues: By yearend 2016, the index had advanced a
+further72%,to19,763.
+American business – and consequently a basket of stocks – is virtually certain to be worth far more in
+theyearsahead.Innovation,productivitygains,entrepreneurialspiritandanabundanceofcapitalwillseetothat.
+Ever-presentnaysayersmayprosperbymarketingtheirgloomyforecasts.Butheavenhelpthemiftheyactonthe
+nonsensetheypeddle.
+Manycompanies, ofcourse,willfall behind,andsomewillfail.Winnowingofthatsortisaproductof
+market dynamism. Moreover, the years ahead will occasionally deliver major market declines – even panics –
+thatwillaffectvirtually allstocks.Noonecantellyouwhenthesetraumaswilloccur–notme,notCharlie,not
+economists, not the media. Meg McConnell of the New York Fed aptly described the reality of panics: “We
+spendalotoftimelookingforsystemicrisk;intruth,however,ittendstofindus.”
+During such scary periods, you should never forget two things: First, widespread fear is your friend as
+an investor, because it serves up bargain purchases. Second, personal fear is your enemy. It will also be
+unwarranted. Investors who avoid high and unnecessary costs and simply sit for an extended period with a
+collectionoflarge,conservatively-financedAmericanbusinesseswillalmostcertainlydowell.
+As for Berkshire, our size precludes a brilliant result: Prospective returns fall as assets increase.
+Nonetheless,Berkshire’scollectionofgoodbusinesses,alongwiththecompany’simpregnablefinancialstrength
+andowner-orientedculture,shoulddeliverdecentresults.Wewon’tbesatisfiedwithless.
+6
+
+ShareRepurchases
+In the investment world, discussions aboutshare repurchases oftenbecomeheated.ButI’dsuggestthat
+participantsinthisdebatetakeadeepbreath:Assessingthedesirabilityofrepurchasesisn’tthatcomplicated.
+From the standpointofexitingshareholders,repurchasesarealwaysaplus.Thoughtheday-to-dayimpactof
+thesepurchasesisusuallyminuscule,it’salwaysbetterforasellertohaveanadditionalbuyerinthemarket.
+For continuing shareholders, however, repurchases only make sense if the shares are bought at a price
+belowintrinsicvalue.Whenthatruleisfollowed,theremainingsharesexperienceanimmediategaininintrinsic
+value. Consider a simple analogy: If there are three equalpartners inabusiness worth$3,000andoneisbought
+out by the partnership for $900, each of the remaining partners realizes an immediate gain of $50.If the exiting
+partner is paid $1,100, however, the continuing partners each suffer a loss of $50. The same math applies with
+corporations and their shareholders. Ergo, the question of whether a repurchase action is value-enhancing or
+value-destroyingforcontinuingshareholdersisentirelypurchase-pricedependent.
+It is puzzling, therefore, that corporate repurchase announcements almost never refer to a price above
+whichrepurchaseswillbeeschewed.Thatcertainlywouldn’tbethecaseifamanagementwasbuyinganoutside
+business.There,pricewouldalwaysfactorintoabuy-or-passdecision.
+When CEOs or boards are buying a small part of their own company, though, they all too often seem
+oblivioustoprice.Wouldtheybehavesimilarlyiftheyweremanagingaprivatecompanywithjustafewowners
+andwereevaluatingthewisdomofbuyingoutoneofthem?Ofcoursenot.
+It is important to remember that there are two occasions in which repurchases should not take place,
+even if the company’s shares are underpriced. One is when a business both needs all its available money to
+protect or expand its own operations and is also uncomfortable adding further debt. Here, the internal need for
+funds should take priority. This exception assumes, of course, that the business has a decent future awaiting it
+aftertheneededexpendituresaremade.
+Thesecondexception,lesscommon,materializeswhenabusinessacquisition(orsomeotherinvestment
+opportunity) offers far greater value than do the undervalued shares of the potential repurchaser. Long ago,
+Berkshire itself often had to choose between these alternatives. Atour present size, the issue is far less likely to
+arise.
+My suggestion: Before even discussing repurchases, a CEO and his or her Board should stand, join
+handsandinunisondeclare,“Whatissmartatonepriceisstupidatanother.”
+************
+TorecapBerkshire’sownrepurchasepolicy:IamauthorizedtobuylargeamountsofBerkshiresharesat
+120%orlessofbookvaluebecauseourBoardhasconcludedthatpurchasesatthatlevelclearlybringaninstantand
+material benefit to continuing shareholders. By our estimate, a 120%-of-book price is a significant discount to
+Berkshire’sintrinsicvalue,aspreadthatisappropriatebecausecalculationsofintrinsicvaluecan’tbeprecise.
+The authorization given me does not mean that we will “prop” our stock’s price at the 120% ratio. If
+that level isreached, wewillinstead attempt toblendadesire tomakemeaningful purchases atavalue-creating
+pricewitharelatedgoalofnotover-influencingthemarket.
+Todate,repurchasingourshareshasprovedhardtodo.Thatmaywellbebecausewehavebeenclearin
+describing our repurchase policy and thereby have signaled our view that Berkshire’s intrinsic value is
+significantlyhigherthan120%ofbookvalue.Ifso,that’sfine.CharlieandIprefertoseeBerkshiresharessellin
+a fairly narrow range around intrinsic value, neither wishing them to sell at an unwarranted high price – it’s no
+fun having owners who are disappointed with their purchases – nor one too low. Furthermore, our buying out
+“partners” at a discount is not a particularly gratifying wayof making money. Still, market circumstances could
+create asituation inwhichrepurchases wouldbenefit bothcontinuingandexitingshareholders. Ifso,wewillbe
+readytoact.
+7
+
+One final observation for this section: As the subject of repurchases has come to a boil, some people
+have come close to calling them un-American – characterizing them as corporate misdeeds that divert funds
+needed for productive endeavors. That simply isn’t the case: Both American corporations and private investors
+are today awash in funds looking to be sensibly deployed. I’m not aware of any enticing project that in recent
+yearshasdiedforlackofcapital.(Callusifyouhaveacandidate.)
+Insurance
+Let’s now look at Berkshire’s various businesses, starting with our most important sector, insurance.
+The property/casualty (“P/C”) branch of that industry has been the engine that has propelled our growth since
+1967,theyearweacquiredNationalIndemnityanditssistercompany,NationalFire&Marine,for$8.6million.
+Today,NationalIndemnityisthelargestproperty/casualtycompanyintheworldasmeasuredbynetworth.
+One reason we were attracted to the P/C business was its financial characteristics: P/C insurers receive
+premiums upfront and pay claims later. In extreme cases, such as claims arising from exposure to asbestos,
+payments canstretch overmanydecades.Thiscollect-now,pay-later modelleavesP/Ccompaniesholdinglarge
+sums –money wecall “float” –that will eventually goto others. Meanwhile, insurers gettoinvest thisfloat for
+their own benefit. Though individual policies and claims come and go, the amount of float an insurer holds
+usually remains fairly stable in relation to premium volume. Consequently, as our business grows, so does our
+float.Andhowithasgrown,asthefollowingtableshows:
+Year Float(inmillions)
+1970 $ 39
+1980 237
+1990 1,632
+2000 27,871
+2010 65,832
+2016 91,577
+We recently wrote a huge policy that increased float to more than $100 billion. Beyond that one-time
+boost,floatatGEICOandseveralofourspecializedoperationsisalmostcertaintogrowatagoodclip.National
+Indemnity’s reinsurance division, however, is party to a number of large run-off contracts whosefloat is certain
+todriftdownward.
+We may in time experience a decline in float. If so, the decline willbeverygradual –attheoutside no
+more than 3% in any year. The nature of our insurance contracts is such that we can never be subject to
+immediate or near-term demands for sums that are of significance to our cash resources. This structure is by
+design and is a key component in the unequaled financial strength of our insurance companies. It will never be
+compromised.
+If our premiums exceed the total of our expenses and eventual losses, our insurance operation registers
+an underwriting profit that adds to the investment income the float produces. When such a profit is earned, we
+enjoytheuseoffreemoney–and,betteryet,getpaidforholdingit.
+Unfortunately, the wish of all insurers to achieve this happy result creates intense competition, so
+vigorousindeedthatitsometimescausestheP/Cindustryasawholetooperateatasignificantunderwritingloss.
+This loss, in effect, is what the industry pays to hold its float. Competitive dynamics almost guarantee that the
+insurance industry, despite the float income all its companies enjoy, will continue its dismal record of earning
+subnormalreturnsontangiblenetworthascomparedtootherAmericanbusinesses.
+8
+
+Thisoutcomeismademorecertainbythedramaticallylowerinterestratesthatnowexistthroughoutthe
+world. The investment portfolios of almost all P/C companies – though not those of Berkshire – are heavily
+concentrated in bonds. As these high-yielding legacy investments mature and are replaced by bonds yielding a
+pittance, earnings from float will steadily fall. For that reason, and others as well, it’s a good bet that industry
+results over the next ten years will fall short of those recorded in the past decade, particularly in the case of
+companiesthatspecializeinreinsurance.
+Nevertheless,Iverymuchlikeourownprospects.Berkshire’sunrivaledfinancialstrengthallowsusfar
+moreflexibilityininvestingthanthatgenerallyavailabletoP/Ccompanies.Themanyalternativesavailabletous
+are always an advantage; occasionally, they offer us major opportunities. When others are constrained, our
+choicesexpand.
+Moreover, our P/Ccompanies have an excellent underwriting record. Berkshire hasnowoperated atan
+underwriting profit for 14 consecutive years, our pre-tax gain for the period having totaled $28 billion. That
+record is no accident: Disciplined risk evaluation is the daily focus of all of our insurance managers, whoknow
+that while float is valuable, its benefits can be drowned by poor underwriting results. All insurers give that
+messagelipservice.AtBerkshireitisareligion,OldTestamentstyle.
+Sohowdoesourfloataffectintrinsicvalue?WhenBerkshire’sbookvalueiscalculated,thefullamount
+of our float is deducted as a liability, just as if we had to pay it out tomorrow and could not replenish it. But to
+thinkoffloatasatypicalliability isamajormistake.Itshouldinsteadbeviewedasarevolvingfund.Daily,we
+pay old claims and related expenses – a huge $27 billion to more than six million claimants in 2016 – and that
+reduces float. Just as surely, we each day write new business that will soon generate its own claims, adding to
+float.
+Ifourrevolvingfloatisbothcostlessandlong-enduring,whichIbelieveitwillbe,thetruevalueofthis
+liabilityisdramaticallylessthantheaccountingliability.Owing$1thatineffectwillneverleavethepremises–
+becausenewbusinessisalmostcertaintodeliverasubstitute–isworldsdifferentfromowing$1thatwillgoout
+thedoortomorrowandnotbereplaced.Thetwotypesofliabilities,however,aretreatedasequalsunderGAAP.
+Apartial offset tothisoverstated liability isa$15.5billion “goodwill” asset thatweincurredinbuying
+ourinsurancecompaniesandthatisincludedinourbook-valuefigure.Inverylargepart,thisgoodwillrepresents
+the price we paid for the float-generating capabilities of our insurance operations. The cost of the goodwill,
+however, has no bearing on its true value. For example, if an insurance company sustains large and prolonged
+underwriting losses, any goodwill asset carried on the books should be deemed valueless, whatever its original
+cost.
+Fortunately, that does not describe Berkshire. Charlie and I believe the true economic value of our
+insurance goodwill – what we would happily pay for float of similar quality were we to purchase an insurance
+operation possessing it–tobefarinexcessofitshistoric carrying value.Indeed,almost theentire$15.5billion
+we carry for goodwill in our insurance business was already on our books in 2000 when float was $28 billion.
+Yetwehavesubsequentlyincreasedourfloatby$64billion,againthatinnowayisreflectedinourbookvalue.
+This unrecorded asset is one reason – a huge reason – why we believe Berkshire’s intrinsic business value far
+exceedsitsbookvalue.
+************
+Berkshire’s attractive insurance economics exist only because we have some terrific managers running
+disciplined operations that in most cases possess hard-to-replicate business models. Let me tell you about the
+majorunits.
+First by float size is the Berkshire Hathaway Reinsurance Group, managed by Ajit Jain. Ajit insures
+risks that no one else has the desire or the capital to take on. His operation combines capacity, speed,
+decisiveness and, most important, brains in a manner unique in the insurance business. Yet he never exposes
+Berkshiretorisksthatareinappropriateinrelationtoourresources.
+9
+
+Indeed,Berkshireisfarmoreconservativeinavoidingriskthanmostlargeinsurers.Forexample,ifthe
+insurance industry should experience a $250 billion loss from some mega-catastrophe – a loss about triple
+anythingithaseverexperienced–Berkshireasawholewouldlikelyrecordalargeprofitfortheyear.Ourmany
+streamsofnon-insurance earningswouldseetothat.Additionally,wewouldremainawashincashandbeeager
+to write business in an insurance market that might well be in disarray. Meanwhile, other major insurers and
+reinsurerswouldbeswimminginredink,ifnotfacinginsolvency.
+When Ajit entered Berkshire’s office on a Saturday in 1986, he did not have a day’s experience in the
+insurance business. Nevertheless, Mike Goldberg, then our manager of insurance, handed him the keys to our
+smallandstrugglingreinsurancebusiness.Withthatmove,Mikeachievedsainthood:Sincethen,Ajithascreated
+tensofbillionsofvalueforBerkshireshareholders.IftherewereevertobeanotherAjitandyoucouldswapme
+forhim,don’thesitate.Makethetrade!
+************
+WehaveanotherreinsurancepowerhouseinGeneralRe,manageduntilrecentlybyTadMontross.After
+39 years at General Re, Tad retired in 2016. Tad was a class act in every way and we owe him a ton of thanks.
+KaraRaiguel,whohasworkedwithAjitfor16years,isnowCEOofGeneralRe.
+At bottom, a sound insurance operation needs to adhere to four disciplines. It must (1) understand all
+exposures that might cause a policy to incur losses; (2) conservatively assess the likelihood of any exposure
+actually causing a loss and the probable cost if it does; (3) set a premium that, on average, will deliver a profit
+after both prospective loss costs and operating expenses are covered; and (4) be willing to walk away if the
+appropriatepremiumcan’tbeobtained.
+Many insurers pass the first three tests and flunk the fourth. They simply can’t turn their back on
+business that is being eagerly written bytheir competitors. That old line, “The other guyis doing it, so wemust
+as well,” spells trouble in any business, but in none more so than insurance. Tad never listened to that
+nonsensicalexcuseforsloppyunderwriting,andneitherwillKara.
+************
+Finally,thereisGEICO,thecompanythatsetmyheartafire66yearsago(andforwhichtheflamestill
+burns).GEICOismanagedbyTonyNicely,whojoinedthecompanyat18andcompleted55yearsofservicein
+2016.
+Tony became CEO of GEICO in 1993, and since then the company has been flying. There is no better
+manager than Tony, who brings his combination of brilliance, dedication and soundness to the job. (The latter
+quality is essential to sustained success. AsCharlie says, it’s great to have a manager with a 160IQ–unless he
+thinksit’s180.)LikeAjit,TonyhascreatedtensofbillionsofvalueforBerkshire.
+On my initial visit to GEICO in 1951, I was blown away by the huge cost advantage the company
+enjoyed over the giants of the industry. It was clear to me that GEICO would succeed because it deserved to
+succeed.Thecompany’s annualsales werethen$8million; In2016,GEICOdidthatmuchbusinesseverythree
+hoursoftheyear.
+Auto insurance is a major expenditure for most families. Savings matter to them – and only a low-cost
+operationcandeliverthose.Infact,atleast40%ofthepeoplereadingthislettercansavemoneybyinsuringwith
+GEICO.Sostopreading–rightnow!–andgotogeico.comorcall800-847-7536.
+GEICO’slowcostscreate amoat –anenduringone–that competitors areunabletocross.Asaresult,
+thecompanygobblesupmarketshareyearafteryear,ending2016withabout12%ofindustryvolume.That’sup
+from2.5%in1995,theyearBerkshireacquiredcontrolofGEICO.Employment,meanwhile,grewfrom8,575to
+36,085.
+10
+
+GEICO’s growth accelerated dramatically during the second half of 2016. Loss costs throughout the
+auto-insurance industry had been increasing at an unexpected pace and some competitors lost their enthusiasm
+for taking on new customers. GEICO’s reaction to the profit squeeze, however, was to accelerate its
+new-businessefforts.Weliketomakehaywhilethesunsets,knowingthatitwillsurelyriseagain.
+GEICOcontinues onaroll asIsendyouthisletter.Wheninsurancepricesincrease,peopleshopmore.
+Andwhentheyshop,GEICOwins.
+Haveyoucalledyet?(800-847-7536orgotogeico.com)
+************
+In addition to our three major insurance operations, we own a collection of smaller companies that
+primarilywritecommercialcoverages.Inaggregate,thesecompaniesarealarge,growingandvaluableoperation
+thatconsistentlydeliversanunderwritingprofit,usuallyonemuchsuperiortothatreportedbytheircompetitors.
+Over the past 14 years, this group has earned $4.7 billion from underwriting – about 13% of its premium
+volume–whileincreasingitsfloatfrom$943millionto$11.6billion.
+Less than three years ago, we formed Berkshire Hathaway Specialty Insurance (“BHSI”), which is
+included in this grouping. Our first decision was to put Peter Eastwood in charge, a move that proved to be a
+home run: We expected significant losses in the early years while Peter built the personnel and infrastructure
+neededforaworld-wideoperation.Instead,heandhiscrewdeliveredsignificantunderwritingprofitsthroughout
+the start-up period. BHSI’s volume increased 40% in 2016, reaching $1.3 billion. It’s clear to me that the
+companyisdestinedtobecomeoneoftheworld’sleadingP/Cinsurers.
+Here’sarecapofpre-tax underwritingearningsandfloatbydivision:
+UnderwritingProfit YearendFloat
+(inmillions)
+InsuranceOperations 2016 2015 2016 2015
+BHReinsurance.................................... $ 822 $ 421 $ 45,081 $ 44,108
+GeneralRe........................................... 190 132 17,699 18,560
+GEICO................................................ 462 460 17,148 15,148
+OtherPrimary....................................... 657 824 11,649 9,906
+$2,131 $1,837 $ 91,577 $ 87,722
+Berkshire’sgreatmanagers,premierfinancialstrengthandarangeofbusinessmodelsprotectedbywide
+moats amount to something unique in the insurance world. This assemblage of strengths is a huge asset for
+Berkshireshareholdersthattimewillonlymakemorevaluable.
+Regulated,Capital-IntensiveBusinesses
+Our BNSF railroad and Berkshire Hathaway Energy (“BHE”), our 90%-owned utility business, share
+important characteristics that distinguish them from Berkshire’s other activities. Consequently, we assign them
+their own section in this letter and split out their combined financial statistics in our GAAP balance sheet and
+income statement. These two very major companies accounted for 33% of Berkshire’s after-tax operating
+earningslastyear.
+11
+
+A key characteristic of both companies is their huge investment in very long-lived, regulated assets,
+withthesepartially fundedbylargeamountsoflong-term debtthatisnotguaranteedbyBerkshire.Ourcreditis
+infactnotneededbecauseeachcompanyhasearningpowerthatevenunderterribleeconomicconditionswould
+farexceeditsinterestrequirements.Lastyear,forexample,inadisappointingyearforrailroads,BNSF’sinterest
+coverage was more than 6:1. (Our definition of coverage is the ratio of earnings before interest and taxes to
+interest,notEBITDA/interest,acommonly-usedmeasureweviewasseriouslyflawed.)
+At BHE, meanwhile, two factors ensure the company’s ability to service its debt under all
+circumstances. The first is common to all utilities: recession-resistant earnings, which result from these
+companies offering an essential service for which demand is remarkably steady. The second is enjoyed by few
+otherutilities:anever-wideningdiversityofearningsstreams,whichshieldBHEfrombeingseriouslyharmedby
+any single regulatory body. These many sources of profit, supplemented by the inherent advantage of the
+company being owned by a strong parent, have allowed BHE and its utility subsidiaries to significantly lower
+theircostofdebt.Thateconomicfactbenefitsbothusandourcustomers.
+Alltold,BHEandBNSFinvested $8.9billion inplant andequipmentlastyear,amassivecommitment
+to their segments of America’s infrastructure. We relish making such investments as long as they promise
+reasonablereturns–and,onthatfront,weputalargeamountoftrustinfutureregulation.
+Our confidence is justified both by our past experience and by the knowledge that society will forever
+need huge investments in both trans

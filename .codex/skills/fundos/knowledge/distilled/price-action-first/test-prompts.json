@@ -1,0 +1,52 @@
+{
+  "skill": "price-action-first",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》(Reminiscences of a Stock Operator) — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "半导体利好消息满天飞，但相关基金就是不涨，怎么回事？",
+      "expected_behavior": "应激活 price-action-first：分离走势事实与新闻解释，判定'利好不涨=派发/资金不认可'，建议不追并降权解释。",
+      "notes": "正面场景：利好不涨是 f08 的核心裁决场景。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我的基金跌了15%，朋友说是主力洗盘，跌这么多是不是该抄底？",
+      "expected_behavior": "应激活 price-action-first：检验'洗盘'解释与持续下跌的价格行为是否相符，提示'持续下跌极少是洗盘，而是东西本身有问题'，避免接飞刀。",
+      "notes": "正面场景：'洗盘/抄底/接飞刀'语言信号对应 x08 与 g08。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "这只基金净值一直跌但还在分红，看着挺便宜，能买吗？",
+      "expected_behavior": "应激活 price-action-first：识别'便宜+有分红'的接飞刀叙事，检查价格行为（持续下跌、无内盘买）并给出不接的建议。",
+      "notes": "正面场景：对应 Guiana Gold 45→35 案例（g08/x08）。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查查这条说光伏要涨的新闻是真是假，来源可不可信。",
+      "expected_behavior": "不应激活本 skill，应走 narrative-news-check / deep-news 做叙事与来源核查。",
+      "notes": "诱饵：新闻真伪核查 ≠ 价格行为裁决。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "大V在直播间强烈推荐这只基金，说跟着买就行，要不要跟？",
+      "expected_behavior": "不应激活本 skill，应激活 independent-judgment（外部建议/信源要不要进入决策）。",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：信源过滤 vs 价格裁决。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "基本面数据都没变，但基金连续阴跌，会不会是错杀？",
+      "expected_behavior": "应激活 price-action-first 裁决'错杀'解释（持续下跌无内盘买=基本问题），同时提示配合基本面排雷——价格行为优先不等于无视基本面。",
+      "notes": "边界：'错杀'是最难裁决的解释；需说明本技能结论的局限并联动基本面核查。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "3 should_trigger + 2 should_not_trigger + 1 edge_case；should_not_trigger 含 1 条跨 skill 混淆诱饵（independent-judgment）。"
+}

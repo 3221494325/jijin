@@ -1,0 +1,52 @@
+{
+  "skill": "herd-contagion-check",
+  "version": "0.1.0",
+  "source_book": "《非同寻常的大众幻想与群众性癫狂》 — Charles Mackay",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我承认我是看了小红书大V天天晒收益才买的科技智选，现在-0.71%了，我是不是被当韭菜了？",
+      "expected_behavior": "应激活 herd-contagion-check：重放决策理由、标注来源为'他人行动'，做社会证明失效测试并给出暂停新增/止损动作",
+      "notes": "正面场景：典型的从众买入复盘"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "所有人都说全球成长QDII是抄底机会，我忍不住又加了一笔，现在-19.15%了，帮我复盘我是不是在从众？",
+      "expected_behavior": "应激活 herd-contagion-check：检验'大家都在抄底'是否构成决策依据，结合-19.15%深坑给出反弹减仓处理",
+      "notes": "正面场景：跟风加仓后的复盘"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我平时很理性，但看到邻居靠半导体赚了钱，这次我也跟了，帮我检查下我的买入理由是不是'别人都在买'。",
+      "expected_behavior": "应激活 herd-contagion-check：用社会证明失效测试判断理由独立性，输出暂停新增与事前清单重审",
+      "notes": "正面场景：'我很理性'假设被自我怀疑触发"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我算一下回本需要涨多少：亏10%、20%、30%分别要涨11.1%、25%、42.9%对吧？",
+      "expected_behavior": "不应激活本 skill，这是回本数学计算，走基金组合诊断而非从众检查",
+      "notes": "诱饵：数值计算类提问"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "身边人都在聊CXO医药，我怀疑医药板块到顶了，要不要先减仓？",
+      "expected_behavior": "不应激活本 skill；用户问的是'社会整体破圈度'而非'我个人是否从众'，应激活同书兄弟 skill mass-participation-top",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：社会破圈监测不应被个人从众检查抢答"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我买半导体是因为看了行业数据（国产替代订单+产能利用率）才买的，但买入后朋友也说好——我的理由到底算独立还是从众？",
+      "expected_behavior": "应触发但需按时间线判定：若独立证据先于他人行动且不依赖他人背书，则算独立决策；仅需提示'别让朋友背书强化原仓位'",
+      "notes": "边界：独立证据与他人认同并存时的归因"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过（诱饵容错为 0），且其中至少 1 条是同书兄弟 skill 的场景（跨 skill 混淆测试）。"
+}

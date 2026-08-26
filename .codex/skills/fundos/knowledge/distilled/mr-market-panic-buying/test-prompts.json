@@ -1,0 +1,50 @@
+{
+  "skill": "mr-market-panic-buying",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》 — 巴菲特 (Warren Buffett)",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "今天大盘暴跌5%，我的华夏绿电(018735)也跌了5%，要不要清仓？",
+      "expected_behavior": "应激活 mr-market-panic-buying：先区分广泛恐惧与个人恐惧，再检查弹药与仓位，确认价值未坏后按计划分批，而不是直接给出清仓建议。",
+      "notes": "真实持仓+暴跌日场景，命中“暴跌”“清仓”触发词。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "市场完了，大家都说熊市来了，我该跑吗？",
+      "expected_behavior": "应激活 mr-market-panic-buying：识别这是广泛恐惧（机会窗口），检查加仓清单与现金，避免被群体情绪牵着走。",
+      "notes": "“市场完了+该跑吗”是典型情绪传染场景。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "什么时候能抄底？现在能加仓吗？",
+      "expected_behavior": "应激活 mr-market-panic-buying：用规则型分批代替预测型抄底，明确不预测点位，按档位清单执行。",
+      "notes": "“抄底/加仓时机”是核心触发场景。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "我的基金持仓逻辑被证伪了（重仓管理层造假曝光），现在跌了很多要不要补仓？",
+      "expected_behavior": "不应激活 mr-market-panic-buying 的加仓流程：资产基本面已恶化，本 skill“资产没坏”前提不满足，应转纠错纪律（b08 及时纠错）与减仓决策。",
+      "notes": "跨 skill 混淆诱饵: 跌了很多≠恐慌买入机会，先判断基本面。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "这只半导体基金我看不懂，但跌了很多，是不是恐慌买入的机会？",
+      "expected_behavior": "不应激活 mr-market-panic-buying 的加仓动作，应激活 circle-of-competence（圈外一票否决），圈外资产不因打折而破圈。",
+      "notes": "跨 skill 混淆诱饵: 恐慌打折也要先过能力圈。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我的组合已经没有现金了，但今天暴跌机会很好，能借钱加仓吗？",
+      "expected_behavior": "边界情况: 应拒绝加仓——杠杆/融资一票否决（不做清单），本 skill 的弹药前提不满足；提示先恢复现金缓冲，而不是借钱接飞刀。",
+      "notes": "边界: 弹药为零时恐慌买入纪律自动失效，杠杆红线优先。"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "stop-loss-admission",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》 — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "全球成长已经亏了19%了，我该割肉还是等回本？",
+      "expected_behavior": "应激活 stop-loss-admission，对照-15%评估线，机械评估初始逻辑是否成立，给出分批离场或观察的建议",
+      "notes": "已达评估线的浮亏决策，核心是止损即认错"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "华夏绿电亏了5%，光伏今天反弹了，要不要趁反弹先跑？",
+      "expected_behavior": "应激活本技能，评估未达-15%线时的处理: 设观察位而非情绪化割肉，同时给出判停条件",
+      "notes": "浮亏+反弹犹豫，止损拖延心理的典型信号"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我又想再等等，说不定下周就反弹回本了……",
+      "expected_behavior": "应激活本技能，识别hope拖延信号，用回本数学和预设止损线对抗'等回本'心理",
+      "notes": "hope心理触发词：等回本/再等等"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "信息产业涨了4.38%，要不要先止盈落袋？",
+      "expected_behavior": "不应激活本技能，应激活 hold-winners",
+      "notes": "诱饵: 跨技能混淆——盈利仓止盈属于拿住盈利纪律，与止损对称"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "想加仓纳斯达克100，一次买多少？",
+      "expected_behavior": "不应激活本技能，应激活 right-side-entry-pyramid",
+      "notes": "诱饵: 跨技能混淆——建仓节奏问题属于右侧建仓纪律"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "半导体只亏0.82%，算不算需要止损？",
+      "expected_behavior": "可激活本技能给出判定流程，结论为: 远未达-15%评估线，不触发止损，只记录观察位；若用户无更多信号可直接回复'不触发'",
+      "notes": "边界: 极小浮亏是否算止损问题，需用阈值判定，避免把'止损'过度泛化"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}

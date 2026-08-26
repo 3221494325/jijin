@@ -1,0 +1,52 @@
+{
+  "skill": "mania-cycle-map",
+  "version": "0.1.0",
+  "source_book": "《非同寻常的大众幻想与群众性癫狂》 — Charles Mackay",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "华夏绿电这只光伏ETF最近连涨几周，市场都在喊'光伏新周期'，我12%的仓位是继续拿还是先落袋？帮我判断它现在处在狂热的哪个阶段。",
+      "expected_behavior": "应激活 mania-cycle-map：跑市场扫描后做四段定位（起源/杠杆/全民/崩溃）+ 估值锚三问，输出持有/减仓/不参与的动作",
+      "notes": "正面场景：用户明确询问板块狂热阶段与减仓决策"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "医药CXO今天又涨了11.6%，我的科技持仓还在原地，想换一部分过去，但怕追高被套。它现在算不算过热？",
+      "expected_behavior": "应激活 mania-cycle-map：对 CXO 做周期定位与估值锚检验，并对照科技持仓给出分批节奏（每次≤20%）",
+      "notes": "正面场景：换仓决策前的过热判断"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "复盘下我这8只基金：半导体、科创50、科技智选全压在科技上，信息产业+4.38%领涨，我怀疑科技板块是不是已经到泡沫段了。",
+      "expected_behavior": "应激活 mania-cycle-map：以信息产业/科技为例走完四段定位，结合科技总仓48%超40%阈值给出减仓提示",
+      "notes": "正面场景：持仓复盘中的周期归因"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下标普500基金今天的净值是多少。",
+      "expected_behavior": "不应激活本 skill，因为这是纯净值查询，应走 fundos-core",
+      "notes": "诱饵：信息查询类提问"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我同事天天说AI是第四次工业革命，说科技智选翻倍只是时间问题，我要不要也跟着他加仓？",
+      "expected_behavior": "不应激活本 skill；用户决策依据是'别人都在买'，应激活同书兄弟 skill herd-contagion-check",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：从众传染场景不应被周期定位器抢答"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "科技板块从低位涨了30%，但估值还在历史中枢附近，没有明显杠杆和全民参与迹象——这是狂热初期还是正常修复？",
+      "expected_behavior": "可触发但需谨慎：不能只凭涨幅判断，应完成四段定位+估值锚三问；若价格可被盈利解释且无杠杆/破圈，判定为价值修复而非狂热",
+      "notes": "边界：涨幅与狂热脱钩，需要完整流程区分价值修复"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过（诱饵容错为 0），且其中至少 1 条是同书兄弟 skill 的场景（跨 skill 混淆测试）。"
+}

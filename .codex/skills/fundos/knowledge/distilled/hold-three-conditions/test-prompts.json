@@ -1,0 +1,52 @@
+{
+  "skill": "hold-three-conditions",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》沃伦·巴菲特",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的 019024 已经赚了 20% 了，要不要落袋为安？",
+      "expected_behavior": "调用 hold-three-conditions，先跑三条件体检（底层回报/经理与产品/估值），三条成立则建议继续持有并设置复查，不因盈利而卖。",
+      "notes": "正面场景：盈利触发卖出冲动，正是三条件体检的典型用法。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "017641 拿了两年了没怎么涨，要不要换掉？",
+      "expected_behavior": "调用 hold-three-conditions，指出'拿久了'不是卖出理由，按三条件判断底层资产与经理是否仍成立。",
+      "notes": "正面场景：拿久了/涨得慢触发换仓冲动，需用三条件纠正。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "这只基金赚了 30%，新闻说要回调，我是不是该先止盈？",
+      "expected_behavior": "调用 hold-three-conditions，提醒'You can't go broke taking a profit 是最蠢格言'，用三条件而非消息情绪决定去留。",
+      "notes": "正面场景：情绪/新闻驱动止盈，需要三条件框架。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "我现在持有 8 只主题基金，是不是太分散了？要不要集中到 3 只？",
+      "expected_behavior": "不应调用 hold-three-conditions，应调用 position-size-framework（伪分散/集中度/认知定位问题）。",
+      "notes": "跨 skill 混淆诱饵：问的是组合结构而非单只持有决策。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下 018354 的最新净值是多少？",
+      "expected_behavior": "不应调用本 skill，纯净值数据查询直接用 fundos-core。",
+      "notes": "诱饵：纯信息查询，无持有决策。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "019024 赚了 15%，但基金经理刚换人了，还要继续持有吗？",
+      "expected_behavior": "调用 hold-three-conditions 但指出经理变更命中三条件第②条风险，需结合 timely-correction 评估是否触发纠错；合理结论是'先核查新经理策略与历史，再决定'。",
+      "notes": "边界：三条件部分破坏，持有与纠错的衔接点。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵中 1 条为同书兄弟 skill（position-size-framework）场景。"
+}

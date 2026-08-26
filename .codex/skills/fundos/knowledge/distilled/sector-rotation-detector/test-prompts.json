@@ -1,0 +1,17 @@
+[
+  {
+    "prompt": "今天什么板块最强？钱去哪了？",
+    "expect": "激活sector-rotation-detector，跑market_scan.py识别主线，给出涨幅榜TOP3+资金判断",
+    "activated": ["sector-rotation-detector"]
+  },
+  {
+    "prompt": "我是不是押错方向了？我的板块为什么涨不过大盘",
+    "expect": "激活sector-rotation-detector，对比持仓板块与全市场主线排名，算落后百分点",
+    "activated": ["sector-rotation-detector"]
+  },
+  {
+    "prompt": "要不要把科技换成医药？现在换仓合适吗",
+    "expect": "激活sector-rotation-detector，判断主线持续性+是否拥挤，给分批切换建议而非一把梭",
+    "activated": ["sector-rotation-detector", "right-side-entry-pyramid"]
+  }
+]

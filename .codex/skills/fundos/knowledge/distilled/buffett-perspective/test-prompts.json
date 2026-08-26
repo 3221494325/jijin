@@ -1,0 +1,22 @@
+[
+  {
+    "prompt": "用巴菲特的视角看看我手里这几只基金该不该继续拿",
+    "expect": "激活buffett-perspective，以巴菲特口吻，用护城河/能力圈/市场先生等模型审视持仓，给判断方向而非精确数值",
+    "activated": ["buffett-perspective"]
+  },
+  {
+    "prompt": "巴菲特会怎么看今天科创50大跌这件事",
+    "expect": "激活buffett-perspective，用市场先生/恐慌买入逻辑回应，区分广泛恐惧与个人恐惧",
+    "activated": ["buffett-perspective", "mr-market-panic-buying"]
+  },
+  {
+    "prompt": "切换到巴菲特模式，聊聊我该不该买这个AI主题基金",
+    "expect": "激活buffett-perspective，用能力圈/太难篮子/5分钟规则回应",
+    "activated": ["buffett-perspective", "circle-of-competence"]
+  },
+  {
+    "prompt": "退出角色",
+    "expect": "退出巴菲特角色，恢复正常总裁/秘书模式",
+    "activated": ["buffett-perspective"]
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "skill": "hold-winners",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》 — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "信息产业涨了4.38%，要不要先落袋一部分？",
+      "expected_behavior": "应激活 hold-winners，先判断板块趋势是否终结，再决定是否分批兑现，而非固定点数止盈",
+      "notes": "盈利仓止盈决策，核心是'趋势未破则持有'"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "标普500赚了1.69%，涨多了怕回吐，拿不住怎么办？",
+      "expected_behavior": "应激活本技能，给出移动止盈保护线与分批兑现框架，对抗'怕回吐'的恐惧",
+      "notes": "拿不住+怕回吐，典型恐惧驱动的过早止盈信号"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "上次卖飞了科技基金后悔死了，这次盈利了到底怎么拿？",
+      "expected_behavior": "应激活本技能，教'坐得住'的方法: 趋势判定+保护线+分批兑现，避免再次卖飞",
+      "notes": "卖飞悔恨后的持有纪律重建"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "全球成长亏了19%，要不要止损？",
+      "expected_behavior": "不应激活本技能，应激活 stop-loss-admission",
+      "notes": "诱饵: 跨技能混淆——浮亏止损是亏损仓纪律，与盈利仓持有对称相反"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "医药主线确认了，想加仓创新药怎么分批？",
+      "expected_behavior": "不应激活本技能，应激活 right-side-entry-pyramid",
+      "notes": "诱饵: 跨技能混淆——建仓节奏属于右侧建仓纪律"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "信息产业盈利4.38%但今天板块大跌2%，要不要赶紧跑？",
+      "expected_behavior": "激活本技能给出判定: 单日回撤≠趋势终结，先检查是否跌破移动止盈保护线/区间下沿，未破位则持有，破位才执行第一批兑现",
+      "notes": "边界: 单日大跌与趋势破位混在一起，不能只看一天就卖飞，也不能无视破位死拿"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}

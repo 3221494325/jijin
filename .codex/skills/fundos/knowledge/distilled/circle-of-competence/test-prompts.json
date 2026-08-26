@@ -1,0 +1,50 @@
+{
+  "skill": "circle-of-competence",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》 — 巴菲特 (Warren Buffett)",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "AI主题基金最近很火，但我完全不懂AI行业，要不要跟风买一点？",
+      "expected_behavior": "应激活 circle-of-competence：用三问判定圈外，输出“圈外一票否决”，不买、不追、不因热度破例。",
+      "notes": "“不懂但很火”是能力圈最典型触发场景。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "半导体、CXO、光伏新技术这些赛道我哪个都看不懂，怎么选？",
+      "expected_behavior": "应激活 circle-of-competence：逐赛道做圈内判定，全部圈外则建议不碰，或列出学习清单而非买入建议。",
+      "notes": "多热门赛道同时出现，触发圈内圈外筛选。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我一直看好信息产业(019024)但一直没买，现在涨了4%还来得及吗？",
+      "expected_behavior": "应激活 circle-of-competence：检查这是否是圈内犹豫（thumb-sucking），若是则给出分批建仓计划并留痕，而非继续等待。",
+      "notes": "圈内犹豫是能力圈框架的另一半，防止只出不进。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "018354全球成长跌了19%，要不要加仓摊低成本？",
+      "expected_behavior": "不应激活 circle-of-competence（用户没有“看不看得懂”的疑问，要的是出价判断），应激活 margin-of-safety。",
+      "notes": "跨 skill 混淆诱饵: 持仓加仓是出价纪律，不是圈内判定。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我估值一下标普500指数基金现在贵不贵。",
+      "expected_behavior": "不应激活 circle-of-competence（宽基指数对普通人默认圈内），应激活 intrinsic-value-ruler 做估值区间判断。",
+      "notes": "跨 skill 混淆诱饵: 宽基指数不触发能力圈判定。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我研究了三个月半导体行业，现在算不算懂？能不能买半导体基金？",
+      "expected_behavior": "边界情况: 研究时长不等于懂；应用可检验标准自检——能否回答三问、能否比市场先生更懂；不满足则仍归圈外/边界，给出学习清单而非买入建议。",
+      "notes": "边界: 能力圈的判据是能否可靠评估长期现金流，不是投入时间。"
+    }
+  ]
+}

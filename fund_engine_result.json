@@ -1,0 +1,125 @@
+{
+  "mode": "quick",
+  "health": {
+    "python": "C:\\Users\\lzf13\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "requests": true,
+    "project": "D:\\基金项目",
+    "news_cache": "D:\\基金项目\\news_result.json"
+  },
+  "skills": {
+    "count": 22,
+    "skills": [
+      "buffett-perspective",
+      "circle-of-competence",
+      "do-not-list",
+      "emotion-discipline-system",
+      "herd-contagion-check",
+      "hold-three-conditions",
+      "hold-winners",
+      "independent-judgment",
+      "intrinsic-value-ruler",
+      "leverage-amplifier",
+      "mania-cycle-map",
+      "margin-of-safety",
+      "mass-participation-top",
+      "mr-market-panic-buying",
+      "narrative-news-check",
+      "position-size-framework",
+      "price-action-first",
+      "right-side-entry-pyramid",
+      "sector-rotation-detector",
+      "stop-loss-admission",
+      "timely-correction",
+      "trend-following-minimum-resistance"
+    ],
+    "source": "D:\\基金项目\\.codex\\skills\\fundos\\knowledge\\INDEX.md"
+  },
+  "market_scan": 0,
+  "diagnosis": 0,
+  "daily_check": 0,
+  "news": 0,
+  "news_status": {
+    "快讯": {
+      "status": "ok",
+      "items": 15,
+      "error": ""
+    },
+    "cls_telegram": {
+      "status": "error",
+      "items": 0,
+      "calls": 23,
+      "elapsed_ms": 10280,
+      "error": "HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E9%9D%9E%E5%86%9C&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A1%AC%E7%A7%91%E6%8A%80&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%BA%B3%E6%96%AF%E8%BE%BE%E5%85%8B&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E6%A0%87%E6%99%AE500&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=ChatGPT&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%AE%97%E5%8A%9B&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%85%89%E4%BC%8F&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=DeepSeek&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=HBM&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E9%A3%8E%E7%94%B5&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%85%89%E5%88%BB%E6%9C%BA&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E6%99%B6%E5%9C%86&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%85%88%E8%BF%9B%E5%B0%81%E8%A3%85&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=CPI&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A7%91%E5%88%9B%E6%9D%BF&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A2%B3%E4%B8%AD%E5%92%8C&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%8D%8A%E5%AF%BC%E4%BD%93&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E5%A4%A7%E6%A8%A1%E5%9E%8B&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%A7%91%E5%88%9B50&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E7%BE%8E%E8%81%94%E5%82%A8&type=telegram&page=0&rn=15; HTTPError: 405 Client Error: Method Not Allowed for url: https://www.cls.cn/api/sw?app=CailianpressWeb&os=web&sv=8.4.6&keyword=%E8%8A%AF%E7%89%87&type=telegram&page=0&rn=15"
+    },
+    "wallstreetcn_live": {
+      "status": "ok",
+      "items": 345,
+      "calls": 23,
+      "elapsed_ms": 9559,
+      "error": ""
+    },
+    "eastmoney_news": {
+      "status": "error",
+      "items": 0,
+      "calls": 23,
+      "elapsed_ms": 9646,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    }
+  },
+  "decision": {
+    "tech_weight": 47.43,
+    "data_source": "daily_check_result.json",
+    "deep_loss": [
+      "全球成长"
+    ],
+    "triggered": [
+      {
+        "skills": [
+          "sector-rotation-detector",
+          "trend-following-minimum-resistance"
+        ],
+        "evidence": "市场扫描已完成，先比较主线与持仓相对强弱",
+        "action": "观察主线是否连续，暂不因单日强势追入",
+        "boundary": "至少等待价格和成交连续确认"
+      },
+      {
+        "skills": [
+          "stop-loss-admission",
+          "timely-correction",
+          "emotion-discipline-system"
+        ],
+        "evidence": "全球成长 -22.29%",
+        "action": "停止摊平，反弹窗口重新评估并分批纠错",
+        "boundary": "不以回本作为唯一卖出条件；接近-25%重新审查逻辑"
+      },
+      {
+        "skills": [
+          "position-size-framework",
+          "right-side-entry-pyramid"
+        ],
+        "evidence": "科技/AI估算仓位 47.4% > 40%",
+        "action": "科技反弹时优先降集中度，新增只允许右侧确认后分批",
+        "boundary": "单次调整不超过相关仓位20%，不追涨"
+      },
+      {
+        "skills": [
+          "hold-winners",
+          "hold-three-conditions"
+        ],
+        "evidence": "标普500 +0.95%",
+        "action": "先检查底层逻辑和估值，再决定持有或费率换类",
+        "boundary": "不因小幅盈利机械止盈"
+      },
+      {
+        "skills": [
+          "narrative-news-check",
+          "price-action-first",
+          "independent-judgment"
+        ],
+        "evidence": "采集新闻 15 条，存在情绪参考信号",
+        "action": "新闻只进入观察层，必须等待价格行为确认",
+        "boundary": "新闻情绪不得单独触发买卖"
+      }
+    ]
+  }
+}

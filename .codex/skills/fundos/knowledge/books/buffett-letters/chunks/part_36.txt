@@ -1,0 +1,874 @@
+descapitalgainsorlosses
+18
+
+Investments
+Below we list our fifteen common stock investments that at yearend had the largest market value. We
+excludeourKraftHeinzholdingbecauseBerkshireispartofacontrolgroupandthereforemustaccountforthis
+investment on the “equity” method. The 325,442,152 shares Berkshire owns of Kraft Heinz are carried on our
+balance sheetataGAAPfigure of$15.3billion andhadayearendmarket valueof$28.4billion. Ourcostbasis
+forthesharesis$9.8billion.
+12/31/16
+Percentageof
+Company
+Shares* Company Owned Cost** Market
+(inmillions)
+151,610,700 AmericanExpressCompany..................... 16.8 $ 1,287 $ 11,231
+61,242,652 AppleInc.............................................. 1.1 6,747 7,093
+6,789,054 CharterCommunications,Inc.................... 2.5 1,210 1,955
+400,000,000 TheCoca-ColaCompany......................... 9.3 1,299 16,584
+54,934,718 DeltaAirlinesInc................................... 7.5 2,299 2,702
+11,390,582 TheGoldmanSachsGroup,Inc................. 2.9 654 2,727
+81,232,303 InternationalBusinessMachinesCorp........ 8.5 13,815 13,484
+24,669,778 Moody’sCorporation.............................. 12.9 248 2,326
+74,587,892 Phillips66............................................. 14.4 5,841 6,445
+22,169,930 Sanofi .................................................. 1.7 1,692 1,791
+43,203,775 SouthwestAirlinesCo............................. 7.0 1,757 2,153
+101,859,335 U.S.Bancorp......................................... 6.0 3,239 5,233
+26,620,184 UnitedContinentalHoldingsInc................ 8.4 1,477 1,940
+43,387,980 USGCorp............................................. 29.7 836 1,253
+500,000,000 WellsFargo&Company ......................... 10.0 12,730 27,555
+Others.................................................. 10,697 17,560
+TotalCommonStocksCarriedatMarket .... $ 65,828 $ 122,032
+* ExcludessharesheldbypensionfundsofBerkshiresubsidiaries.
+** This is our actual purchase price and also our tax basis; GAAP“cost” differs inafewcasesbecauseof
+write-downsthathavebeenrequiredunderGAAPrules.
+SomeofthestocksinthetablearetheresponsibilityofeitherToddCombsorTedWeschler,whowork
+with me in managing Berkshire’s investments. Each, independently, manages more than $10 billion; I usually
+learnaboutdecisionstheyhavemadebylookingatmonthlytradesheets.Includedinthe$21billionthatthetwo
+manage is about $7.6 billion of pension trust assets of certain Berkshire subsidiaries. As noted, pension
+investmentsarenotincludedintheprecedingtabulationofBerkshireholdings.
+************
+Excluded from the table – but important – is our ownership of $5 billion of preferred stock issued by
+Bank of America. This stock, which pays us $300 million per year, also carries with it a valuable warrant
+allowingBerkshiretopurchase700millioncommonsharesofBankofAmericafor$5billionatanytimebefore
+September 2, 2021. At yearend, that privilege would have delivered us a profit of $10.5 billion. If it wishes,
+Berkshirecanuseitspreferredsharestosatisfythe$5billioncostofexercisingthewarrant.
+19
+
+If the dividend rate on Bank of America common stock – now 30 cents annually – should rise above
+44 cents before 2021, we would anticipate making a cashless exchange of our preferred into common. If the
+common dividend remains below 44 cents, it is highly probable that we will exercise the warrant immediately
+beforeitexpires.
+Many of our investees, including Bank of America, have been repurchasing shares, some quite
+aggressively. We very much like this behavior because we believe the repurchased shares have in most cases
+been underpriced. (Undervaluation, after all, is why we own these positions.) When a company grows and
+outstandingsharesshrink,goodthingshappenforshareholders.
+************
+It’simportantforyoutounderstandthat95%ofthe$86billionof“cashandequivalents”(whichinmy
+mind includes U.S. Treasury Bills) shown on our balance sheet are held by entities in the United States and,
+consequently, is not subject to any repatriation tax. Moreover, repatriation of the remaining funds would trigger
+only minor taxes because much of that money has been earned in countries that themselves impose meaningful
+corporatetaxes.ThosepaymentsbecomeanoffsettoU.S.taxwhenmoneyisbroughthome.
+These explanations are important because many cash-rich American companies hold a large portion of
+theirfundsinjurisdictionsimposingverylowtaxes.Suchcompanieshope–andmaywellbeprovedright–that
+the tax levied for bringing these funds to America will soon be materially reduced. In the meantime, these
+companies are limited as to how they can use that cash. In other words, off-shore cash is simply not worth as
+muchascashheldathome.
+Berkshire hasapartialoffsettothefavorablegeographical locationofitscash,whichisthatmuchofit
+is held in our insurance subsidiaries. Though we have many alternatives for investing this cash, we do not have
+the unlimited choices that we would enjoy if the cash were held by the parent company, Berkshire. We dohave
+anabilityannuallytodistributelargeamountsofcashfromourinsurerstotheparent–thoughhere,too,thereare
+limits. Overall,cashheldatourinsurersisaveryvaluableasset,butoneslightlylessvaluabletousthaniscash
+heldattheparentlevel.
+************
+Sometimesthecommentsofshareholdersormediaimplythatwewillowncertainstocks“forever.”Itis
+true that we own some stocks that I have no intention of selling for as far as the eye can see (and we’re talking
+20/20vision).ButwehavemadenocommitmentthatBerkshirewillholdanyofitsmarketablesecuritiesforever.
+Confusion about this point may have resulted from a too-casual reading of Economic Principle 11 on
+pages 110 - 111, which has been included in our annual reports since 1983. That principle covers controlled
+businesses, not marketable securities. This year I’ve added a final sentence to #11 to ensure that our owners
+understandthatweregardanymarketablesecurityasavailableforsale,howeverunlikelysuchasalenowseems.
+************
+Beforeweleavethisinvestmentsection,afeweducationalwordsaboutdividendsandtaxes:Berkshire,
+like most corporations, nets considerably more from a dollar of dividends than it reaps from a dollar of capital
+gains. That will probably surprise those of our shareholders who are accustomed to thinking of capital gains as
+theroutetotax-favoredreturns.
+But here’s the corporate math. Every $1 of capital gains that a corporation realizes carries with it
+35centsoffederalincometax(andoftenstateincometaxaswell).Thetaxondividendsreceivedfromdomestic
+corporations,however,isconsistentlylower,thoughratesvarydependingonthestatusoftherecipient.
+20
+
+Foranon-insurancecompany–whichdescribesBerkshireHathaway,theparent–thefederaltaxrateis
+effectively101⁄ 2centsper$1ofdividendsreceived.Furthermore,anon-insurancecompanythatownsmorethan
+20% of an investee owes taxes of only 7 cents per $1 of dividends. That rate applies, for example, to the
+substantial dividends we receive from our 27% ownership of Kraft Heinz, all of it held by the parent company.
+(The rationale for the low corporate taxes on dividends is that the dividend-paying investee has already paid its
+owncorporatetaxontheearningsbeingdistributed.)
+Berkshire’sinsurancesubsidiariespayataxrateondividendsthatissomewhathigherthanthatapplying
+to non-insurance companies, though the rate is still well below the 35% hitting capital gains. Property/casualty
+companies oweabout 14% in taxes onmost dividends they receive. Their tax rate falls, though,toabout11%if
+theyownmorethan20%ofaU.S.-basedinvestee.
+Andthat’sourtaxlessonfortoday.
+“TheBet”(orhowyourmoneyfindsitswaytoWallStreet)
+In this section, you will encounter, early on, the story of an investment bet I made nine years ago and,
+next, some strong opinions I have about investing. As a starter, though, I want to briefly describe Long Bets, a
+uniqueestablishmentthatplayedaroleinthebet.
+Long Bets was seeded by Amazon’s Jeff Bezos and operates as a non-profit organization that
+administersjustwhatyou’dguess:long-termbets.Toparticipate,“proposers”postapropositionatLongbets.org
+thatwillbeprovedright orwrongatadistant date.Theythenwaitforacontrary-minded partytotaketheother
+sideofthebet.Whena“doubter”stepsforward,eachsidenamesacharitythatwillbethebeneficiaryifitsside
+wins; parks its wager with Long Bets; and posts a short essay defending its position on the Long Bets website.
+Whenthebetisconcluded,LongBetspaysoffthewinningcharity.
+HereareexamplesofwhatyouwillfindonLongBets’veryinterestingsite:
+In2002,entrepreneurMitchKaporassertedthat“By2029nocomputer–or‘machineintelligence’–will
+have passed the Turing Test,” which deals with whether a computer cansuccessfullyimpersonate a humanbeing.
+Inventor Ray Kurzweil took the opposing view. Each backed up his opinion with $10,000. I don’t knowwho will
+winthisbet,butIwillconfidentlywagerthatnocomputerwilleverreplicateCharlie.
+Thatsameyear,CraigMundieofMicrosoftassertedthatpilotlessplaneswouldroutinelyflypassengers
+by 2030, while Eric Schmidt of Google argued otherwise. The stakes were $1,000 each. To ease any heartburn
+Eric might be experiencing from his outsized exposure, I recently offered to take a piece of his action. He
+promptly laid off $500 with me. (I like his assumption that I’ll be around in 2030 to contribute my payment,
+shouldwelose.)
+Now, to my bet and its history. In Berkshire’s 2005 annual report, I argued that active investment
+managementbyprofessionals–inaggregate–wouldoveraperiodofyearsunderperformthereturnsachievedby
+rank amateurs who simply sat still. I explained that the massive fees levied by a variety of “helpers” would leave
+theirclients–againinaggregate–worseoffthaniftheamateurssimplyinvestedinanunmanagedlow-costindex
+fund.(Seepages114-115forareprintoftheargumentasIoriginallystateditinthe2005report.)
+21
+
+Subsequently, I publicly offered to wager $500,000 that no investment pro could select a set of at least
+five hedge funds – wildly-popular and high-fee investing vehicles – that would over an extended period match
+the performance of an unmanaged S&P-500 index fund charging only token fees.Isuggested aten-year betand
+named a low-cost Vanguard S&P fund as my contender. I then sat back and waited expectantly for a parade of
+fund managers – who could include their own fund as one of the five – to come forth and defend their
+occupation.Afterall,thesemanagersurgedotherstobetbillionsontheirabilities.Whyshouldtheyfearputting
+alittleoftheirownmoneyontheline?
+Whatfollowedwasthesoundofsilence.Thoughtherearethousandsofprofessionalinvestmentmanagers
+who have amassed staggering fortunes by touting their stock-selecting prowess, only one man – Ted Seides –
+stepped up to my challenge. Ted was a co-manager of Protégé Partners, an asset manager that had raised money
+fromlimitedpartnerstoformafund-of-funds–inotherwords,afundthatinvestsinmultiplehedgefunds.
+Ihadn’tknownTedbeforeourwager,butIlikehimandadmirehiswillingnesstoputhismoneywhere
+his mouth was.Hehas been both straight-forward with me and meticulous in supplyingallthedatathatbothhe
+andIhaveneededtomonitorthebet.
+For Protégé Partners’ side of our ten-year bet, Ted picked five funds-of-funds whoseresults were to be
+averagedandcomparedagainstmyVanguardS&Pindexfund.Thefiveheselectedhadinvestedtheirmoneyin
+more than 100 hedge funds, which meant that the overall performance of the funds-of-funds would not be
+distortedbythegoodorpoorresultsofasinglemanager.
+Eachfund-of-funds,ofcourse,operatedwithalayeroffeesthatsatabovethefeeschargedbythehedge
+funds in which it had invested. In this doubling-up arrangement, the larger fees were levied by the underlying
+hedgefunds;eachofthefund-of-funds imposedanadditionalfeeforitspresumedskillsinselectinghedge-fund
+managers.
+Herearetheresultsforthefirstnineyearsofthebet–figuresleavingnodoubtthatGirlsInc.ofOmaha,
+thecharitablebeneficiaryIdesignatedtogetanybetwinningsIearned,willbetheorganizationeagerlyopening
+themailnextJanuary.
+Fundof Fundof Fundof Fundof Fundof S&P
+Year FundsA FundsB FundsC FundsD FundsE IndexFund
+2008 -16.5% -22.3% -21.3% -29.3% -30.1% -37.0%
+2009 11.3% 14.5% 21.4% 16.5% 16.8% 26.6%
+2010 5.9% 6.8% 13.3% 4.9% 11.9% 15.1%
+2011 -6.3% -1.3% 5.9% -6.3% -2.8% 2.1%
+2012 3.4% 9.6% 5.7% 6.2% 9.1% 16.0%
+2013 10.5% 15.2% 8.8% 14.2% 14.4% 32.3%
+2014 4.7% 4.0% 18.9% 0.7% -2.1% 13.6%
+2015 1.6% 2.5% 5.4% 1.4% -5.0% 1.4%
+2016 -2.9% 1.7% -1.4% 2.5% 4.4% 11.9%
+Gainto
+Date 8.7% 28.3% 62.8% 2.9% 7.5% 85.4%
+Footnote: Under my agreement with Protégé Partners, the names of these funds-of-funds have never
+beenpubliclydisclosed.I,however,seetheirannualaudits.
+Thecompounded annual increase to date for the index fund is 7.1%, which is a return thatcouldeasily
+prove typical for the stock market over time. That’s an important fact: A particularly weak nine years for the
+market over the lifetime of this bet would have probably helped the relative performance of the hedge funds,
+because many hold large “short” positions. Conversely, nine years of exceptionally high returns from stocks
+wouldhaveprovidedatailwindforindexfunds.
+Instead we operated in what I would call a “neutral” environment. In it, the five funds-of-funds
+delivered, through 2016, an average of only 2.2%, compounded annually. That means $1 million invested in
+thosefundswouldhavegained$220,000.Theindexfundwouldmeanwhilehavegained$854,000.
+22
+
+Bear in mind that every one of the 100-plus managers of the underlying hedge funds had a huge
+financial incentive to do his or her best. Moreover, the five funds-of-funds managers that Ted selected were
+similarly incentivized to select the best hedge-fund managers possible because the five were entitled to
+performancefeesbasedontheresultsoftheunderlyingfunds.
+I’m certain that in almost all cases the managers at both levels were honest and intelligent people. But
+the results for their investors were dismal – really dismal. And, alas, the huge fixed fees charged by all of the
+funds and funds-of-funds involved – fees that were totally unwarranted by performance – were such that their
+managerswereshoweredwithcompensationoverthenineyearsthathavepassed.AsGordonGekkomighthave
+putit:“Feesneversleep.”
+The underlying hedge-fund managers in our bet received payments from their limited partners that
+likely averaged a bit under the prevailing hedge-fund standard of “2 and 20,” meaning a 2% annual fixed fee,
+payable even when losses are huge, and 20% of profits with no clawback (if good years were followed by bad
+ones). Under this lopsided arrangement, a hedge fund operator’s ability to simply pile up assets under
+management has made many of these managers extraordinarily rich, even as their investments have performed
+poorly.
+Still, we’renotthroughwithfees. Remember, there werethefund-of-funds managers tobefedaswell.
+These managers received an additional fixed amount that was usually set at 1% of assets. Then, despite the
+terrible overall record of the five funds-of-funds, some experienced a few good years and collected
+“performance” fees. Consequently, I estimate that over the nine-year period roughly 60% – gulp! – of all gains
+achieved by the five funds-of-funds were diverted to the two levels of managers. That was their misbegotten
+reward for accomplishing something far short of what their many hundreds of limited partners could have
+effortlessly–andwithvirtuallynocost–achievedontheirown.
+Inmyopinion,thedisappointingresultsforhedge-fundinvestorsthatthisbetexposedarealmostcertain
+torecurinthefuture.IlaidoutmyreasonsforthatbeliefinastatementthatwaspostedontheLongBetswebsite
+whenthebetcommenced(andthatisstillpostedthere).HereiswhatIasserted:
+Overaten-yearperiodcommencingonJanuary1,2008,andendingonDecember31,2017,
+the S&P 500 will outperform a portfolio of funds of hedge funds, when performance is
+measuredonabasisnetoffees,costsandexpenses.
+Alotofverysmartpeoplesetouttodobetterthanaverageinsecuritiesmarkets.Callthem
+activeinvestors.
+Their opposites, passive investors, will by definition do about average. In aggregate their
+positions will more or less approximate those of an index fund. Therefore, the balance of
+the universe—the active investors—must do about average as well. However, these
+investorswillincurfargreatercosts.So,onbalance,theiraggregateresultsafterthesecosts
+willbeworsethanthoseofthepassiveinvestors.
+Costsskyrocketwhenlargeannualfees,largeperformancefees,andactivetradingcostsare
+all added to the active investor’s equation. Funds of hedge funds accentuate this cost
+problem because their fees are superimposed on the large fees charged by the hedge funds
+inwhichthefundsoffundsareinvested.
+A number of smart people are involved in running hedge funds. But to a great extent their
+efforts are self-neutralizing, and their IQ will not overcome the costs they impose on
+investors. Investors, on average and over time, will do better with a low-cost index fund
+thanwithagroupoffundsoffunds.
+23
+
+So that was my argument – and now let me put it into a simple equation. If GroupA(active investors)
+and Group B (do-nothing investors) comprise the total investing universe, and B is destined to achieve average
+resultsbeforecosts,so,too,mustA.Whichevergrouphasthelowercostswillwin.(Theacademicinmerequires
+me to mention that there is a very minor point – not worth detailing – that slightly modifies this formulation.)
+AndifGroupAhasexorbitantcosts,itsshortfallwillbesubstantial.
+There are, of course, some skilled individuals who are highly likely to out-perform the S&P over long
+stretches. In my lifetime, though, I’ve identified – early on – only ten or so professionals that I expected would
+accomplishthisfeat.
+Therearenodoubtmanyhundredsofpeople–perhapsthousands–whomIhavenevermetandwhose
+abilitieswouldequalthoseofthepeopleI’veidentified.Thejob,afterall,isnotimpossible.Theproblemsimply
+isthatthegreatmajorityofmanagerswhoattempttoover-performwillfail.Theprobabilityisalsoveryhighthat
+the person soliciting your funds will not be the exception whodoes well. Bill Ruane–a truly wonderful human
+beingandamanwhomIidentified60yearsagoasalmostcertaintodeliversuperiorinvestmentreturnsoverthe
+longhaul–saiditwell:“Ininvestmentmanagement,theprogressionisfromtheinnovatorstotheimitatorstothe
+swarmingincompetents.”
+Furthercomplicatingthesearchfortherarehigh-feemanagerwhoisworthhisorherpayisthefactthat
+someinvestment professionals, justassomeamateurs,willbeluckyovershortperiods.If1,000managersmake
+amarketpredictionatthebeginningofayear,it’sverylikelythatthecallsofatleastonewillbecorrectfornine
+consecutive years. Of course, 1,000 monkeys would be just as likely to produce a seemingly all-wise prophet.
+But there would remain a difference: The lucky monkey would not find people standing in line to invest with
+him.
+Finally, there are three connected realities that cause investing success to breed failure. First, a good
+record quickly attracts a torrent of money. Second, huge sums invariably act as an anchor on investment
+performance: What is easy with millions, struggles with billions (sob!). Third, most managers will nevertheless
+seeknewmoneybecauseoftheirpersonalequation–namely,themorefundstheyhaveundermanagement,the
+moretheirfees.
+Thesethreepointsarehardlynewgroundforme:InJanuary1966,whenIwasmanaging$44million,I
+wrote my limited partners: “I feel substantially greater size is more likely to harm future results than to help
+them.Thismightnotbetrueformyownpersonalresults,butitislikelytobetrueforyourresults.Therefore,...
+IintendtoadmitnoadditionalpartnerstoBPL.IhavenotifiedSusiethatifwehaveanymorechildren,itisupto
+hertofindsomeotherpartnershipforthem.”
+The bottom line: When trillions of dollars are managed by Wall Streeters charging high fees, it will
+usually be the managers who reap outsized profits, not the clients. Both large and small investors should stick
+withlow-costindexfunds.
+************
+IfastatueisevererectedtohonorthepersonwhohasdonethemostforAmericaninvestors,thehands-
+downchoiceshouldbeJackBogle.Fordecades,Jackhasurgedinvestorstoinvestinultra-low-costindexfunds.
+In his crusade, he amassed only a tiny percentage of the wealth that has typically flowed to managers whohave
+promised their investors large rewards while delivering them nothing – or, as in our bet, less than nothing – of
+addedvalue.
+In his early years, Jack was frequently mocked by the investment-management industry. Today,
+however,hehasthesatisfactionofknowingthathehelpedmillionsofinvestorsrealizefarbetterreturnsontheir
+savingsthantheyotherwisewouldhaveearned.Heisaherotothemandtome.
+************
+Over the years, I’ve often been asked for investment advice, and in the process of answering I’ve
+learned a good deal about human behavior. My regular recommendation has been a low-cost S&P 500 index
+fund.Totheircredit,myfriendswhopossessonlymodestmeanshaveusuallyfollowedmysuggestion.
+24
+
+I believe, however, that none of the mega-rich individuals, institutions or pension funds has followed
+that same advice when I’ve given it to them. Instead, these investors politely thank me for my thoughts and
+depart to listen to the siren song of a high-fee manager or, in the case of many institutions, to seek out another
+breedofhyper-helpercalledaconsultant.
+That professional, however, faces a problem. Can you imagine an investment consultant telling clients,
+year after year, to keep adding to an index fund replicating the S&P 500? That would be career suicide. Large
+fees flow to these hyper-helpers, however, if they recommend small managerial shifts every year or so. That
+advice is often delivered in esoteric gibberish that explains why fashionable investment “styles” or current
+economictrendsmaketheshiftappropriate.
+The wealthy are accustomed to feeling that it is their lot in life to get the best food, schooling,
+entertainment, housing, plastic surgery, sports ticket, you name it. Their money, they feel, should buy them
+somethingsuperiorcomparedtowhatthemassesreceive.
+In many aspects of life, indeed, wealth does command top-grade products or services. For that reason,
+thefinancial“elites”–wealthyindividuals,pensionfunds,collegeendowmentsandthelike–havegreattrouble
+meekly signing up for a financial product or service that is available as well to people investing only a few
+thousand dollars. This reluctance of the rich normally prevails even though the product at issue is –on an
+expectancy basis – clearly the best choice. My calculation, admittedly very rough, is that the search by the elite
+forsuperiorinvestment advicehascausedit,inaggregate,towastemorethan$100billionoverthepastdecade.
+Figure it out: Even a 1% fee on a few trillion dollars adds up. Of course, not every investor who put money in
+hedge funds ten years ago lagged S&P returns. But I believe my calculation of the aggregate shortfall is
+conservative.
+Much of the financial damage befell pension funds for public employees. Many of these funds are
+woefully underfunded, in part because they have suffered a double whammy: poor investment performance
+accompanied by huge fees. The resulting shortfalls in their assets will for decades have to be made up by local
+taxpayers.
+Human behavior won’t change. Wealthy individuals, pension funds, endowments and the like will
+continue to feel they deserve something “extra” in investment advice. Those advisors who cleverly play to this
+expectation will get very rich. This year the magic potion may be hedge funds, next year something else. The
+likely result from this parade of promises is predicted in an adage: “When a person with money meets a person
+with experience, the one with experience ends up with the money and the one with money leaves with
+experience.”
+Long ago, a brother-in-law of mine, Homer Rogers, was a commission agent working in the Omaha
+stockyards. Iaskedhimhowheinducedafarmerorranchertohirehimtohandlethesaleoftheirhogsorcattle
+to the buyers from the big four packers (Swift, Cudahy, Wilson and Armour). After all, hogs were hogs and the
+buyers were experts whoknewto the penny howmuch any animal was worth. Howthen, I asked Homer, could
+anysalesagentgetabetterresultthananyother?
+Homer gave me a pitying look and said: “Warren, it’s not how you sell ‘em, it’s how you tell ‘em.”
+WhatworkedinthestockyardscontinuestoworkinWallStreet.
+************
+And, finally, let me offer an olive branch to Wall Streeters, many of them good friends of mine.
+Berkshirelovestopayfees–evenoutrageousfees–toinvestmentbankerswhobringusacquisitions.Moreover,
+wehavepaidsubstantial sumsforover-performance toourtwoin-houseinvestment managers–andwehopeto
+makeevenlargerpaymentstotheminthefuture.
+To get biblical (Ephesians 3:18), I know the height and the depth and the length and the breadth of the
+energyflowingfromthatsimplefour-letterword–fees–whenitisspokentoWallStreet.Andwhenthatenergy
+deliversvaluetoBerkshire,Iwillcheerfullywriteabigcheck.
+25
+
+TheAnnualMeeting
+LastyearwepartneredwithYahootoairthefirst-ever webcastofourannualmeeting.ThankstoAndy
+Serwer and his Yahoocrew, the production wasa success in all respects, registering 1.1million uniquevisits in
+real-timeviewingand11.5millionmoreinreplays(manyofthose,tobesure,calledupbyviewersinterestedin
+onlycertainsegmentsofthewebcast).
+Berkshire’sthank-youmailforinitiatingthewebcastincludedmanynotesfromthreeconstituencies:the
+elderly who find travel difficult; the thrifty who find it expensive to travel to Omaha; and those who cannot
+attendaSaturdaymeetingforreligiousreasons.
+Thewebcastcutattendanceatlastyear’smeetingtoabout37,000people(wecan’tgetaprecisecount),
+which was down about 10%. Nevertheless, both Berkshire’s subsidiaries and Omaha hotels and restaurants
+racked up huge sales. Nebraska Furniture Mart’s sales broke their 2015 record volume by 3%, with the Omaha
+storerecordingone-weekvolumeof$45.5million.
+OurBerkshireexhibitorsatCenturyLinkwereopenfromnoonuntil5p.m.onFridayanddrewacrowd
+of 12,000bargain-hunting shareholders. Wewillrepeat thoseFridayshoppinghoursthisyearonMay5th.Bring
+money.
+The annual meeting falls on May 6th and will again be webcast by Yahoo, whose web address is
+https://finance.yahoo.com/brklivestream. The webcast will go live at 9 a.m. Central Daylight Time. Yahoo will
+interview directors, managers, stockholders and celebrities before the meeting and during the lunch break. Both
+thoseinterviewsandmeetingwillbetranslatedsimultaneouslyintoMandarin.
+For those attending the meeting in person, the doors at the CenturyLink will open at 7:00 a.m. on
+Saturday to facilitate shopping prior to our shareholder movie, which begins at 8:30. The question-and-answer
+periodwillstartat9:30andrununtil3:30,withaone-hourlunchbreakatnoon.Finally,at3:45wewillbeginthe
+formal shareholder meeting. It will run an hour or so. That is somewhat longer than usual because three proxy
+itemsaretobepresentedbytheirproponents,whowillbegivenareasonableamountoftimetostatetheircase.
+On Saturday morning, we will have our sixth International Newspaper Tossing Challenge. Our target
+will again be the porch of a Clayton Home, located precisely 35 feet from the throwing line. When I was a
+teenager – in my one brief flirtation with honest labor – I delivered about 500,000 papers. So I think I’m pretty
+goodatthisgame.Challengeme!Humiliateme!Knockmedownapeg!Thepaperswillrun36to42pages,and
+you must fold them yourself (no rubber bands allowed). The competition will begin about 7:45, and I’ll take on
+tenorsocompetitorsselectedafewminutesearlierbymyassistant,DebBosanek.
+Your venue for shopping will be the 194,300-square-foot hall that adjoins the meeting and in which
+productsfromdozensofoursubsidiarieswillbeforsale.SayhellotothemanyBerkshiremanagerswhowillbe
+captainingtheirexhibits.AndbesuretoviewtheterrificBNSFrailroadlayoutthatsalutesallofourcompanies.
+Yourchildren(andyou!)willbeenchantedwithit.
+Brooks, our running-shoe company, will again have a special commemorative shoe to offer at the
+meeting. After you purchase a pair, wear them on Sunday at our fourth annual “Berkshire 5K,” an 8 a.m. race
+starting attheCenturyLink.Fulldetails forparticipating willbeincludedintheVisitor’sGuidethatwillbesent
+to you with your meeting credentials. Entrants in the race will find themselves running alongside many of
+Berkshire’s managers, directors and associates. (Charlie and I, however, will sleep in; the fudge and peanut
+brittle we eat throughout the Saturday meeting takes its toll.) Participation in the 5K grows every year. Help us
+setanotherrecord.
+26
+
+AGEICOboothintheshoppingareawillbestaffedbyanumberofthecompany’stopcounselorsfrom
+aroundthecountry.Atlastyear’smeeting,wesetarecordforpolicysales,up21%from2015.Ipredictwewill
+beupagainthisyear.
+So stop by for a quote. In most cases, GEICO will be able to give you a shareholder discount (usually
+8%). This special offer is permitted by 44of the51jurisdictions inwhichweoperate. (Onesupplemental point:
+The discount is not additive if you qualify for another discount, such as that available to certain groups.) Bring
+the details of your existing insurance and check out our price. We can save many of you real money. Spendthe
+savingsonotherBerkshireproducts.
+BesuretovisittheBookworm.ThisOmaha-basedretailerwillcarryabout35booksandDVDs,among
+them a couple of new titles. The best book I read last year was Shoe Dog, by Nike’s Phil Knight. Phil is a very
+wise, intelligent and competitive fellow who is also a gifted storyteller. The Bookworm will have piles of Shoe
+DogaswellasseveralinvestmentclassicsbyJackBogle.
+TheBookwormwillonceagainofferourhistoryofthehighlights(andlowlights)ofBerkshire’sfirst50
+years. Non-attendees of the meeting can find the book on eBay. Just type in: Berkshire Hathaway Inc.
+Celebrating50yearsofaProfitablePartnership(2ndEdition).
+An attachment to the proxy material that is enclosed with this report explains how you can obtain the
+credential you will need for admission to both the meeting and other events. Keep in mind that airlines have
+sometimes jacked up prices for the Berkshire weekend – though I must admit I have developed some tolerance,
+bordering on enthusiasm, for that practice now that Berkshire has made large investments in America’s four
+major carriers. Nevertheless, if you are coming from far away, compare the cost of flying to Kansas City vs.
+Omaha. The drive between the two cities is about 21/ hours, and it may be that Kansas City can save you
+2
+significantmoney.Thesavingsforacouplecouldrunto$1,000ormore.Spendthatmoneywithus.
+AtNebraskaFurnitureMart,locatedona77-acresiteon72ndStreetbetweenDodgeandPacific,wewill
+again be having “Berkshire Weekend” discount pricing. To obtain the Berkshire discount at NFM, you must
+make your purchases between Tuesday, May 2nd and Monday, May 8th inclusive, and must also present your
+meeting credential. The period’s special pricing will even apply to the products of several prestigious
+manufacturers that normally have ironclad rules against discounting but which, in the spirit of our shareholder
+weekend,havemadeanexceptionforyou.Weappreciatetheircooperation.During“BerkshireWeekend,”NFM
+will be open from 10 a.m. to 9 p.m. Monday through Friday, 10 a.m. to 9:30 p.m. on Saturday and 10 a.m. to 8
+p.m.onSunday.From5:30p.m.to8p.m.onSaturday,NFMishostingapicnictowhichyouareallinvited.
+This year wehave goodnews for shareholders in the Kansas City andDallasmetromarketswhocan’t
+attend the meeting or perhaps prefer the webcast. From May 2nd through May 8th, shareholders who present
+meetingcredentials orotherevidenceoftheirBerkshireownership(suchasbrokeragestatements)totheirlocal
+NFMstorewillreceivethesamediscountsenjoyedbythosevisitingtheOmahastore.
+At Borsheims, we will again have two shareholder-only events. The first will be a cocktail reception
+from 6 p.m. to 9 p.m. on Friday, May 5th. The second, the main gala, will be held on Sunday, May 7th, from 9
+a.m. to 4 p.m. On Saturday, we will remain open until 6 p.m. Remember, the more you buy, the more you save
+(orsomydaughtertellsmewhenwevisitthestore).
+27
+
+We will have huge crowds at Borsheims throughout the weekend. For your convenience, therefore,
+shareholder prices will be available from Monday, May 1st through Saturday, May 13th. During that period,
+please identify yourself as a shareholder either by presenting your meeting credential or a brokerage statement
+showingyouownourstock.
+On Sunday, in the mall outside of Borsheims, Norman Beck, a remarkable magician and motivational
+speaker from Dallas, will bewilder onlookers. On the upper level, we will have Bob Hamman and Sharon
+Osberg, two of the world’s top bridge experts, available to play with our shareholders on Sunday afternoon. If
+theysuggestwageringonthegame,changethesubject.IwilljointhematsomepointandhopeAjit,Charlieand
+BillGateswilldosoalso.
+My friend, Ariel Hsing, will be in the mall as well on Sunday, taking on challengers at table tennis. I
+met Ariel when she was nine, and even then I was unable to score a point against her. Ariel represented the
+United States in the 2012 Olympics. Now, she’s a senior at Princeton (after interning last summer at JPMorgan
+Chase). If you don’t mind embarrassing yourself, test your skills against her, beginning at 1 p.m. Bill Gates did
+prettywellplayingAriellastyear,sohemaybereadytoagainchallengeher.(Myadvice:BetonAriel.)
+Gorat’s will be open exclusively for Berkshire shareholders on Sunday, May 7th, serving from 1 p.m.
+until 10 p.m. To make a reservation at Gorat’s, call 402-551-3733 on April 3rd(but not before). Showyouare a
+sophisticateddinerbyorderingtheT-bonewithhashbrowns.
+We will have the same three financial journalists lead the question-and-answer period at the meeting,
+asking Charlie and me questions that shareholders have submitted to them by e-mail. The journalists and their
+e-mail addresses are: Carol Loomis, the preeminent business journalist of her time, who may be e-mailed at
+loomisbrk@gmail.com;BeckyQuick,ofCNBC,atBerkshireQuestions@cnbc.com;andAndrewRossSorkin,of
+theNewYorkTimes,atarsorkin@nytimes.com.
+From the questions submitted, each journalist will choose the six he or she decides are the most
+interestingandimportanttoshareholders.Thejournalistshavetoldmeyourquestionhasthebestchanceofbeing
+selected if you keep it concise, avoid sending it in at the last moment, make it Berkshire-related and include no
+more than twoquestions in any e-mail yousend them. (In your e-mail, let thejournalist knowifyouwouldlike
+yournamementionedifyourquestionisasked.)
+An accompanying set of questions will be asked by three analysts who follow Berkshire. This year the
+insurance specialist will be Jay Gelb of Barclays. Questions that deal with our non-insurance operations will
+come from Jonathan Brandt of Ruane, Cunniff & Goldfarb and Gregg Warren of Morningstar. Since what we
+willbeconductingisashareholders’meeting,ourhopeisthattheanalystsandjournalistswillaskquestionsthat
+addtoourowners’understandingandknowledgeoftheirinvestment.
+Neither Charlie nor I will get so much as a clue about the questions headed our way. Some will be
+tough, for sure, and that’s the way we like it. Multi-part questions aren’t allowed; we want to give as many
+questionersaspossibleashotatus.OurgoalisforyoutoleavethemeetingknowingmoreaboutBerkshirethan
+whenyoucameandforyoutohaveagoodtimewhileinOmaha.
+All told, we expect at least 54 questions, which will allow for six from each analyst and journalist and
+for 18 from the audience. The questioners from the audience will be chosen by means of 11 drawings that will
+take place at 8:15 a.m. onthe morning of theannualmeeting. Eachofthe11microphones installed inthearena
+andmainoverflowroomwillhost,sotospeak,adrawing.
+28
+
+While I’m on the subject of our owners’ gaining knowledge, let me remind you that Charlie and I
+believe all shareholders should simultaneously have access to new information that Berkshire releases and, if
+possible, should also have adequate time to digest and analyze it before any trading takes place. That’s why we
+try to issue financial data late onFridays or early onSaturdays andwhyourannualmeeting isalwaysheldona
+Saturday(adaythatalsoeasestrafficandparkingproblems).
+We do not follow the common practice of talking one-on-one with large institutional investors or
+analysts, treating them instead as we do all other shareholders. There is no one more important to us than the
+shareholderoflimitedmeanswhotrustsuswithasubstantialportionofhisorhersavings.AsIrunthecompany
+day-to-day–andasIwritethisletter–thatistheshareholderwhoseimageisinmymind.
+************
+For good reason, I regularly extol the accomplishments of our operating managers. They are truly
+All-Stars who run their businesses as if they were the only asset owned by their families. I also believe the
+mindset of our managers to be as shareholder-oriented as can be found in the universe of large publicly-owned
+companies.Mostofourmanagershavenofinancialneedtowork.Thejoyofhittingbusiness“homeruns”means
+asmuchtothemastheirpaycheck.
+Equally important, however, are the men and women who work with me at our corporate office. This
+team efficiently deals with a multitude of SEC and other regulatory requirements, files a 30,450-page Federal
+income tax return, oversees the filing of 3,580 state tax returns, responds to countless shareholder and media
+inquiries, gets out the annual report, prepares for the country’s largest annual meeting, coordinates the Board’s
+activities,fact-checksthisletter–andthelistgoesonandon.
+Theyhandleallofthesebusinesstaskscheerfullyandwithunbelievableefficiency,makingmylifeeasy
+and pleasant. Their efforts go beyond activities strictly related to Berkshire: Last year, for example, they dealt
+with the 40 universities (selected from 200 applicants) who sent students to Omaha for a Q&A day with me.
+TheyalsohandleallkindsofrequeststhatIreceive,arrangemytravel,andevengetmehamburgersandFrench
+fries(smotheredinHeinzketchup,ofcourse)forlunch.Inaddition,theycheerfullypitchintohelpCarrieSova–
+our talented ringmaster at the annual meeting – deliver an interesting and entertaining weekend for our
+shareholders.TheyareproudtoworkforBerkshire,andIamproudofthem.
+I’m a lucky guy, very fortunate in being surrounded by this excellent staff, a team of highly-talented
+operating managers and a boardroom of very wise and experienced directors. Come to Omaha – the cradle of
+capitalism–onMay6thandmeettheBerkshireBunch.Allofuslookforwardtoseeingyou.
+February25,2017 WarrenE.Buffett
+ChairmanoftheBoard
+29
+
+
+===== LETTER 2017.md =====
+
+# Berkshire Hathaway Shareholder Letter 2017
+
+Berkshire’sPerformancevs.theS&P500
+AnnualPercentageChange
+inPer-Share inPer-Share inS&P500
+BookValueof MarketValueof withDividends
+Year Berkshire Berkshire Included
+1965 ....................................................... 23.8 49.5 10.0
+1966 ....................................................... 20.3 (3.4) (11.7)
+1967 ....................................................... 11.0 13.3 30.9
+1968 ....................................................... 19.0 77.8 11.0
+1969 ....................................................... 16.2 19.4 (8.4)
+1970 ....................................................... 12.0 (4.6) 3.9
+1971 ....................................................... 16.4 80.5 14.6
+1972 ....................................................... 21.7 8.1 18.9
+1973 ....................................................... 4.7 (2.5) (14.8)
+1974 ....................................................... 5.5 (48.7) (26.4)
+1975 ....................................................... 21.9 2.5 37.2
+1976 ....................................................... 59.3 129.3 23.6
+1977 ....................................................... 31.9 46.8 (7.4)
+1978 ....................................................... 24.0 14.5 6.4
+1979 ....................................................... 35.7 102.5 18.2
+1980 ....................................................... 19.3 32.8 32.3
+1981 ....................................................... 31.4 31.8 (5.0)
+1982 ....................................................... 40.0 38.4 21.4
+1983 ....................................................... 32.3 69.0 22.4
+1984 ....................................................... 13.6 (2.7) 6.1
+1985 ....................................................... 48.2 93.7 31.6
+1986 ....................................................... 26.1 14.2 18.6
+1987 ....................................................... 19.5 4.6 5.1
+1988 ....................................................... 20.1 59.3 16.6
+1989 ....................................................... 44.4 84.6 31.7
+1990 ....................................................... 7.4 (23.1) (3.1)
+1991 ....................................................... 39.6 35.6 30.5
+1992 ....................................................... 20.3 29.8 7.6
+1993 ....................................................... 14.3 38.9 10.1
+1994 ....................................................... 13.9 25.0 1.3
+1995 ....................................................... 43.1 57.4 37.6
+1996 ....................................................... 31.8 6.2 23.0
+1997 ....................................................... 34.1 34.9 33.4
+1998 ....................................................... 48.3 52.2 28.6
+1999 ....................................................... 0.5 (19.9) 21.0
+2000 ....................................................... 6.5 26.6 (9.1)
+2001 ....................................................... (6.2) 6.5 (11.9)
+2002 ....................................................... 10.0 (3.8) (22.1)
+2003 ....................................................... 21.0 15.8 28.7
+2004 ....................................................... 10.5 4.3 10.9
+2005 ....................................................... 6.4 0.8 4.9
+2006 ....................................................... 18.4 24.1 15.8
+2007 ....................................................... 11.0 28.7 5.5
+2008 ....................................................... (9.6) (31.8) (37.0)
+2009 ....................................................... 19.8 2.7 26.5
+2010 ....................................................... 13.0 21.4 15.1
+2011 ....................................................... 4.6 (4.7) 2.1
+2012 ....................................................... 14.4 16.8 16.0
+2013 ....................................................... 18.2 32.7 32.4
+2014 ....................................................... 8.3 27.0 13.7
+2015 ....................................................... 6.4 (12.5) 1.4
+2016 ....................................................... 10.7 23.4 12.0
+2017 ....................................................... 23.0 21.9 21.8
+CompoundedAnnualGain–1965-2017 ........................... 19.1% 20.9% 9.9%
+OverallGain–1964-2017 ...................................... 1,088,029% 2,404,748% 15,508%
+Note:Dataareforcalendaryearswiththeseexceptions:1965and1966,yearended9/30;1967,15monthsended12/31.Startingin1979,accounting
+rulesrequiredinsurancecompaniestovaluetheequitysecuritiestheyholdatmarketratherthanatthelowerofcostormarket,whichwaspreviously
+therequirement.Inthistable,Berkshire’sresultsthrough1978havebeenrestatedtoconformtothechangedrules.Inallotherrespects,theresultsare
+calculated usingthe numbers originallyreported. The S&P500numbers arepre-taxwhereastheBerkshirenumbersareafter-tax.Ifacorporation
+such as Berkshire were simply to have owned the S&P 500 and accrued the appropriate taxes, its results would have lagged the S&P 500 in years
+whenthatindexshowedapositivereturn,butwouldhaveexceededtheS&P500inyearswhentheindexshowedanegativereturn.Overtheyears,
+thetaxcostswouldhavecausedtheaggregatelagtobesubstantial.
+2
+
+BERKSHIREHATHAWAYINC.
+TotheShareholdersofBerkshireHathawayInc.:
+Berkshire’s gain in net worth during 2017 was $65.3 billion, which increased the per-share book value of
+bothourClassAandClassBstockby23%.Overthelast53years(thatis,sincepresentmanagementtookover),per-
+sharebookvaluehasgrownfrom$19to$211,750,arateof19.1%compoundedannually.*
+The format of that opening paragraph has been standard for 30 years. But 2017 was far from standard: A
+largeportionofourgaindidnotcomefromanythingweaccomplishedatBerkshire.
+The $65 billion gain is nonetheless real – rest assured of that. But only $36 billion came from Berkshire’s
+operations. The remaining $29 billion was delivered to us in December when Congress rewrote the U.S. Tax Code.
+(DetailsofBerkshire’stax-relatedgainappearonpageK-32andpagesK-89–K-90.)
+After stating those fiscal facts, I would prefer to turn immediately to discussing Berkshire’s operations. But,
+in still another interruption, I must first tell you about a new accounting rule – a generally accepted accounting
+principle(GAAP)–thatinfuturequarterlyandannualreportswillseverelydistortBerkshire’snetincomefiguresand
+veryoftenmisleadcommentatorsandinvestors.
+The new rule says that the net change in unrealized investment gains and losses in stocks we hold must be
+included in all net income figures we report to you. That requirement will produce some truly wild and capricious
+swingsinourGAAPbottom-line.Berkshireowns$170billionofmarketablestocks(notincludingoursharesofKraft
+Heinz), and the value of these holdings can easily swing by $10 billion or more within a quarterly reporting period.
+Includinggyrationsofthatmagnitudeinreportednetincomewillswampthetrulyimportantnumbersthatdescribeour
+operatingperformance.Foranalyticalpurposes,Berkshire’s“bottom-line”willbeuseless.
+The new rule compounds the communication problems we have long had in dealing with the realized gains
+(or losses) that accounting rules compel us to include in our net income. In past quarterly and annual press releases,
+wehaveregularlywarnedyounottopayattentiontotheserealizedgains,becausethey–justlikeourunrealizedgains
+–fluctuaterandomly.
+That’slargelybecausewesellsecuritieswhenthatseemstheintelligentthingtodo,notbecausewearetrying
+toinfluenceearningsinanyway.Asaresult,wesometimeshavereportedsubstantialrealizedgainsforaperiodwhen
+ourportfolio,overall,performedpoorly(ortheconverse).
+*All per-share figures used in this report apply to Berkshire’s A shares. Figures for the B shares are 1/1500th of those
+shownfortheAshares.
+3
+
+With the new rule about unrealized gains exacerbating the distortion caused by the existing rules applying to
+realized gains, we will take pains every quarter to explain the adjustments you need in order to make sense of our
+numbers. But televised commentary on earnings releases is often instantaneous with their receipt, and newspaper
+headlines almost always focus on the year-over-year change in GAAP net income. Consequently, media reports
+sometimeshighlightfiguresthatunnecessarilyfrightenorencouragemanyreadersorviewers.
+We will attempt to alleviate this problem by continuing our practice of publishing financial reports late on
+Friday, well after the markets close, or early on Saturday morning. That will allow you maximum time for analysis
+and give investment professionals the opportunity to deliver informed commentary before markets open on Monday.
+Nevertheless,Iexpectconsiderableconfusionamongshareholdersforwhomaccountingisaforeignlanguage.
+At Berkshire what counts most are increases in our normalized per-share earning power. That metric is what
+CharlieMunger,mylong-timepartner,andIfocuson–andwehopethatyoudo,too.Ourscorecardfor2017follows.
+Acquisitions
+There are four building blocks that add value to Berkshire: (1) sizable stand-alone acquisitions; (2) bolt-on
+acquisitions that fit with businesses we already own; (3) internal sales growth and margin improvement at our many
+and varied businesses; and (4) investment earnings from our huge portfolio of stocks and bonds. In this section, we
+willreview2017acquisitionactivity.
+In our search for new stand-alone businesses, the key qualities we seek are durable competitive strengths;
+able and high-grade management; good returns on the net tangible assets required to operate the business;
+opportunitiesforinternalgrowthatattractivereturns;and,finally,asensiblepurchaseprice.
+That last requirement proved a barrier to virtually all deals wereviewedin2017,asprices fordecent,butfar
+from spectacular, businesses hit an all-time high. Indeed, price seemed almost irrelevant to an army of optimistic
+purchasers.
+Why the purchasing frenzy? In part, it’s because the CEO job self-selects for “can-do” types. If Wall Street
+analystsorboardmembersurgethatbrandofCEOtoconsiderpossibleacquisitions,it’sabitliketellingyourripening
+teenagertobesuretohaveanormalsexlife.
+OnceaCEOhungersforadeal,heorshewillneverlackforforecasts thatjustifythepurchase.Subordinates
+will be cheering, envisioning enlarged domains and the compensation levels that typically increase with corporate
+size. Investment bankers, smelling huge fees, will be applauding as well. (Don’t ask the barber whether you need a
+haircut.) If the historical performance of the target falls short of validating its acquisition, large “synergies” will be
+forecast.Spreadsheetsneverdisappoint.
+The ample availability of extraordinarily cheap debt in 2017 further fueled purchase activity. After all, even
+a high-priced deal will usually boost per-share earnings if it is debt-financed. At Berkshire, in contrast, we evaluate
+acquisitionsonanall-equitybasis,knowingthatourtasteforoveralldebtisverylowandthattoassignalargeportion
+of our debt to any individual business would generally be fallacious (leaving aside certain exceptions, such as debt
+dedicated to Clayton’s lending portfolio or to the fixed-asset commitments at our regulated utilities). We also never
+factorin,nordoweoftenfind,synergies.
+Our aversion to leverage has dampened our returns over the years. But Charlie and I sleep well. Both of us
+believeitisinsanetoriskwhatyouhaveandneedinordertoobtainwhatyoudon’tneed.Weheldthisview50years
+ago when we each ran an investment partnership, funded by a few friends and relatives who trusted us. We also hold
+ittodayafteramillionorso“partners”havejoinedusatBerkshire.
+4
+
+Despite our recent drought of acquisitions, Charlie and I believe that from time to time Berkshire will have
+opportunities to make very large purchases. In the meantime, we will stick with our simple guideline: The less the
+prudencewithwhichothersconducttheiraffairs,thegreatertheprudencewithwhichwemustconductourown.
+************
+Wewereabletomakeonesensiblestand-alonepurchaselastyear,a38.6%partnershipinterestinPilotFlying
+J (“PFJ”). With about $20 billion in annual volume, the company is far and away the nation’s leading travel-center
+operator.
+PFJ has been run from the get-go by the remarkable Haslam family. “Big Jim” Haslam began with a dream
+and a gas station 60 years ago. Now his son, Jimmy, manages 27,000 associates at about 750 locations throughout
+North America. Berkshire has a contractual agreement to increase its partnership interest in PFJ to 80% in 2023;
+Haslamfamilymemberswillthenowntheremaining20%.Berkshireisdelightedtobetheirpartner.
+When driving on the Interstate, drop in. PFJ sells gasoline as well as diesel fuel, and the food is good. If it’s
+beenalongday,remember,too,thatourpropertieshave5,200showers.
+************
+Let’s move now to bolt-on acquisitions. Some of these were small transactions that I will not detail. Here is
+anaccount,however,ofafewlargerpurchaseswhoseclosingsstretchedbetweenlate2016andearly2018.
+Š Clayton Homes acquired two builders of conventional homes during 2017, a move that more than doubled
+our presence in a field we entered only three years ago. With these additions – Oakwood Homes in Colorado and
+HarrisDoyleinBirmingham–Iexpectour2018sitebuiltvolumewillexceed$1billion.
+Clayton’s emphasis, nonetheless, remains manufactured homes, both their construction and their financing.
+In2017Claytonsold19,168unitsthroughitsownretailoperationandwholesaledanother26,706unitstoindependent
+retailers. Alltold,Claytonaccounted for49%ofthemanufactured-home marketlastyear.Thatindustry-leading share
+– about three times what our nearest competitor did – is a far cry from the 13% Clayton achieved in 2003, the year it
+joinedBerkshire.
+BothClaytonHomesandPFJarebasedinKnoxville,wheretheClaytonandHaslamfamilieshavelongbeen
+friends. Kevin Clayton’s comments to the Haslams about the advantages of a Berkshire affiliation, and his admiring
+commentsabouttheHaslamfamilytome,helpedcementthePFJdeal.
+Š Near the end of 2016, Shaw Industries, our floor coverings business, acquired U.S. Floors (“USF”), a rapidly
+growing distributor of luxury vinyl tile. USF’s managers, Piet Dossche and Philippe Erramuzpe, came out of the gate
+fast, delivering a 40% increase in sales in 2017, during which their operation was integrated with Shaw’s. It’s clear
+thatweacquiredbothgreathumanassetsandbusinessassetsinmakingtheUSFpurchase.
+Vance Bell, Shaw’s CEO, originated, negotiated and completed this acquisition, which increased Shaw’s
+sales to $5.7 billion in 2017 and its employment to 22,000. With the purchase of USF, Shaw has substantially
+strengtheneditspositionasanimportantanddurablesourceofearningsforBerkshire.
+Š I have told you several times about HomeServices, our growing real estate brokerage operation. Berkshire
+backedintothisbusinessin2000whenweacquiredamajorityinterestinMidAmericanEnergy(nownamedBerkshire
+Hathaway Energy). MidAmerican’s activities were then largely in the electric utility field, and I originally paid little
+attentiontoHomeServices.
+5
+
+But,year-by-year,thecompanyaddedbrokersand,bytheendof2016,HomeServiceswasthesecond-largest
+brokerage operation in the country – still ranking, though, far behind the leader, Realogy. In 2017, however,
+HomeServices’ growth exploded. We acquired the industry’s third-largest operator, Long and Foster; number 12,
+HoulihanLawrence;andGloriaNilson.
+With those purchases we added 12,300 agents, raising our total to 40,950. HomeServices is now close to
+leading the country in home sales, having participated (including our three acquisitions pro-forma) in $127 billion of
+“sides” during 2017. To explain that term, there are two “sides” to every transaction; if we represent both buyer and
+seller,thedollarvalueofthetransactioniscountedtwice.
+Despite its recent acquisitions, HomeServices is on track to do only about 3% of the country’s home-
+brokerage business in 2018. That leaves 97% to go. Given sensible prices, we will keep adding brokers in this most
+fundamentalofbusinesses.
+Š Finally, Precision Castparts, a company built through acquisitions, bought Wilhelm Schulz GmbH, a
+German maker of corrosion resistant fittings, piping systems and components. Please allow me to skip a further
+explanation. I don’t understand manufacturing operations as well as I do the activities of real estate brokers, home
+buildersortruckstops.
+Fortunately, I don’t need in this instance to bring knowledge to the table: Mark Donegan, CEO of Precision,
+is an extraordinary manufacturing executive, and any business in his domain is slated to do well. Betting on people
+cansometimesbemorecertainthanbettingonphysicalassets.
+Let’s now move on to operations, beginning with property-casualty (“p/c”) insurance, a business I do
+understandandtheenginethatfor51yearshaspoweredBerkshire’sgrowth.
+Insurance
+Before I discuss our 2017 insurance results, let me remind you of how and why we entered the field. We
+began by purchasing National Indemnity and a smaller sister company for $8.6 million in early 1967. With our
+purchase we received $6.7million of tangible net worth that, bythe nature of the insurance business, wewere able to
+deployinmarketablesecurities.Itwaseasytorearrangetheportfoliointosecuritieswewouldotherwisehaveownedat
+Berkshireitself.Ineffect,wewere“tradingdollars”forthenetworthportionofthecost.
+The $1.9 million premium over net worth that Berkshire paid brought us an insurance business that usually
+delivered anunderwriting profit. Evenmoreimportant, theinsurance operation carried withit$19.4million of“float”
+–moneythatbelongedtoothersbutwasheldbyourtwoinsurers.
+Ever since, float has been of great importance to Berkshire. When we invest these funds, all dividends,
+interest and gains from their deployment belong to Berkshire. (If we experience investment losses, those, of course,
+areonourtabaswell.)
+Float materializes at p/c insurers in several ways: (1) Premiums are generally paid to the company upfront
+whereaslossesoccuroverthelifeofthepolicy,usuallyasix-monthorone-yearperiod;(2)Thoughsomelosses,such
+as car repairs, are quickly paid, others – such as the harm caused by exposure to asbestos – may take many years to
+surface and even longer to evaluate and settle; (3) Loss payments are sometimes spread over decades in cases, say, of
+a person employed by one of our workers’ compensation policyholders being permanently injured and thereafter
+requiringexpensivelifetimecare.
+6
+
+Float generally grows as premium volume increases. Additionally, certain p/c insurers specialize in lines of
+business such as medical malpractice or product liability – business labeled “long-tail” in industry jargon – that
+generatefarmorefloatthan,say,autocollisionandhomeownerpolicies,whichrequireinsurerstoalmostimmediately
+makepaymentstoclaimantsforneededrepairs.
+Berkshire has been a leader in long-tail business for many years. In particular, we have specialized in jumbo
+reinsurance policies that leave us assuming long-tail losses already incurred by other p/c insurers. As a result of our
+emphasizingthatsortofbusiness,Berkshire’sgrowthinfloathasbeenextraordinary.Wearenowthecountry’ssecond
+largestp/ccompanymeasuredbypremiumvolumeanditsleader,byfar,infloat.
+Here’stherecord:
+(in$millions)
+Year PremiumVolume Float
+1970 $ 39 $ 39
+1980 185 237
+1990 582 1,632
+2000 19,343 27,871
+2010 30,749 65,832
+2017 60,597 114,500
+Our2017volume wasboosted by a huge deal in which wereinsured upto$20billion oflong-tail losses that
+AIG had incurred. Our premium for this policy was $10.2 billion, a world’s record and one we won’t come close to
+repeating.Premiumvolumewillthereforefallsomewhatin2018.
+Float will probably increase slowly for at least a few years. When weeventually experience a decline, it will
+be modest – at most 3% or so in any single year. Unlike bank deposits or life insurance policies containing surrender
+options, p/c float can’t be withdrawn. This means that p/c companies can’t experience massive “runs” in times of
+widespread financial stress, a characteristic of prime importance to Berkshire that we factor into our investment
+decisions.
+Charlie and I never will operate Berkshire in a manner that depends on the kindness of strangers – or even
+that of friends who may be facing liquidity problems of their own. During the 2008-2009 crisis, we liked having
+Treasury Bills – loads of Treasury Bills –that protected us from having to rely on funding sources such as bank lines
+or commercial paper. We have intentionally constructed Berkshire in a manner that will allow it to comfortably
+withstandeconomicdiscontinuities,includingsuchextremesasextendedmarketclosures.
+************
+Thedownsideoffloatisthatitcomeswithrisk,sometimesoceansofrisk.Whatlookspredictableininsurance
+can be anything but. Take the famous Lloyds insurance market, which produced decent results for three centuries. In
+the 1980’s, though, huge latent problems from a few long-tail lines of insurance surfaced at Lloyds and, for a time,
+threatenedtodestroyitsstoriedoperation.(Ithas,Ishouldadd,fullyrecovered.)
+Berkshire’s insurance managers are conservative and careful underwriters, who operate in a culture that has
+longprioritizedthosequalities.Thatdisciplinedbehaviorhasproducedunderwritingprofitsinmostyears,andinsuch
+instances, our cost of float was less than zero. In effect, we got paid then for holding the huge sums tallied in the
+earliertable.
+Ihavewarnedyou,however,thatwehavebeenfortunateinrecentyearsandthatthecatastrophe-light period
+the industry was experiencing was not a new norm. Last September drove home that point, as three significant
+hurricaneshitTexas,FloridaandPuertoRico.
+7
+
+Myguessatthistimeisthattheinsuredlossesarisingfromthehurricanesare$100billionorso.Thatfigure,
+however, could be far off the mark. The pattern with most mega-catastrophes has been that initial loss estimates ran
+low. As well-known analyst V.J. Dowling has pointed out, the loss reserves of an insurer are similar to a self-graded
+exam. Ignorance, wishful thinking or, occasionally, downright fraud can deliver inaccurate figures about an insurer’s
+financialconditionforaverylongtime.
+We currently estimate Berkshire’s losses from the three hurricanes to be $3 billion (or about $2 billion after
+tax).Ifboththatestimate andmyindustryestimate of$100billionareclosetoaccurate,ourshareoftheindustryloss
+was about 3%. I believe that percentage is also what we may reasonably expect to be our share of losses in future
+Americanmega-cats.
+It’s worth noting that the $2 billion net cost from the three hurricanes reduced Berkshire’s GAAP net worth
+by less than 1%. Elsewhere in the reinsurance industry there were many companies that suffered losses in net worth
+ranging from 7% to more than 15%. The damage to them could have been far worse: Had Hurricane Irma followed a
+paththroughFloridaonlyabittotheeast,insuredlossesmightwellhavebeenanadditional$100billion.
+We believe that the annual probability of a U.S. mega-catastrophe causing $400 billion or more of insured
+losses is about 2%. No one, of course, knows the correct probability. We do know, however, that the risk increases
+overtimebecauseofgrowthinboththenumberandvalueofstructureslocatedincatastrophe-vulnerableareas.
+No company comes close to Berkshire in being financially prepared for a $400 billion mega-cat. Our share
+of such a loss might be $12 billion or so, an amount far below the annual earnings we expect from our non-insurance
+activities. Concurrently, much – indeed, perhaps most – of the p/c world would be out of business. Our unparalleled
+financial strength explains why other p/c insurers come to Berkshire – and only Berkshire – when they, themselves,
+needtopurchasehugereinsurancecoveragesforlargepaymentstheymayhavetomakeinthefarfuture.
+Prior to 2017, Berkshire had recorded 14 consecutive years of underwriting profits, which totaled $28.3
+billion pre-tax. Ihaveregularly toldyouthatIexpectBerkshiretoattainanunderwritingprofitinamajority ofyears,
+butalsotoexperience losses from time totime. Mywarningbecame fact in2017,aswelost$3.2billionpre-taxfrom
+underwriting.
+A large amount of additional information about our various insurance operations is included in the 10-K at
+the back of this report. The only point I will add here is that you have some extraordinary managers working for you
+at our various p/c operations. This is a business in which there are no trade secrets, patents, or locational advantages.
+Whatcountsarebrainsandcapital.ThemanagersofourvariousinsurancecompaniessupplythebrainsandBerkshire
+providesthecapital.
+************
+For many years, this letter has described the activities of Berkshire’s many other businesses. That discussion
+has become both repetitious and partially duplicative of information regularly included in the 10-K that follows the
+letter.Consequently,thisyearIwillgiveyouasimplesummaryofourdozensofnon-insurancebusinesses.Additional
+detailscanbefoundonpagesK-5–K-22andpagesK-40–K-50.
+Viewed as a group – and excluding investment income – our operations other than insurance delivered pre-
+taxincomeof$20billionin2017,anincreaseof$950millionover2016.About44%ofthe2017profitcamefromtwo
+subsidiaries. BNSF, our railroad, and Berkshire Hathaway Energy (of which we own 90.2%). You can read more
+aboutthesebusinessesonpagesK-5–K-10andpagesK-40–K-44.
+Proceeding down Berkshire’s long list of subsidiaries, our next five non-insurance businesses, as ranked by
+earnings (but presented here alphabetically) Clayton Homes, International Metalworking Companies, Lubrizol,
+Marmon and Precision Castparts had aggregate pre-tax income in 2017 of $5.5 billion, little changed from the $5.4
+billionthesecompaniesearnedin2016.
+The next five, similarly ranked and listed (Forest River, Johns Manville, MiTek, Shaw and TTI) earned $2.1
+billionlastyear,upfrom$1.7billionin2016.
+8
+
+The remaining businesses that Berkshire owns – and there are many – recorded little change in pre-tax
+income,whichwas$3.7billionin2017versus$3.5billionin2016.
+Depreciation charges for all of these non-insurance operations totaled $7.6 billion; capital expenditures were
+$11.5 billion. Berkshire is always looking for ways to expand its businesses and regularly incurs capital expenditures
+that far exceed its depreciation charge. Almost 90% of our investments are made in the United States. America’s
+economicsoilremainsfertile.
+Amortization charges were an additional $1.3 billion. I believe that in large part this item is not a true
+economic cost. Partially offsetting this good news is the fact that BNSF (like all other railroads) records depreciation
+chargesthatfallwellshortofthesumsregularlyneededtokeeptherailroadinfirst-classshape.
+Berkshire’s goal is to substantially increase the earnings of its non-insurance group. For that to happen, we
+willneedtomakeoneormorehugeacquisitions. Wecertainly havetheresourcestodoso.AtyearendBerkshireheld
+$116.0billionincashandU.S.TreasuryBills(whoseaveragematuritywas88days),upfrom$86.4billionatyearend
+2016. This extraordinary liquidity earns only a pittance and is far beyond the level Charlie and I wish Berkshire to
+have.OursmileswillbroadenwhenwehaveredeployedBerkshire’sexcessfundsintomoreproductiveassets.
+Investments
+Belowwelistourfifteencommonstockinvestmentsthatatyearendhadthelargestmarketvalue.Weexclude
+our Kraft Heinz holding – 325,442,152 shares – because Berkshire is part of a control group and therefore must
+account for this investment on the “equity” method. On its balance sheet, Berkshire carries its Kraft Heinz holding at
+aGAAPfigureof$17.6billion.Theshareshadayearendmarketvalueof$25.3billion,andacostbasisof$9.8billion.
+12/31/17
+Percentageof
+Company
+Shares* Company Owned Cost** Market
+(inmillions)
+151,610,700 AmericanExpressCompany .................. 17.6 $ 1,287 $ 15,056
+166,713,209 AppleInc. ................................. 3.3 20,961 28,213
+700,000,000 BankofAmericaCorporation ................. 6.8 5,007 20,664
+53,307,534 TheBankofNewYorkMellonCorporation ...... 5.3 2,230 2,871
+225,000,000 BYDCompanyLtd. ......................... 8.2 232 1,961
+6,789,054 CharterCommunications,Inc. ................. 2.8 1,210 2,281
+400,000,000 TheCoca-ColaCompany ..................... 9.4 1,299 18,352
+53,110,395 DeltaAirlinesInc. .......................... 7.4 2,219 2,974
+44,527,147 GeneralMotorsCompany .................... 3.2 1,343 1,825
+11,390,582 TheGoldmanSachsGroup,Inc. ............... 3.0 654 2,902
+24,669,778 Moody’sCorporation ........................ 12.9 248 3,642
+74,587,892 Phillips66 ................................. 14.9 5,841 7,545
+47,659,456 SouthwestAirlinesCo. ....................... 8.1 1,997 3,119
+103,855,045 U.S.Bancorp .............................. 6.3 3,343 5,565
+482,544,468 WellsFargo&Company ..................... 9.9 11,837 29,276
+Others .................................... 14,968 24,294
+TotalCommonStocksCarriedatMarket......... $ 74,676 $ 170,540
+* ExcludessharesheldbypensionfundsofBerkshiresubsidiaries.
+** This is our actual purchase price and also our tax basis; GAAP “cost” differs in a few cases because of
+write-downsthathavebeenrequiredunderGAAPrules.
+9
+
+Some of the stocks in the table are theresponsibility ofeither ToddCombsorTedWeschler, whoworkwith
+me in managing Berkshire’s investments. Each, independently of me, manages more than $12 billion; I usually learn
+about decisions they have made by looking at monthly portfolio summaries. Included in the $25 billion that the two
+manageismorethan$8billionofpensiontrustassetsofcertainBerkshiresubsidiaries.Asnoted,pensioninvestments
+arenotincludedintheprecedingtabulationofBerkshireholdings.
+************
+CharlieandIviewthemarketablecommonstocksthatBerkshireownsasinterestsinbusinesses,notasticker
+symbols to be bought or sold based on their “chart” patterns, the “target” prices of analysts or the opinions of media
+pundits. Instead, we simply believe that if the businesses of the investees are successful (as we believe most will be)
+our investments will be successful as well. Sometimes the payoffs to us will be modest; occasionally thecashregister
+will ring loudly. And sometimes I will make expensive mistakes. Overall – and over time – we should get decent
+results.InAmerica,equityinvestorshavethewindattheirback.
+From our stock portfolio – call our holdings “minority interests” in a diversified group of publicly-owned
+businesses – Berkshire received $3.7 billion of dividends in 2017. That’s the number included in our GAAP figures,
+aswellasinthe“operatingearnings”wereferenceinourquarterlyandannualreports.
+That dividend figure, however, far understates the “true” earnings emanating from our stock holdings. For
+decades, we have stated in Principle 6 of our “Owner-Related Business Principles” (page 19) that we expect
+undistributedearningsofourinvesteestodeliverusatleastequivalentearningsbywayofsubsequentcapitalgains.
+Our recognition of capital gains (and losses) will be lumpy, particularly as we conform with the new GAAP
+rule requiring us to constantly record unrealized gains or losses in our earnings. I feel confident, however, that the
+earnings retained by our investees will over time, and with our investees viewed as a group, translate into
+commensuratecapitalgainsforBerkshire.
+The connection of value-building to retained earnings that I’ve just described will be impossible to detect in
+the short term. Stocks surge and swoon, seemingly untethered to any year-to-year buildup in their underlying value.
+Over time, however, Ben Graham’s oft-quoted maxim proves true: “In the short run, the market is a voting machine;
+inthelongrun,however,itbecomesaweighingmachine.”
+************
+Berkshire, itself, provides some vivid examples of howprice randomness intheshortterm canobscurelong-
+term growth in value. For the last 53 years, the company has built value by reinvesting its earnings and letting
+compound interest work its magic. Year 

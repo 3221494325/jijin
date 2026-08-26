@@ -1,0 +1,50 @@
+{
+  "skill": "margin-of-safety",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》 — 巴菲特 (Warren Buffett)",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "018354全球成长从390跌到315，跌了19%，我该不该加仓摊低成本？",
+      "expected_behavior": "应激活 margin-of-safety：先验证资产质量（能力圈内且基本面未坏），再估算内在价值区间，最后用折价率判断是否出手，禁止仅因跌得多就加仓。",
+      "notes": "真实持仓场景，命中“要不要加仓”+“跌了很多”触发词。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "CXO板块跌了40%，现在是不是抄底的好时机？",
+      "expected_behavior": "应激活 margin-of-safety：提醒便宜不等于安全边际，先确认底层资产质量与内在价值区间，再看折价是否显著，警惕困境反转题材。",
+      "notes": "“跌了40%+抄底”是典型出价纪律场景。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "低估值基金和打折基金值得买吗？怎么判断它有没有安全边际？",
+      "expected_behavior": "应激活 margin-of-safety，给出“好生意+好价格”双重确认的方法与折价率门槛。",
+      "notes": "方法论求助场景，触发词“安全边际”“打折”。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我算一下这只基金的DCF精确估值，要精确到小数点后两位。",
+      "expected_behavior": "不应激活 margin-of-safety（没有出价决策，只有估值计算请求），应激活 intrinsic-value-ruler 并说明内在价值只能给区间。",
+      "notes": "跨 skill 混淆诱饵: 估值计算 ≠ 出价纪律。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "AI行业我看不懂，但这个AI主题基金很火，要不要买？",
+      "expected_behavior": "不应激活 margin-of-safety 的出价流程，应激活 circle-of-competence（圈外一票否决优先于价格判断）。",
+      "notes": "跨 skill 混淆诱饵: 圈外资产根本不进入出价环节。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "一只我完全看不懂的高收益债基金，票息很高、价格很低，能买吗？",
+      "expected_behavior": "边界情况: 应拒绝给出出价建议——圈外（circle-of-competence 否决）+ 会计炼金术警告（EBDIT/应计利息式高收益不可信），一票否决优先。",
+      "notes": "边界: “便宜+高收益”是典型假便宜，必须同时触发不做清单与圈外判定。"
+    }
+  ]
+}

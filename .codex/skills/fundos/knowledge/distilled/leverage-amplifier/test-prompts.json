@@ -1,0 +1,52 @@
+{
+  "skill": "leverage-amplifier",
+  "version": "0.1.0",
+  "source_book": "《非同寻常的大众幻想与群众性癫狂》 — Charles Mackay",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "半导体板块融资余额一个月翻倍，两融资金疯狂涌入，我手里的半导体基金要不要先撤？",
+      "expected_behavior": "应激活 leverage-amplifier：识别杠杆载体、测量杠杆强度，输出脆弱性评级与减仓/止损动作",
+      "notes": "正面场景：融资余额激增的杠杆风险检查"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "市场上有带2倍杠杆的科技ETF，我科技仓位已经48%超标了，要不要用杠杆产品博一把反弹？",
+      "expected_behavior": "应激活 leverage-amplifier：提示杠杆产品放大回撤风险、科技仓位已超40%阈值，输出禁止追加与减杠杆暴露的结论",
+      "notes": "正面场景：考虑杠杆产品时的风控"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "科创50最近份额暴增、新基发行火爆，但机构在悄悄赎回——这是不是杠杆资金进场的危险信号？",
+      "expected_behavior": "应激活 leverage-amplifier：结合份额激增与机构赎回，套用'知情人悄悄卖、散户拼命买'结构，给出脆弱性评级",
+      "notes": "正面场景：聪明钱动向与杠杆结构交叉验证"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我算每月定投1000元、年化5%，三年后有多少。",
+      "expected_behavior": "不应激活本 skill，这是普通定投测算，走 aip_calc 类工具",
+      "notes": "诱饵：无杠杆的定投计算"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "网上到处都在晒科创50的收益，全民都在加仓半导体，我要不要也跟着买？",
+      "expected_behavior": "不应激活本 skill；用户场景是'他人行动+全民话题'，应激活同书兄弟 skill herd-contagion-check 或 mass-participation-top",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：从众/破圈场景不应被杠杆检查抢答"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "融资余额上升但幅度温和（5%），同时板块估值处于历史低位——杠杆信号和估值信号打架，怎么办？",
+      "expected_behavior": "应触发但输出综合结论：按杠杆增速分级（温和=低脆弱）+估值低位对冲，评级为中低脆弱，持有但设止损，不因单一信号清仓",
+      "notes": "边界：杠杆信号与估值信号冲突时的分级判断"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过（诱饵容错为 0），且其中至少 1 条是同书兄弟 skill 的场景（跨 skill 混淆测试）。"
+}

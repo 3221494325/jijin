@@ -1,0 +1,21 @@
+{
+  "date": "2026-08-26",
+  "source": "user_confirmed",
+  "note": "用户手动确认最新持仓；未恢复定投计划",
+  "holdings": [
+    {"name": "华夏中证绿色电力ETF联接C", "code": "018735", "value": 446.81, "day_return": 1.29, "return": -33.19, "ret_pct": -6.91, "cost": 480.00, "class": "C"},
+    {"name": "易方达全球成长精选混合（QDII）C", "code": "012922", "value": 303.07, "day_return": -9.81, "return": -86.93, "ret_pct": -22.29, "cost": 390.00, "class": "C"},
+    {"name": "摩根标普500指数（QDII）A", "code": "017641", "value": 726.79, "day_return": -1.75, "return": 6.79, "ret_pct": 0.94, "cost": 720.00, "class": "A"},
+    {"name": "摩根纳斯达克100指数（QDII）A", "code": "019172", "value": 406.82, "day_return": -3.63, "return": -13.16, "ret_pct": -3.13, "cost": 419.98, "class": "A"},
+    {"name": "易方达科创50联接A", "code": "011608", "value": 337.19, "day_return": 0.49, "return": -45.23, "ret_pct": -11.83, "cost": 382.42, "class": "A"},
+    {"name": "易方达信息产业混合A", "code": "001513", "value": 191.07, "day_return": -1.03, "return": -7.63, "ret_pct": -4.04, "cost": 198.70, "class": "A"},
+    {"name": "永赢科技智选混合C", "code": "022365", "value": 399.54, "day_return": -1.85, "return": -22.82, "ret_pct": -5.04, "cost": 422.36, "class": "C"},
+    {"name": "中欧半导体产业股票A", "code": "019759", "value": 107.54, "day_return": -2.55, "return": -5.59, "ret_pct": -4.94, "cost": 113.13, "class": "A"},
+    {"name": "中欧半导体产业股票C", "code": "019764", "value": 95.97, "day_return": -2.28, "return": -3.13, "ret_pct": -3.16, "cost": 99.10, "class": "C"}
+  ],
+  "total_value": 3014.80,
+  "total_cost": 3225.71,
+  "total_return": -210.89,
+  "total_ret_pct": -6.54,
+  "recurring_investment": false
+}

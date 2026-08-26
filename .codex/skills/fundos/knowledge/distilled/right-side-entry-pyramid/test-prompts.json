@@ -1,0 +1,52 @@
+{
+  "skill": "right-side-entry-pyramid",
+  "version": "0.1.0",
+  "source_book": "《股票大作手回忆录》 — Edwin Lefèvre",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "全球成长已经亏了19%，我想补仓摊薄成本，可行吗？",
+      "expected_behavior": "应激活 right-side-entry-pyramid，先判定这是'摊平亏损'而非右侧加仓，给出'不加仓、转止损评估'的判断框架",
+      "notes": "典型的'越跌越买摊薄'诱因场景，本技能核心纪律是绝不摊平"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "医药主线确认了，我想加仓创新药基金，一次买多少、怎么分批？",
+      "expected_behavior": "应激活本技能，给出分批3次、首仓试探（约1/5-1/3）、盈利后再加码的方案",
+      "notes": "主线确认后的建仓节奏问题"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "纳斯达克100回调了几天，我想分三批买，怎么安排节奏？",
+      "expected_behavior": "应激活本技能，检查右侧企稳信号后给出分批计划与首仓验证规则",
+      "notes": "分批建仓节奏设计，含试探仓与加码规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "科创50跌破区间下沿了，我的仓位要不要止损？",
+      "expected_behavior": "不应激活本技能，应激活 stop-loss-admission",
+      "notes": "诱饵: 跨技能混淆——破位止损属于止损纪律，不是建仓节奏"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "标普500已经涨了1.69%，要不要先止盈一部分？",
+      "expected_behavior": "不应激活本技能，应激活 hold-winners",
+      "notes": "诱饵: 跨技能混淆——盈利仓止盈属于拿住盈利纪律"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "半导体只浮亏0.82%，正好有一笔小闲钱，想补一点——这算摊平还是右侧加仓？",
+      "expected_behavior": "可激活本技能给出判定流程: 浮亏状态下加仓若无独立右侧信号即视为摊平；先用 trend-following-minimum-resistance 确认方向，未确认则不动",
+      "notes": "边界: 浮亏极小+有闲钱，容易把'加仓'包装成'抄底'，需先做方向判定"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}

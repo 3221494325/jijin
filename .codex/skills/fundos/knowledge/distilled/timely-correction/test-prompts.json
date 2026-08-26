@@ -1,0 +1,52 @@
+{
+  "skill": "timely-correction",
+  "version": "0.1.0",
+  "source_book": "《巴菲特致股东信》沃伦·巴菲特",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "018354 亏了 19%，我的买入逻辑已经被证伪了，要不要等回本再卖？",
+      "expected_behavior": "调用 timely-correction，证伪即触发纠错：用回本数学量化拖延成本（-19.15% 需涨约 23.7%），给分批止损计划，不等回本。",
+      "notes": "正面场景：b08 V2 验证问题，逻辑证伪+等回本心理。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "这只基金的管理层爆出诚信问题，但还赚着钱，要不要继续拿？",
+      "expected_behavior": "调用 timely-correction，按 x09 触发：管理层诚信是买入前提，发现诚信问题立即行动，不因账面盈利拖延。",
+      "notes": "正面场景：诚信问题触发纠错。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我总想'再观察一个季度'，这只基金是不是已经该处理了？",
+      "expected_behavior": "调用 timely-correction，识别拇指吮吸（thumb-sucking）信号，按 E 步骤跑逻辑验证与拖延成本量化。",
+      "notes": "正面场景：自我怀疑在拖延，触发纠错流程。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "017641 今天跌了 3%，我要不要割肉？",
+      "expected_behavior": "不应调用 timely-correction，应先调用 hold-three-conditions 做三条件体检；单纯价格下跌≠逻辑破坏。",
+      "notes": "跨 skill 混淆诱饵：价格波动 vs 逻辑证伪。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "给我讲讲巴菲特'时间是好企业的朋友'是什么意思？",
+      "expected_behavior": "不应调用本 skill，纯知识问答，不需要持仓纠错动作。",
+      "notes": "诱饵：概念解释请求。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "019024 涨了 20% 后回调到 +12%，我怕坐过山车，要不要先卖一部分？",
+      "expected_behavior": "不直接触发纠错：先跑三条件体检；若逻辑成立且估值未高估则继续持有；若估值已显著高估，部分止盈属于纪律（基于估值而非恐惧），可少量执行并记录。",
+      "notes": "边界：盈利回吐恐惧 vs 估值纪律，需要 hold-three-conditions 前置判断。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵中 1 条为同书兄弟 skill（hold-three-conditions）场景。"
+}
