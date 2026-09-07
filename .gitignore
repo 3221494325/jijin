@@ -2,3 +2,5 @@ __pycache__/
 *.py[cod]
 data/cache/
 data/llm/
+mobile_site/index.html
+mobile_site/data.json

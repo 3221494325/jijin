@@ -25,9 +25,9 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Build mobile snapshot
         env:
-          FUNDOS_LLM_API_KEY: \${{ secrets.FUNDOS_LLM_API_KEY }}
-          FUNDOS_LLM_BASE_URL: \${{ secrets.FUNDOS_LLM_BASE_URL }}
-          FUNDOS_LLM_MODEL: \${{ secrets.FUNDOS_LLM_MODEL }}
+          FUNDOS_LLM_API_KEY: ${{ secrets.FUNDOS_LLM_API_KEY }}
+          FUNDOS_LLM_BASE_URL: ${{ secrets.FUNDOS_LLM_BASE_URL }}
+          FUNDOS_LLM_MODEL: ${{ secrets.FUNDOS_LLM_MODEL }}
         run: python export_mobile_snapshot.py
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: \${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
