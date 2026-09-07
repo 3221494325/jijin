@@ -14,10 +14,9 @@ def public_payload(payload):
     if private:
         return payload
     result = dict(payload)
-    portfolio = payload.get("portfolio", {})
-    result["portfolio"] = {"as_of": portfolio.get("as_of", ""), "total_ret_pct": portfolio.get("total_ret_pct"), "est_ret_pct": portfolio.get("est_ret_pct")}
-    result["holdings"] = [{k: item.get(k) for k in ("name", "sector", "weight", "ret_pct", "nav_day_chg", "today_est", "freshness")} for item in payload.get("holdings", [])]
-    result["privacy"] = "redacted"
+    # GitHub Pages is intentionally public in this deployment; retain the full
+    # dashboard fields so the mobile view can show portfolio value and P/L.
+    result["privacy"] = "public-financial-data"
     return result
 
 def main():
