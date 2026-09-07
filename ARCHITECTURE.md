@@ -58,23 +58,52 @@ D:\基金项目\
 
 ## 三、数据脚本职责
 
+### 引擎分层（2026-08-28 升级，参考 akshare/OpenBB 的 Provider 模式）
+
+```
+fundos_config.py    统一配置层 — 持仓元数据/成本基准/阈值/路径 单一事实来源
+fundos_data.py      统一数据层 — 重试退避 + 多源回退 + NAV历史本地沉淀(data/nav_history) + 板块快照沉淀(data/board_history)
+fundos_analytics.py 组合分析引擎 — 回撤/夏普/波动率/相关性/风险贡献/HHI（此前缺失的能力）
+fund_engine.py      总编排 — Phase1并行(扫描/盘后/新闻) → Phase2诊断 → Phase3分析；支持 --offline
+notify.py           通知层 — Windows toast + 可选 Server酱；失败只记日志不中断
+auto_pipeline.py    自动化层 — 工作日 09:00晨报 / 15:30触发警报 / 20:30晚报(全引擎)；schtasks 注册
+```
+
+自动化日志: `data/logs/auto_YYYY-MM-DD.log`；简报输出: `fundos_morning_YYYY-MM-DD.md` / `fundos_evening_YYYY-MM-DD.md`。
+
 | 脚本 | 功能 | 数据源 |
 |------|------|--------|
-| fundos_core.py | 组合诊断（盈亏/占比/阈值/板块敞口） | 天天基金净值 + 新浪指数 |
-| market_scan.py | 全市场 224 板块排名，识别主线 | 新浪板块/概念 |
-| deep_news.py | 利好利空三层拆解 | 同花顺/见闻/东财 |
-| daily_check.py | 盘后净值复核 + 止损/止盈/换A 触发线 | 天天基金 lsjz/f10 |
+| fundos_core.py | 组合诊断（盈亏/占比/阈值/板块敞口/QDII美股代理估值+汇率因子） | fundos_data: 净值 + 指数 + 汇率 |
+| market_scan.py | 全市场224板块排名 + 主线连续性 + 轮动打分 | fundos_data: 新浪板块/概念 |
+| daily_check.py | 盘后净值复核 + 止损/止盈/换A 触发线（9只，原子写入） | fundos_data: lsjz + fundos_config 成本基准 |
+| volatility_aug.py | 单基金波动率/最大回撤预估 | fundos_data: 净值历史沉淀 |
+| fundos_analytics.py | 组合风险收益指标（含净值分位/两两相关性/XIRR） | 净值历史沉淀 + transactions.json |
+| backtest.py | 策略回测：触发线规则 vs 死扛 + 定投对照 | 净值历史沉淀 |
+| deep_news.py | 利好利空三层拆解 | 同花顺/见闻/东财搜索 |
+| news_fetch_v2.py | 六维新闻情报（v2.1 修复死源，六维全通；含情绪指数落盘） | 见闻/同花顺/新浪滚动/东财搜索 |
 | trade_journal.py | 操作记录/复盘 | 本地 JSON |
 | fundos_console_v2.py | 交互控制台（聚合以上） | — |
+| tests/test_fundos.py | 22项单元测试（含网络冒烟） | — |
+
+持仓元数据唯一来源：`fundos_config.FUND_META`（含 App 摊薄成本口径的 cost_nav 校准公式）。
+更新 portfolio_snapshot.json 后需按其中公式重推 cost_nav。
 
 ## 四、数据文件
 
 | 文件 | 内容 |
 |------|------|
-| portfolio_snapshot.json | 最新持仓快照 |
+| portfolio_snapshot.json | 最新持仓快照（权威，更新后需重推 fundos_config 的 cost_nav） |
+| daily_check_result.json | 盘后检查结果（原子写入，诊断/分析的数据入口） |
+| data/nav_history/*.json | 净值历史本地沉淀（全量落盘，读取时按窗口过滤） |
+| data/board_history/*.json | 每日板块快照（主线连续性/轮动打分的数据底座） |
+| data/sentiment_history/*.json | 日度情绪指数序列（情绪 vs 价格背离检测底座） |
+| data/news_history/news_YYYY-MM-DD.json | 当日快讯归档（去重合并，AI 全天图景与多空累计统计的数据源） |
+| fund_backtest_report.md / .json | 策略回测输出（规则 vs 死扛 / 定投对照） |
+| data/cache/ | HTTP 短期缓存（TTL，已 gitignore） |
+| fund_analytics_report.md / .json | 组合风险分析输出 |
 | transactions.json | 买卖流水 |
 | trade_journal.json | 操作/批示留痕（逐条复盘） |
-| manual_updates.json | 手动涨跌幅（优先于指数映射） |
+| manual_updates.json | 手动涨跌幅（优先于指数映射/美股代理） |
 | news_cache.json / news_result.json | 新闻缓存/结果 |
 | daily_check_YYYY-MM-DD.md | 每日盘后检查报告 |
 | deep_news_report.md / market_sector_scan.md | 新闻 / 板块扫描报告 |
@@ -93,12 +122,14 @@ D:\基金项目\
 
 | 数据 | 来源 | 状态 |
 |------|------|------|
-| 基金净值 | api.fund.eastmoney.com/f10/lsjz | ✅ 稳定 |
+| 基金净值(最新/历史) | lsjz → pingzhongdata → akshare 三级回退 | ✅ 稳定（数据层重试+落盘） |
+| 汇率(QDII估值因子) | hq.sinajs.cn fx_susdcnh | ✅ 稳定 |
 | A股/全球指数 | hq.sinajs.cn | ✅ 稳定 |
 | 行业/概念板块 | vip.stock.finance.sina.com.cn | ✅ 稳定 |
-| 新闻快讯 | 同花顺/华尔街见闻/新浪 | ✅ 稳定 |
-| 东财搜索 | search-api-web.eastmoney.com | ⚠️ 限流 |
-| 东财 push2 | push2.eastmoney.com | ❌ 避免使用 |
+| 新闻快讯 | 华尔街见闻/同花顺/新浪滚动 | ✅ 稳定 |
+| 东财资讯搜索 | search-api-web.eastmoney.com (jsonp, **必须urllib直连**，requests会破坏编码) | ✅ 可用（限流保护） |
+| 东财 searchapi/push2/cls api/sw | — | ❌ 死源（v2.1 已移除） |
+| 政府网爬虫 pbc/miit/nea | — | ❌ 长期空（v2.1 已移除） |
 
 ## 七、近期变更（2026-08-21）
 

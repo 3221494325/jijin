@@ -1,0 +1,462 @@
+{
+  "generated_at": "2026-09-07T20:30:16",
+  "window_days": 120,
+  "funds": {
+    "018735": {
+      "name": "华夏绿电",
+      "sector": "green",
+      "value": 447.9307659022069,
+      "weight": 14.7,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": -9.55,
+      "ann_ret_pct": -26.01,
+      "ann_vol_pct": 23.2,
+      "max_dd_pct": -18.46,
+      "max_dd_window": "2026-06-01→2026-07-09",
+      "sharpe": -1.12,
+      "worst_day_pct": -4.17,
+      "nav_pct": 24.7
+    },
+    "012922": {
+      "name": "全球成长",
+      "sector": "qdii",
+      "value": 300.09882018601445,
+      "weight": 9.85,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": -9.93,
+      "ann_ret_pct": -26.93,
+      "ann_vol_pct": 51.38,
+      "max_dd_pct": -34.35,
+      "max_dd_window": "2026-06-22→2026-07-29",
+      "sharpe": -0.52,
+      "worst_day_pct": -8.01,
+      "nav_pct": 10.6
+    },
+    "017641": {
+      "name": "标普500",
+      "sector": "qdii",
+      "value": 732.9922241348609,
+      "weight": 24.06,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": 3.16,
+      "ann_ret_pct": 9.78,
+      "ann_vol_pct": 11.86,
+      "max_dd_pct": -4.31,
+      "max_dd_window": "2026-06-02→2026-06-10",
+      "sharpe": 0.82,
+      "worst_day_pct": -2.51,
+      "nav_pct": 87.1
+    },
+    "019172": {
+      "name": "纳斯达克100",
+      "sector": "qdii",
+      "value": 413.4553527762199,
+      "weight": 13.57,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": -0.03,
+      "ann_ret_pct": -0.1,
+      "ann_vol_pct": 21.07,
+      "max_dd_pct": -10.83,
+      "max_dd_window": "2026-06-02→2026-07-29",
+      "sharpe": -0.0,
+      "worst_day_pct": -4.46,
+      "nav_pct": 54.1
+    },
+    "011608": {
+      "name": "科创50联接",
+      "sector": "tech",
+      "value": 339.522145642771,
+      "weight": 11.14,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": -4.9,
+      "ann_ret_pct": -13.99,
+      "ann_vol_pct": 52.91,
+      "max_dd_pct": -28.1,
+      "max_dd_window": "2026-06-30→2026-08-03",
+      "sharpe": -0.26,
+      "worst_day_pct": -7.3,
+      "nav_pct": 10.6
+    },
+    "001513": {
+      "name": "信息产业A",
+      "sector": "tech",
+      "value": 195.0369918202905,
+      "weight": 6.4,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": 1.93,
+      "ann_ret_pct": 5.89,
+      "ann_vol_pct": 58.56,
+      "max_dd_pct": -34.3,
+      "max_dd_window": "2026-06-30→2026-07-30",
+      "sharpe": 0.1,
+      "worst_day_pct": -8.45,
+      "nav_pct": 24.7
+    },
+    "022365": {
+      "name": "科技智选",
+      "sector": "tech",
+      "value": 418.0631045817648,
+      "weight": 13.72,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": 5.03,
+      "ann_ret_pct": 15.87,
+      "ann_vol_pct": 52.52,
+      "max_dd_pct": -29.18,
+      "max_dd_window": "2026-06-25→2026-07-30",
+      "sharpe": 0.3,
+      "worst_day_pct": -9.22,
+      "nav_pct": 45.9
+    },
+    "019759": {
+      "name": "半导体A",
+      "sector": "tech",
+      "value": 105.42949206218638,
+      "weight": 3.46,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": 13.61,
+      "ann_ret_pct": 46.65,
+      "ann_vol_pct": 68.87,
+      "max_dd_pct": -38.34,
+      "max_dd_window": "2026-06-30→2026-08-03",
+      "sharpe": 0.68,
+      "worst_day_pct": -8.7,
+      "nav_pct": 34.1
+    },
+    "019764": {
+      "name": "半导体",
+      "sector": "tech",
+      "value": 94.06629576148813,
+      "weight": 3.09,
+      "start": "2026-05-11",
+      "end": "2026-09-07",
+      "days": 85,
+      "period_ret_pct": 13.43,
+      "ann_ret_pct": 45.94,
+      "ann_vol_pct": 68.87,
+      "max_dd_pct": -38.37,
+      "max_dd_window": "2026-06-30→2026-08-03",
+      "sharpe": 0.67,
+      "worst_day_pct": -8.7,
+      "nav_pct": 34.1
+    }
+  },
+  "portfolio": {
+    "ann_ret_pct": 2.58,
+    "ann_vol_pct": 26.82,
+    "max_dd_pct": -15.92,
+    "max_dd_window": "2026-06-30→2026-07-30",
+    "sharpe": 0.1,
+    "hhi": 0.145,
+    "effective_funds": 6.9
+  },
+  "data_gaps": [],
+  "risk_contribution": [
+    {
+      "code": "022365",
+      "name": "科技智选",
+      "weight": 13.72,
+      "corr_portfolio": 0.89,
+      "risk_contrib_pct": 12.2
+    },
+    {
+      "code": "017641",
+      "name": "标普500",
+      "weight": 24.06,
+      "corr_portfolio": 0.49,
+      "risk_contrib_pct": 11.7
+    },
+    {
+      "code": "011608",
+      "name": "科创50联接",
+      "weight": 11.14,
+      "corr_portfolio": 0.9,
+      "risk_contrib_pct": 10.0
+    },
+    {
+      "code": "012922",
+      "name": "全球成长",
+      "weight": 9.85,
+      "corr_portfolio": 0.9,
+      "risk_contrib_pct": 8.8
+    },
+    {
+      "code": "019172",
+      "name": "纳斯达克100",
+      "weight": 13.57,
+      "corr_portfolio": 0.62,
+      "risk_contrib_pct": 8.4
+    },
+    {
+      "code": "001513",
+      "name": "信息产业A",
+      "weight": 6.4,
+      "corr_portfolio": 0.93,
+      "risk_contrib_pct": 6.0
+    },
+    {
+      "code": "019759",
+      "name": "半导体A",
+      "weight": 3.46,
+      "corr_portfolio": 0.78,
+      "risk_contrib_pct": 2.7
+    },
+    {
+      "code": "019764",
+      "name": "半导体",
+      "weight": 3.09,
+      "corr_portfolio": 0.78,
+      "risk_contrib_pct": 2.4
+    },
+    {
+      "code": "018735",
+      "name": "华夏绿电",
+      "weight": 14.7,
+      "corr_portfolio": 0.12,
+      "risk_contrib_pct": 1.8
+    }
+  ],
+  "correlation": {
+    "pairs": [
+      {
+        "a": "半导体A",
+        "b": "半导体",
+        "corr": 1.0
+      },
+      {
+        "a": "信息产业A",
+        "b": "科技智选",
+        "corr": 0.93
+      },
+      {
+        "a": "标普500",
+        "b": "纳斯达克100",
+        "corr": 0.92
+      },
+      {
+        "a": "科创50联接",
+        "b": "半导体A",
+        "corr": 0.9
+      },
+      {
+        "a": "科创50联接",
+        "b": "半导体",
+        "corr": 0.9
+      },
+      {
+        "a": "科创50联接",
+        "b": "信息产业A",
+        "corr": 0.89
+      },
+      {
+        "a": "科创50联接",
+        "b": "科技智选",
+        "corr": 0.8
+      },
+      {
+        "a": "全球成长",
+        "b": "信息产业A",
+        "corr": 0.79
+      },
+      {
+        "a": "信息产业A",
+        "b": "半导体A",
+        "corr": 0.78
+      },
+      {
+        "a": "信息产业A",
+        "b": "半导体",
+        "corr": 0.78
+      },
+      {
+        "a": "全球成长",
+        "b": "纳斯达克100",
+        "corr": 0.75
+      },
+      {
+        "a": "全球成长",
+        "b": "科技智选",
+        "corr": 0.75
+      },
+      {
+        "a": "全球成长",
+        "b": "科创50联接",
+        "corr": 0.71
+      },
+      {
+        "a": "科技智选",
+        "b": "半导体A",
+        "corr": 0.66
+      },
+      {
+        "a": "科技智选",
+        "b": "半导体",
+        "corr": 0.66
+      },
+      {
+        "a": "全球成长",
+        "b": "标普500",
+        "corr": 0.56
+      },
+      {
+        "a": "全球成长",
+        "b": "半导体A",
+        "corr": 0.55
+      },
+      {
+        "a": "全球成长",
+        "b": "半导体",
+        "corr": 0.55
+      },
+      {
+        "a": "纳斯达克100",
+        "b": "信息产业A",
+        "corr": 0.38
+      },
+      {
+        "a": "纳斯达克100",
+        "b": "科创50联接",
+        "corr": 0.35
+      },
+      {
+        "a": "纳斯达克100",
+        "b": "科技智选",
+        "corr": 0.35
+      },
+      {
+        "a": "标普500",
+        "b": "信息产业A",
+        "corr": 0.27
+      },
+      {
+        "a": "纳斯达克100",
+        "b": "半导体A",
+        "corr": 0.24
+      },
+      {
+        "a": "纳斯达克100",
+        "b": "半导体",
+        "corr": 0.24
+      },
+      {
+        "a": "标普500",
+        "b": "科创50联接",
+        "corr": 0.23
+      },
+      {
+        "a": "标普500",
+        "b": "科技智选",
+        "corr": 0.22
+      },
+      {
+        "a": "标普500",
+        "b": "半导体A",
+        "corr": 0.16
+      },
+      {
+        "a": "标普500",
+        "b": "半导体",
+        "corr": 0.16
+      },
+      {
+        "a": "华夏绿电",
+        "b": "全球成长",
+        "corr": 0.08
+      },
+      {
+        "a": "华夏绿电",
+        "b": "纳斯达克100",
+        "corr": 0.08
+      },
+      {
+        "a": "华夏绿电",
+        "b": "标普500",
+        "corr": 0.04
+      },
+      {
+        "a": "华夏绿电",
+        "b": "科技智选",
+        "corr": 0.0
+      },
+      {
+        "a": "华夏绿电",
+        "b": "信息产业A",
+        "corr": -0.03
+      },
+      {
+        "a": "华夏绿电",
+        "b": "科创50联接",
+        "corr": -0.04
+      },
+      {
+        "a": "华夏绿电",
+        "b": "半导体A",
+        "corr": -0.13
+      },
+      {
+        "a": "华夏绿电",
+        "b": "半导体",
+        "corr": -0.13
+      }
+    ],
+    "top_pairs": [
+      {
+        "a": "半导体A",
+        "b": "半导体",
+        "corr": 1.0
+      },
+      {
+        "a": "信息产业A",
+        "b": "科技智选",
+        "corr": 0.93
+      },
+      {
+        "a": "标普500",
+        "b": "纳斯达克100",
+        "corr": 0.92
+      }
+    ],
+    "bottom_pairs": [
+      {
+        "a": "华夏绿电",
+        "b": "科创50联接",
+        "corr": -0.04
+      },
+      {
+        "a": "华夏绿电",
+        "b": "半导体A",
+        "corr": -0.13
+      },
+      {
+        "a": "华夏绿电",
+        "b": "半导体",
+        "corr": -0.13
+      }
+    ],
+    "tech_cluster_avg": 0.83
+  },
+  "xirr": {
+    "portfolio": 21.35,
+    "funds": {
+      "012922": -71.0,
+      "019764": -96.9
+    },
+    "note": "基于 transactions.json 快照(2026-08-08 重建)，未含其后结构调账，仅供粗略参考",
+    "skipped": []
+  }
+}

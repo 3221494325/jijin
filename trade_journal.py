@@ -17,19 +17,12 @@ from datetime import datetime
 from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-JOURNAL = Path(r"D:\基金项目\trade_journal.json")
+JOURNAL = Path(__file__).resolve().parent / "trade_journal.json"
 
-# 已纠错代码表（与 portfolio_snapshot.json 一致）
-FUNDS = {
-    "1": ("018735", "华夏绿电"),
-    "2": ("012922", "全球成长"),
-    "3": ("017641", "标普500"),
-    "4": ("019172", "纳斯达克100"),
-    "5": ("019764", "半导体"),
-    "6": ("011608", "科创50联接"),
-    "7": ("022365", "科技智选"),
-    "8": ("019018", "信息产业"),
-}
+# 持仓表从统一配置派生（v1.2: 修复旧版硬编码错误代码/缺 019759 的问题）
+from fundos_config import FUND_META
+FUNDS = {str(i + 1): (code, meta["name"]) for i, (code, meta) in enumerate(FUND_META.items())}
+ALL_KEY = "0"  # 全组合/市场判断
 
 ACTIONS = {"1": "买入/加仓", "2": "卖出/减仓", "3": "换仓", "4": "持有不动", "5": "观察等待"}
 
@@ -73,12 +66,12 @@ def add(code=None, action=None, reason=None, expect=None, fund_name=None):
     print("\n  选择基金:")
     for k, (code, name) in FUNDS.items():
         print(f"    [{k}] {name} ({code})")
-    print("    [9] 全组合 / 市场判断")
+    print(f"    [{ALL_KEY}] 全组合 / 市场判断")
     try:
         fk = input("\n  基金编号: ").strip()
         if fk in FUNDS:
             code, name = FUNDS[fk]
-        elif fk == "9":
+        elif fk == ALL_KEY:
             code, name = "ALL", "全组合"
         else:
             print("  无效编号")

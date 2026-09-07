@@ -11,6 +11,7 @@ import subprocess
 import sys
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from portfolio_data import load_portfolio
@@ -27,6 +28,7 @@ DAILY_CHECK = ROOT / f"daily_check_{datetime.now().date().isoformat()}.md"
 PRESIDENTIAL_BRIEF = ROOT / "fundos_presidential_brief.md"
 RUN_HISTORY = ROOT / "fund_engine_runs.jsonl"
 AUDIT_REPORT = ROOT / "fund_engine_audit.md"
+ANALYTICS_RESULT = ROOT / "fund_analytics_result.json"
 
 
 def now_iso():
@@ -62,6 +64,7 @@ def normalize_news(payload):
         "schema_version": "fundos.news.v1",
         "collected_at": payload.get("collected_at", now_iso()) if isinstance(payload, dict) else now_iso(),
         "source_status": payload.get("source_status", {}) if isinstance(payload, dict) else {},
+        "sentiment_index": payload.get("sentiment_index") if isinstance(payload, dict) else None,
         "news": items,
     }
 
@@ -108,10 +111,10 @@ def load_skills():
 def dispatch_skills(snapshot, news):
     """Select auditable skills from measurable portfolio/news conditions."""
     holdings = snapshot.get("holdings", [])
-    tech_names = {"半导体", "科创50联接", "科技智选", "信息产业"}
     tech_weight = snapshot.get("tech_weight")
     if tech_weight is None:
-        tech_weight = sum(f.get("weight", 0) for f in holdings if f.get("name") in tech_names)
+        # 按板块字段兜底（v1.0 按基金名硬编码集合，改版后即失效）
+        tech_weight = sum(f.get("weight", 0) for f in holdings if f.get("sector") == "tech")
     deep_loss = [f for f in holdings if f.get("ret_pct", 0) <= -15]
     winners = [f for f in holdings if f.get("ret_pct", 0) > 0]
     news_items = news.get("news", [])
@@ -155,7 +158,7 @@ def load_portfolio_data():
     return load_portfolio()
 
 
-def write_presidential_brief(outputs, snapshot, news):
+def write_presidential_brief(outputs, snapshot, news, analytics=None):
     decision = outputs["decision"]
     holdings = snapshot.get("holdings", [])
     total = snapshot.get("total_ret_pct", 0)
@@ -163,7 +166,7 @@ def write_presidential_brief(outputs, snapshot, news):
     lines = [
         "# 总裁批示 | FundOS 基金引擎",
         f"> 批示时间: {now_iso()}",
-        f"> 持仓基准: {snapshot.get('date', 'unknown')}",
+        f"> 持仓基准: {snapshot.get('date', snapshot.get('as_of', 'unknown'))}",
         "",
         "## 一、形势研判",
         "市场扫描、持仓诊断和新闻采集已经完成。新闻与涨跌预测只作为参考输入，当前优先级仍是价格确认、仓位结构和亏损纪律。",
@@ -173,15 +176,17 @@ def write_presidential_brief(outputs, snapshot, news):
         f"- 科技/AI估算仓位: {decision['tech_weight']:.1f}%",
         f"- 深度亏损标的: {deep}",
         f"- 盈利标的: {', '.join(f['name'] for f in holdings if f.get('ret_pct', 0) > 0) or '无'}",
-        "",
-        "## 三、执行指令",
     ]
+    p = (analytics or {}).get("portfolio", {})
+    if p:
+        lines.append(
+            f"- 组合风险(近120日): 年化波动 {p.get('ann_vol_pct')}% | "
+            f"最大回撤 {p.get('max_dd_pct')}% | 夏普 {p.get('sharpe')} | "
+            f"HHI {p.get('hhi')}(有效 ~{p.get('effective_funds')}只)")
+    lines += ["", "## 三、执行指令", ""]
     for item in decision["triggered"]:
         lines.append(f"- {item['action']}（依据：{item['evidence']}）")
-    lines.extend([
-        "",
-        "## 四、风控边界",
-    ])
+    lines.extend(["", "## 四、风控边界", ""])
     for item in decision["triggered"]:
         lines.append(f"- {item['boundary']}")
     lines.extend([
@@ -200,7 +205,7 @@ def append_run_history(outputs):
     record = {
         "run_at": now_iso(),
         "mode": outputs.get("mode"),
-        "status": {k: outputs.get(k) for k in ("market_scan", "diagnosis", "daily_check", "news")},
+        "status": {k: outputs.get(k) for k in ("market_scan", "diagnosis", "daily_check", "news", "analytics")},
         "news_status": outputs.get("news_status", {}),
         "decision": outputs.get("decision", {}),
     }
@@ -265,38 +270,71 @@ def collect_news(mode):
     return 0
 
 
-def run_engine(mode="quick"):
-    """Run the complete FundOS workflow and persist one report."""
+def run_engine(mode="quick", offline=False):
+    """Run the complete FundOS workflow and persist one report.
+
+    编排（v2.0）:
+      Phase1 并行: market_scan / daily_check / news (网络型任务)
+      Phase2 串行: fundos_core 诊断（合并 Phase1 刷新的 daily_check_result）
+      Phase3 串行: fundos_analytics 组合风险分析（读本地净值沉淀，离线可用）
+    """
     outputs = {}
     outputs["mode"] = mode
+    outputs["offline"] = offline
     outputs["health"] = source_health()
     outputs["skills"] = load_skills()
-    outputs["market_scan"] = run_script("market_scan.py").returncode
-    outputs["diagnosis"] = run_script("fundos_core.py").returncode
-    outputs["daily_check"] = run_script("daily_check.py").returncode
-    outputs["news"] = collect_news(mode)
+    if offline:
+        outputs["market_scan"] = outputs["diagnosis"] = -1
+        outputs["daily_check"] = outputs["news"] = -1
+    else:
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            f_scan = pool.submit(run_script, "market_scan.py")
+            f_check = pool.submit(run_script, "daily_check.py")
+            f_news = pool.submit(collect_news, mode)
+            outputs["market_scan"] = f_scan.result().returncode
+            outputs["daily_check"] = f_check.result().returncode
+            outputs["news"] = f_news.result()
+        outputs["diagnosis"] = run_script("fundos_core.py").returncode
+    outputs["analytics"] = run_script("fundos_analytics.py", "--days", "120").returncode
+    analytics = {}
+    if ANALYTICS_RESULT.exists():
+        try:
+            analytics = json.loads(ANALYTICS_RESULT.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            analytics = {}
+    outputs["analytics_summary"] = analytics.get("portfolio", {})
     news = json.loads(NEWS_JSON.read_text(encoding="utf-8")) if NEWS_JSON.exists() else {}
     outputs["news_status"] = news.get("source_status", {})
     snapshot = load_portfolio_data()
     outputs["decision"] = dispatch_skills(snapshot, news)
-    write_presidential_brief(outputs, snapshot, news)
+    write_presidential_brief(outputs, snapshot, news, analytics)
     append_run_history(outputs)
+    step_label = lambda rc, name: (f"跳过(offline)" if rc == -1 else ("通过" if rc == 0 else "失败"))
     lines = [
         "# FundOS 基金引擎运行报告",
         f"> 运行时间: {now_iso()}",
-        f"> 模式: {mode}",
+        f"> 模式: {mode}{' (offline)' if offline else ''}",
         "",
         "## 执行状态",
         "",
-        f"- 市场扫描: {'通过' if outputs['market_scan'] == 0 else '失败'}",
-        f"- 持仓诊断: {'通过' if outputs['diagnosis'] == 0 else '失败'}",
-        f"- 新闻采集: {'通过' if outputs['news'] == 0 else '失败'}",
-        f"- 盘后净值检查: {'通过' if outputs['daily_check'] == 0 else '失败'}",
+        f"- 市场扫描: {step_label(outputs['market_scan'], 'scan')}",
+        f"- 持仓诊断: {step_label(outputs['diagnosis'], 'diag')}",
+        f"- 新闻采集: {step_label(outputs['news'], 'news')}",
+        f"- 盘后净值检查: {step_label(outputs['daily_check'], 'check')}",
+        f"- 组合风险分析: {step_label(outputs['analytics'], 'analytics')}",
         f"- 技能注册: {outputs['skills']['count']} 个",
         "",
-        "## 新闻来源状态",
-        "",
     ]
+    if analytics.get("portfolio"):
+        p = analytics["portfolio"]
+        lines += [
+            "## 组合风险指标 (近120日)",
+            "",
+            f"- 年化波动: {p.get('ann_vol_pct')}% | 最大回撤: {p.get('max_dd_pct')}% ({p.get('max_dd_window')})",
+            f"- 夏普(rf=0): {p.get('sharpe')} | HHI集中度: {p.get('hhi')} (有效基金数 ~{p.get('effective_funds')})",
+            "",
+        ]
+    lines += ["## 新闻来源状态", ""]
     for name, status in outputs["news_status"].items():
         lines.append(f"- {name}: {status.get('status')}，{status.get('items', 0)}条")
     lines.extend(["", "## 技能调度", "",
@@ -319,8 +357,11 @@ def run_engine(mode="quick"):
 
 def main():
     parser = argparse.ArgumentParser(description="FundOS unified engine")
-    parser.add_argument("command", choices=["health", "skills", "news", "scan", "diagnose", "run", "audit", "journal"])
+    parser.add_argument("command", choices=["health", "skills", "news", "scan", "diagnose",
+                                            "run", "audit", "journal", "analytics"])
     parser.add_argument("--mode", choices=["quick", "full"], default="quick")
+    parser.add_argument("--offline", action="store_true",
+                        help="跳过网络采集，仅基于本地数据重建批示/报告")
     args, extra = parser.parse_known_args()
 
     if args.command == "health":
@@ -331,13 +372,17 @@ def main():
         return 0
     if args.command == "news":
         return collect_news(args.mode)
+    if args.command == "analytics":
+        return run_script("fundos_analytics.py", "--days", "120", *extra).returncode
     if args.command == "scan":
         return run_script("market_scan.py", *extra).returncode
     if args.command == "diagnose":
         return run_script("fundos_core.py", *extra).returncode
     if args.command == "run":
-        result = run_engine(args.mode)
+        result = run_engine(args.mode, offline=args.offline)
         print(json.dumps(result, ensure_ascii=False, indent=2))
+        if args.offline:
+            return 0
         return 0 if all(result.get(k, 1) == 0 for k in ("market_scan", "diagnosis", "daily_check", "news")) else 1
     if args.command == "audit":
         print(audit_engine())

@@ -250,6 +250,28 @@ def menu_9_skills():
         print(f"\n  {C['W']}提示: 在 Codex 中直接问 FundOS 相关问题，会按 description 自动匹配技能{C['X']}")
     pause()
 
+def menu_10_dashboard():
+    """可视化面板（本地网页看板）"""
+    import subprocess
+    clear()
+    print(BANNER)
+    print(f"  {C['bold']}{C['C']}[10] 可视化面板{C['X']}")
+    print(f"  {'─'*60}")
+    dash = PROJECT_DIR / "dashboard.py"
+    if dash.exists():
+        print(f"\n  {C['Y']}📊 正在启动可视化面板（浏览器将自动打开 http://127.0.0.1:8899）...{C['X']}")
+        print(f"  {C['W']}面板在本后台运行，关闭本控制台不影响已打开的页面；{C['X']}")
+        print(f"  {C['W']}如需停止服务，运行: python dashboard.py 后按 Ctrl+C{C['X']}\n")
+        try:
+            subprocess.Popen([sys.executable, str(dash)], cwd=str(PROJECT_DIR),
+                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        except OSError as exc:
+            print(f"  {C['R']}启动失败: {exc}{C['X']}")
+    else:
+        print(f"  {C['R']}未找到: {dash}{C['X']}")
+    pause()
+
+
 def menu_6_help():
     """使用说明"""
     clear()
@@ -345,6 +367,7 @@ def main_menu():
         "7": ("全市场扫描",   menu_7_market_scan, "224板块找主线"),
         "8": ("操作记录",     menu_8_journal,   "建议留痕+复盘"),
         "9": ("蒸馏技能库",   menu_9_skills,    "22个分析师技能+导读"),
+        "10": ("可视化面板",  menu_10_dashboard, "网页看板：走势/盈亏/风险/新闻"),
         "0": ("退出",         menu_0_exit,    ""),
     }
     

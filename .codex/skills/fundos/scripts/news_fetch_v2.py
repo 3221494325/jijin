@@ -1,87 +1,88 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-FundOS 六维新闻情报系统 v2.0
+FundOS 六维新闻情报系统 v2.1
 ============================
-六维度 × 12数据源 × 三层关键词 × 关联度打分 × 智能情绪
+v2.1 (2026-08-28) 引擎修复 —— 依据 fund_engine_audit.md 审计：
+  - 移除死源: cls_telegram(405) / searchapi.eastmoney.com(JSONDecodeError)
+              / push2.eastmoney.com(ProxyError, 架构矩阵禁用) / 政府网爬虫(pbc/miit/nea 长期空)
+  - 东财搜索切换到已验证的 search-api-web.eastmoney.com (jsonp, 限流保护)
+  - 新增已验证源: 同花顺快讯 / 新浪滚动快讯
+  - 修复维度错标 bug: v2.0 所有搜索结果都标成"快讯"，导致政策/公告/宏观/资金/海外恒为空
+  - 东财调用加全局限速 + 调用预算，防限流封禁
 
 用法:
   python news_fetch_v2.py                           # 全维度采集
-  python news_fetch_v2.py --dimensions 快讯,政策,海外  # 指定维度
-  python news_fetch_v2.py --mode quick                  # 快速模式(仅快讯)
-  python news_fetch_v2.py --mode full                   # 全量模式(所有维度)
-  python news_fetch_v2.py --output daily_report.md      # 导出日报
-  python news_fetch_v2.py --schedule                    # 定时模式(盘中每小时)
+  python news_fetch_v2.py --mode quick              # 快速模式(仅快讯)
+  python news_fetch_v2.py --dimensions 快讯,海外    # 指定维度
+  python news_fetch_v2.py --format json             # 引擎契约输出(fund_engine 调用)
+  python news_fetch_v2.py --format markdown -o out.md
 
 六维:
   1.实时快讯  2.行业政策  3.基金公告  4.宏观数据  5.资金流向  6.海外联动
 """
 
-import argparse, json, os, re, sys, time, hashlib
+import argparse
+import hashlib
+import json
+import sys
 import threading
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Optional
-from urllib.parse import quote
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
+from pathlib import Path
+from urllib.parse import quote
 
-try:
-    import requests
-except ImportError:
-    print("pip install requests"); sys.exit(1)
+import requests
 
-try:
-    from bs4 import BeautifulSoup
-    HAS_BS4 = True
-except ImportError:
-    HAS_BS4 = False
+# 项目根 = .codex/skills/fundos/scripts 往上 4 级
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(PROJECT_ROOT))
+from fundos_config import FUND_SECTOR_MAP, DATA_DIR  # noqa: E402
 
-# ============================================================
-# 配置
-# ============================================================
-CACHE_DIR = Path.home() / "FundOS" / "news_cache"
+CACHE_DIR = DATA_DIR / "news_cache"
+REPORT_DIR = DATA_DIR / "reports"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
-OUTPUT_DIR = Path.home() / "FundOS" / "reports"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Accept": "text/html,application/json,*/*",
+    "Accept": "application/json, text/plain, */*",
     "Accept-Language": "zh-CN,zh;q=0.9",
 }
 
 # ============================================================
-# 六维定义 + 12数据源
+# 六维定义 + 数据源（仅保留实测可用源）
 # ============================================================
 DIMENSIONS = {
     "快讯": {
         "desc": "实时市场快讯",
-        "sources": ["cls_telegram", "eastmoney_news", "wallstreetcn_live"],
+        "sources": ["wallstreetcn_live", "ths_news", "sina_roll", "eastmoney_search"],
         "priority": 1,
     },
     "政策": {
-        "desc": "行业政策/部委文件",
-        "sources": ["eastmoney_policy", "miit_gov", "nea_gov"],
+        "desc": "行业政策/部委动向(搜索聚合)",
+        "sources": ["eastmoney_policy"],
         "priority": 2,
     },
     "公告": {
-        "desc": "基金公告(分红/限购/经理变更/持仓)",
-        "sources": ["eastmoney_fund_announce", "cninfo_announce", "tiantian_announce"],
+        "desc": "基金公告(分红/限购/经理变更, 搜索聚合)",
+        "sources": ["eastmoney_fund_announce"],
         "priority": 1,
     },
     "宏观": {
         "desc": "宏观经济数据(CPI/PMI/利率/社融)",
-        "sources": ["eastmoney_macro", "pbc_gov", "investing_macro"],
+        "sources": ["eastmoney_macro"],
         "priority": 3,
     },
     "资金": {
-        "desc": "资金流向(北向/主力/板块/龙虎榜)",
-        "sources": ["eastmoney_capital", "10jqka_capital"],
+        "desc": "资金流向(北向/主力, 搜索聚合)",
+        "sources": ["eastmoney_capital"],
         "priority": 2,
     },
     "海外": {
-        "desc": "海外市场联动(美股期货/VIX/港股/外汇)",
-        "sources": ["investing_global", "eastmoney_global", "xueqiu_hot"],
+        "desc": "海外市场联动(美股/VIX/港股)",
+        "sources": ["eastmoney_global"],
         "priority": 2,
     },
 }
@@ -91,73 +92,71 @@ DIMENSIONS = {
 # ============================================================
 KEYWORD_LAYERS = {
     "半导体": {
-        "core": ["半导体+政策", "芯片+制裁", "光刻机", "晶圆+涨价", "先进封装", "HBM"],
-        "expand": ["集成电路", "第三代半导体", "EDA", "chiplet", "存储芯片", "台积电"],
+        "core": ["半导体", "芯片", "光刻机", "晶圆", "先进封装", "HBM"],
+        "expand": ["集成电路", "第三代半导体", "EDA", "存储芯片", "台积电"],
         "related": ["AI芯片", "汽车芯片", "国产替代", "大基金"],
     },
     "AI科技": {
-        "core": ["人工智能+政策", "大模型+发布", "算力", "ChatGPT", "DeepSeek"],
+        "core": ["人工智能", "大模型", "算力", "ChatGPT", "DeepSeek"],
         "expand": ["AI应用", "机器人", "自动驾驶", "AI Agent", "具身智能"],
         "related": ["数字经济", "信创", "数据要素", "云计算"],
     },
     "美股": {
-        "core": ["美联储+利率", "标普500", "纳斯达克", "非农", "CPI+美国"],
-        "expand": ["科技七巨头", "Magnificent+7", "VIX", "美债收益率"],
+        "core": ["美联储", "标普500", "纳斯达克", "非农", "CPI"],
+        "expand": ["科技七巨头", "VIX", "美债收益率"],
         "related": ["美元指数", "人民币汇率", "中概股", "港股"],
     },
     "绿色电力": {
-        "core": ["新型电力系统", "光伏+政策", "风电+装机", "碳中和"],
-        "expand": ["储能", "特高压", "绿电交易", "新能源+补贴"],
+        "core": ["新型电力系统", "光伏", "风电", "碳中和"],
+        "expand": ["储能", "特高压", "绿电交易"],
         "related": ["电力改革", "碳排放", "虚拟电厂"],
     },
     "科创50": {
         "core": ["科创板", "科创50", "硬科技"],
-        "expand": ["专精特新", "北交所", "注册制"],
-        "related": ["IPO+科创", "科创板+解禁"],
+        "expand": ["专精特新", "北交所"],
+        "related": ["IPO", "科创板解禁"],
     },
 }
 
-# 持仓→板块映射
-FUND_SECTOR_MAP = {
-    "华夏中证绿色电力ETF联接C": ["绿色电力"],
-    "易方达全球成长精选混合(QDII)C": ["美股"],
-    "摩根标普500指数(QDII)A": ["美股"],
-    "摩根纳斯达克100指数(QDII)A": ["美股", "AI科技"],
-    "中欧半导体产业股票C": ["半导体"],
-    "易方达信息产业混合C": ["AI科技"],
-    "易方达科创50联接A": ["科创50", "半导体"],
-    "永赢科技智选混合C": ["AI科技"],
-}
-
 # ============================================================
-# 智能情绪分析 (v2.0 升级版)
+# 智能情绪分析 (v2.0 保留)
 # ============================================================
 POSITIVE_KW = {
     "strong": ["重大利好", "超预期", "大幅增长", "历史新高", "突破性"],
-    "medium": ["利好", "大涨", "突破", "增长", "回暖", "反弹", "拉升",
-               "走强", "领涨", "净流入", "政策支持", "扶持", "加速"],
+    "medium": ["利好", "大涨", "涨停", "突破", "增长", "盈利", "回暖", "反弹", "拉升",
+               "走强", "领涨", "净流入", "政策支持", "扶持", "加速",
+               "上涨", "收涨", "涨超", "涨", "扭亏", "中标", "获批", "创新高"],
 }
 
 NEGATIVE_KW = {
-    "strong": ["重大利空", "崩盘", "暴跌", "腰斩", "违约", "退市风险"],
+    "strong": ["重大利空", "崩盘", "暴跌", "腰斩", "违约", "退市风险", "造假", "欺诈",
+               "立案调查", "行政处罚", "被罚", "罚款", "警示函", "监管函", "减持"],
     "medium": ["利空", "大跌", "下挫", "亏损", "不及预期", "承压",
-               "走弱", "领跌", "净流出", "监管", "处罚", "下滑"],
+               "走弱", "领跌", "净流出", "监管", "处罚", "下滑",
+               "违规", "立案", "问询", "遭遇", "暂停上市",
+               "下跌", "收跌", "跌", "减持", "终止", "冻结", "失信", "被执行", "拖欠"],
 }
+
+# 数字涨跌幅模式：无关键词但带 "涨/跌 X%" 的快讯（如 "现货钯金涨8.00%"）
+import re as _re
+RISE_PCT_RE = _re.compile(r"(涨|升)\s*[0-9.]+%")
+FALL_PCT_RE = _re.compile(r"(跌|下挫)\s*[0-9.]+%")
 
 NEGATION_WORDS = ["不会", "未能", "并未", "没有", "避免", "防止", "止住", "扭转"]
 
 
 def classify_sentiment_v2(title: str, content: str = "") -> tuple:
-    """v2.0 智能情绪分类: 关键词加权 + 否定词检测 + 位置权重
+    """v2.2 智能情绪分类: 关键词加权 + 否定词检测 + 位置权重 + 数字涨跌幅模式
 
-    Returns: (sentiment_label, score)
+    Returns: (sentiment_label, signed_score)
+    v2.2 修复: 分值改为【带符号】(正=偏多, 负=偏空)。旧版返回绝对值，
+    导致"略偏空2分"与"略偏多2分"无法区分，下游标签错判方向。
     """
     text = (title * 3 + " " + content[:200])  # 标题权重×3
 
     pos_score = 0
     neg_score = 0
 
-    # 检测否定词 → 反转情绪
     def has_negation(text_seg: str, kw: str) -> bool:
         idx = text_seg.find(kw)
         if idx < 0:
@@ -181,310 +180,330 @@ def classify_sentiment_v2(title: str, content: str = "") -> tuple:
                 else:
                     neg_score += (3 if level == "strong" else 1)
 
+    # 数字涨跌幅: "涨8.00%" / "跌0.5%" —— 比泛词更强的方向证据
+    if RISE_PCT_RE.search(text):
+        pos_score += 2
+    if FALL_PCT_RE.search(text):
+        neg_score += 2
+
     diff = pos_score - neg_score
     if diff >= 3:
         return ("🟢偏多", diff)
     elif diff <= -3:
-        return ("🔴偏空", abs(diff))
+        return ("🔴偏空", diff)
     elif diff > 0:
         return ("🟢略偏多", diff)
     elif diff < 0:
-        return ("🔴略偏空", abs(diff))
+        return ("🔴略偏空", diff)
+    return ("⚪中性", 0)
+
+
+def sentiment_label_cn(item):
+    """中文标签（利好/利空/中性），带强弱阈值：|分值|>=2 才定性。
+    弱信号(±1分，如标题只扫到一个泛词)一律归中性 —— 宁可少说，不能乱说。"""
+    sc = item.get("sentiment_score", 0) if isinstance(item, dict) else item
+    if sc >= 2:
+        return "利好"
+    if sc <= -2:
+        return "利空"
+    return "中性"
+
+
+def compute_sentiment_index(items):
+    """多空情绪指数 v2: 0-100，50=中性。
+
+    v1 按情绪分数累加，快讯普遍带"增长/盈利"等词时会饱和到100，失去参考价值。
+    v2 改为【条数占比 + 阻尼】: index = 50 + 50*(利好条数-利空条数)/(利好+利空+8)
+      - 只统计达到定性阈值(±2分)的条目，与页面标签口径一致
+      - 阻尼项8条：少量新闻时不轻易给出极端读数
+    """
+    n_up = sum(1 for i in items if i.get("sentiment_score", 0) >= 2)
+    n_down = sum(1 for i in items if i.get("sentiment_score", 0) <= -2)
+    n_flat = len(items) - n_up - n_down
+    if n_up + n_down == 0:
+        index = 50.0
     else:
-        return ("⚪中性", 0)
+        index = round(50 + 50 * (n_up - n_down) / (n_up + n_down + 8), 1)
+    label = "偏多" if index >= 60 else ("偏空" if index <= 40 else "中性")
+    return {"index": index, "label": label, "up": n_up, "down": n_down,
+            "flat": n_flat, "count": len(items),
+            "pos": sum(max(i.get("sentiment_score", 0), 0) for i in items),
+            "neg": sum(max(-i.get("sentiment_score", 0), 0) for i in items)}
 
 
 # ============================================================
-# 关联度打分
+# 数据源采集器（仅保留实测可用源；维度由调用方传入，修复错标）
 # ============================================================
-def relevance_score(text: str, fund_name: str, sectors: list, keywords: dict) -> int:
-    """关联度打分: 直接相关(3) / 板块相关(2) / 市场相关(1)"""
-    # 3分: 提到基金名或重仓股 (简化: 检查板块核心词)
-    for kw in keywords.get("core", []):
-        main_kw = kw.split("+")[0] if "+" in kw else kw
-        if main_kw in text:
-            return 3
-    # 2分: 扩展词命中
-    for kw in keywords.get("expand", []):
-        if kw in text:
-            return 2
-    # 1分: 关联词
-    for kw in keywords.get("related", []):
-        if kw in text:
-            return 1
-    return 1  # 默认市场相关
+class NewsCollectorV21:
+    """线程安全的采集器。东财搜索带全局限速（限流保护）。"""
 
+    EM_MIN_INTERVAL = 0.6   # 两次东财搜索最小间隔(秒)
+    EM_MAX_CALLS = 40       # 单次运行东财搜索调用预算
 
-# ============================================================
-# 数据源采集器
-# ============================================================
-class NewsCollectorV2:
-    def __init__(self, timeout: int = 15):
+    def __init__(self, timeout: int = 12):
         self.timeout = timeout
         self.session = requests.Session()
         self.session.headers.update(HEADERS)
+        self._em_lock = threading.Lock()
+        self._em_last = [0.0]
+        self._em_calls = [0]
 
-    def _json(self, response):
-        response.raise_for_status()
-        return response.json()
+    # ---------- 基础 ----------
+    def _get_json(self, url, **kw):
+        resp = self.session.get(url, timeout=self.timeout, **kw)
+        resp.raise_for_status()
+        return resp.json()
 
-    # ---------- 维度1: 实时快讯 ----------
-    def fetch_cls_telegram(self, keyword: str = "") -> list:
-        """财联社7x24电报"""
+    def _em_throttle(self):
+        """东财全局限速：超预算抛错，间隔不足等待。"""
+        with self._em_lock:
+            if self._em_calls[0] >= self.EM_MAX_CALLS:
+                raise RuntimeError("东财搜索调用预算已用尽")
+            wait = self.EM_MIN_INTERVAL - (time.time() - self._em_last[0])
+            if wait > 0:
+                time.sleep(wait)
+            self._em_last[0] = time.time()
+            self._em_calls[0] += 1
+
+    # ---------- 源 1: 华尔街见闻快讯 ----------
+    def fetch_wallstreetcn_live(self, keyword: str = "", dimension: str = "快讯") -> list:
         items = []
-        try:
-            url = "https://www.cls.cn/api/sw"
-            params = {"app": "CailianpressWeb", "os": "web", "sv": "8.4.6",
-                      "keyword": keyword, "type": "telegram", "page": 0, "rn": 15}
-            resp = self.session.get(url, params=params, timeout=self.timeout)
-            data = self._json(resp)
-            for item in data.get("data", {}).get("roll_data", []):
-                items.append({
-                    "title": item.get("title", ""),
-                    "content": item.get("brief", "")[:150],
-                    "source": "财联社快讯",
-                    "url": f"https://www.cls.cn/detail/{item.get('id','')}",
-                    "date": datetime.fromtimestamp(item.get("ctime", 0)).strftime("%m-%d %H:%M"),
-                    "dimension": "快讯",
-                })
-        except Exception:
-            raise
-        return items
-
-    def fetch_eastmoney_news(self, keyword: str, max_items: int = 15) -> list:
-        """东方财富资讯搜索"""
-        items = []
-        try:
-            url = "https://searchapi.eastmoney.com/bussiness/Web/GetCMSSearchResult"
-            params = {"type": "8196", "pageindex": 1, "pagesize": max_items,
-                      "keyword": keyword, "name": "zixun"}
-            resp = self.session.get(url, params=params, timeout=self.timeout)
-            data = self._json(resp)
-            for art in data.get("Data", []):
-                title = art.get("Title", "").replace("<em>", "").replace("</em>", "")
-                if title:
+        for channel in ("global", "a-stock"):
+            try:
+                data = self._get_json(
+                    "https://api-one.wallstcn.com/apiv1/content/lives",
+                    params={"channel": f"{channel}-channel", "limit": 15})
+                for item in data.get("data", {}).get("items", []):
+                    title = (item.get("title") or item.get("content_text") or "").strip()
+                    if len(title) < 10:
+                        continue
+                    ts = item.get("display_time") or 0
                     items.append({
-                        "title": title,
-                        "content": art.get("Content", "")[:150] if "Content" in art else "",
-                        "source": "东方财富",
-                        "url": art.get("Url", ""),
-                        "date": art.get("Date", ""),
-                        "dimension": "快讯",
+                        "title": title[:120],
+                        "content": (item.get("content_text") or "")[:150],
+                        "source": f"华尔街见闻·{channel}",
+                        "url": item.get("uri", ""),
+                        "date": datetime.fromtimestamp(ts).strftime("%m-%d %H:%M") if ts else "",
+                        "dimension": dimension,
                     })
-        except Exception:
-            raise
+            except Exception:
+                continue
         return items
 
-    def fetch_wallstreetcn_live(self, keyword: str = "") -> list:
-        """华尔街见闻快讯"""
-        items = []
+    # ---------- 源 2: 同花顺快讯 ----------
+    def fetch_ths_news(self, keyword: str = "", dimension: str = "快讯") -> list:
         try:
-            url = "https://api-one.wallstcn.com/apiv1/content/lives"
-            params = {"channel": "global-channel", "limit": 15}
-            resp = self.session.get(url, params=params, timeout=self.timeout)
-            data = self._json(resp)
-            for item in data.get("data", {}).get("items", []):
-                title = item.get("title", "") + " " + item.get("content_text", "")[:80]
-                items.append({
-                    "title": title.strip(),
-                    "source": "华尔街见闻",
-                    "url": item.get("uri", ""),
-                    "date": datetime.fromtimestamp(item.get("display_time", 0)).strftime("%m-%d %H:%M"),
-                    "dimension": "快讯",
-                })
-        except Exception:
-            raise
-        return items
-
-    # ---------- 维度2: 行业政策 ----------
-    def fetch_eastmoney_policy(self, keyword: str) -> list:
-        """东方财富政策/行业新闻"""
-        # 复用 eastmoney_news，加"政策"关键字
-        return self.fetch_eastmoney_news(keyword + "+政策")
-
-    def fetch_miit_gov(self, keyword: str = "") -> list:
-        """工信部政策 (半导体/AI)"""
-        items = []
-        if not HAS_BS4:
-            return items
-        try:
-            url = f"https://www.miit.gov.cn/search/index.html?searchword={quote(keyword or '半导体')}"
-            resp = self.session.get(url, timeout=self.timeout)
-            soup = BeautifulSoup(resp.text, "html.parser")
-            for li in soup.select(".clist_con li")[:5]:
-                a_tag = li.select_one("a")
-                span = li.select_one("span")
-                if a_tag:
-                    items.append({
-                        "title": a_tag.get_text(strip=True),
-                        "source": "工信部",
-                        "url": a_tag.get("href", ""),
-                        "date": span.get_text(strip=True) if span else "",
-                        "dimension": "政策",
-                    })
-        except Exception:
-            raise
-        return items
-
-    def fetch_nea_gov(self, keyword: str = "") -> list:
-        """国家能源局政策 (绿色电力)"""
-        items = []
-        if not HAS_BS4:
-            return items
-        try:
-            url = f"https://www.nea.gov.cn/search.htm?key={quote(keyword or '光伏')}"
-            resp = self.session.get(url, timeout=self.timeout)
-            soup = BeautifulSoup(resp.text, "html.parser")
-            for item in soup.select(".list_news li")[:5]:
-                a_tag = item.select_one("a")
-                if a_tag:
-                    items.append({
-                        "title": a_tag.get_text(strip=True),
-                        "source": "国家能源局",
-                        "url": a_tag.get("href", ""),
-                        "date": "",
-                        "dimension": "政策",
-                    })
-        except Exception:
-            raise
-        return items
-
-    # ---------- 维度3: 基金公告 ----------
-    def fetch_eastmoney_fund_announce(self, keyword: str = "") -> list:
-        """天天基金公告"""
-        return self.fetch_eastmoney_news(keyword + "+公告+分红+限购+经理")
-
-    def fetch_cninfo_announce(self, keyword: str = "") -> list:
-        """巨潮资讯官方公告"""
-        items = []
-        try:
-            url = "http://www.cninfo.com.cn/new/disclosure"
-            params = {"column": "szse_latest", "pageNum": 1, "pageSize": 15}
-            resp = self.session.post(url, data=params, timeout=self.timeout)
-            data = self._json(resp)
-            groups = data if isinstance(data, list) else data.get("classifiedAnnouncements", [])
-            for item in groups[:10]:
-                if not isinstance(item, dict):
+            data = self._get_json(
+                "https://news.10jqka.com.cn/tapp/news/push/stock/",
+                params={"page": 1, "tag": "", "track": "website"})
+            out = []
+            for it in (data.get("data") or {}).get("list", [])[:25]:
+                title = (it.get("title") or "").strip()
+                if len(title) < 8:
                     continue
-                for ann in item.get("announcementList", [])[:3]:
-                    items.append({
-                        "title": ann.get("announcementTitle", ""),
-                        "source": "巨潮资讯",
-                        "url": f"http://www.cninfo.com.cn/new/disclosure/detail?announceId={ann.get('announcementId','')}",
-                        "date": datetime.fromtimestamp(ann.get("announcementTime", 0) / 1000).strftime("%m-%d"),
-                        "dimension": "公告",
+                ts = int(it.get("ctime") or 0)
+                out.append({
+                    "title": title[:120], "content": "",
+                    "source": "同花顺",
+                    "url": it.get("url", ""),
+                    "date": datetime.fromtimestamp(ts).strftime("%m-%d %H:%M") if ts else "",
+                    "dimension": dimension,
+                })
+            return out
+        except Exception:
+            raise
+
+    # ---------- 源 3: 新浪滚动快讯 ----------
+    def fetch_sina_roll(self, keyword: str = "", dimension: str = "快讯") -> list:
+        try:
+            data = self._get_json(
+                "https://feed.mix.sina.com.cn/api/roll/get",
+                params={"pageid": 153, "lid": 2509, "k": "", "num": 25, "page": 1})
+            out = []
+            for it in (data.get("result") or {}).get("data", []) or []:
+                title = (it.get("title") or "").strip()
+                if len(title) < 8:
+                    continue
+                ts = int(it.get("ctime") or 0)
+                out.append({
+                    "title": title[:120],
+                    "content": (it.get("intro") or "")[:150],
+                    "source": "新浪财经",
+                    "url": it.get("url", ""),
+                    "date": datetime.fromtimestamp(ts).strftime("%m-%d %H:%M") if ts else "",
+                    "dimension": dimension,
+                })
+            return out
+        except Exception:
+            raise
+
+    # ---------- 源 4: 东财资讯搜索 (search-api-web, jsonp) ----------
+    def fetch_eastmoney_search(self, keyword: str, dimension: str = "快讯",
+                               max_items: int = 12, retries: int = 2) -> list:
+        """注意: 必须用 urllib 原样透传 URL —— requests 会对百分号编码做规范化，
+        破坏 param 中的 JSON 转义，东财会返回错误的 result 维度 (passportWeb)。"""
+        import urllib.request
+        self._em_throttle()
+        param = {
+            "uid": "", "keyword": keyword,
+            "type": ["cmsArticleWebOld"], "client": "web", "clientVersion": "curr",
+            "param": {"cmsArticleWebOld": {
+                "searchScope": "default", "sort": "time",
+                "pageIndex": 1, "pageSize": max_items,
+                "preTag": "<em>", "postTag": "</em>"}},
+        }
+        url = ("https://search-api-web.eastmoney.com/search/jsonp?cb=cb&param="
+               + quote(json.dumps(param)))
+        last_err = None
+        for attempt in range(retries + 1):
+            try:
+                req = urllib.request.Request(url, headers={
+                    "User-Agent": HEADERS["User-Agent"],
+                    "Referer": "https://so.eastmoney.com/"})
+                text = urllib.request.urlopen(req, timeout=self.timeout).read().decode("utf-8", "replace")
+                data = json.loads(text[text.index("(") + 1:text.rindex(")")])
+                out = []
+                for art in (data.get("result") or {}).get("cmsArticleWebOld", []) or []:
+                    title = (art.get("title") or "").replace("<em>", "").replace("</em>", "").strip()
+                    if not title:
+                        continue
+                    out.append({
+                        "title": title[:120],
+                        "content": (art.get("Content") or "")[:150],
+                        "source": "东方财富",
+                        "url": art.get("url", "") or art.get("Url", ""),
+                        "date": (art.get("date") or "")[:16],
+                        "dimension": dimension,
                     })
-        except Exception:
-            raise
-        return items
+                return out
+            except Exception as exc:
+                last_err = exc
+                if attempt < retries:
+                    time.sleep(1.5 * (attempt + 1))
+        raise last_err if last_err else RuntimeError("eastmoney_search 未知失败")
 
-    def fetch_tiantian_announce(self, keyword: str = "") -> list:
-        """天天基金公告页面"""
-        return self.fetch_eastmoney_news(keyword + "+基金公告")
+    # ---------- 搜索聚合维度（政策/公告/宏观/资金/海外） ----------
+    def fetch_eastmoney_policy(self, keyword: str) -> list:
+        return self.fetch_eastmoney_search(f"{keyword} 政策", dimension="政策", max_items=6)
 
-    # ---------- 维度4: 宏观数据 ----------
+    def fetch_eastmoney_fund_announce(self, keyword: str) -> list:
+        return self.fetch_eastmoney_search("基金 分红 限购 公告", dimension="公告", max_items=8)
+
     def fetch_eastmoney_macro(self, keyword: str = "") -> list:
-        """东方财富宏观数据"""
-        queries = ["CPI", "PMI", "社融", "LPR", "利率", "GDP"]
-        all_items = []
-        for q in queries:
-            all_items.extend(self.fetch_eastmoney_news(q, max_items=3))
-        return all_items
+        out = []
+        for q in ("CPI", "PMI", "社融", "LPR"):
+            out.extend(self.fetch_eastmoney_search(q, dimension="宏观", max_items=4))
+        return out
 
-    def fetch_pbc_gov(self, keyword: str = "") -> list:
-        """中国人民银行"""
-        items = []
-        if not HAS_BS4:
-            return items
-        try:
-            url = "http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/11040/index1.html"
-            resp = self.session.get(url, timeout=self.timeout)
-            soup = BeautifulSoup(resp.text, "html.parser")
-            for a_tag in soup.select(".newslist_style a")[:8]:
-                items.append({
-                    "title": a_tag.get_text(strip=True),
-                    "source": "中国人民银行",
-                    "url": "http://www.pbc.gov.cn" + a_tag.get("href", ""),
-                    "date": "",
-                    "dimension": "宏观",
-                })
-        except Exception:
-            raise
-        return items
-
-    def fetch_investing_macro(self, keyword: str = "") -> list:
-        """英为财情宏观数据"""
-        return self.fetch_eastmoney_news("美联储+利率+非农+CPI+GDP", max_items=5)
-
-    # ---------- 维度5: 资金流向 ----------
     def fetch_eastmoney_capital(self, keyword: str = "") -> list:
-        """东方财富资金流向"""
-        items = []
-        try:
-            # 北向资金
-            url = "https://push2.eastmoney.com/api/qt/kamt.kline/get"
-            params = {"fields1": "f1,f3", "fields2": "f51,f52",
-                      "klt": "101", "lmt": 5, "secid": "1.000300"}
-            resp = self.session.get(url, params=params, timeout=self.timeout)
-            data = self._json(resp)
-            klines = data.get("data", {}).get("klines", []) if data.get("data") else []
-            if klines:
-                last = klines[-1].split(",")
-                net_flow = float(last[1]) / 1e8 if len(last) > 1 else 0
-                direction = "净流入" if net_flow > 0 else "净流出"
-                items.append({
-                    "title": f"北向资金今日{direction}{abs(net_flow):.1f}亿",
-                    "source": "东方财富资金",
-                    "url": "",
-                    "date": datetime.now().strftime("%m-%d"),
-                    "dimension": "资金",
-                })
-        except Exception:
-            raise
-
-        # 板块资金排名
-        try:
-            url2 = "https://push2.eastmoney.com/api/qt/clist/get"
-            params2 = {"pn": "1", "pz": "5", "fs": "m:90+t2", "fields": "f2,f3,f4,f12,f14,f62,f184",
-                       "fid": "f62", "po": "1"}
-            resp2 = self.session.get(url2, params=params2, timeout=self.timeout)
-            data2 = self._json(resp2)
-            for item in data2.get("data", {}).get("diff", [])[:5]:
-                items.append({
-                    "title": f"{item.get('f14','')} 主力净流入{item.get('f62','')}万 涨跌幅{item.get('f3','')}%",
-                    "source": "板块资金",
-                    "url": "",
-                    "date": datetime.now().strftime("%m-%d"),
-                    "dimension": "资金",
-                })
-        except Exception:
-            raise
-        return items
-
-    def fetch_10jqka_capital(self, keyword: str = "") -> list:
-        """同花顺资金流向"""
-        return self.fetch_eastmoney_news("北向资金+主力资金", max_items=5)
-
-    # ---------- 维度6: 海外联动 ----------
-    def fetch_investing_global(self, keyword: str = "") -> list:
-        """海外市场数据"""
-        return self.fetch_eastmoney_news("美股+纳斯达克+标普+VIX+美元", max_items=8)
+        return self.fetch_eastmoney_search("北向资金 主力资金", dimension="资金", max_items=8)
 
     def fetch_eastmoney_global(self, keyword: str = "") -> list:
-        """东方财富全球"""
-        return self.fetch_eastmoney_news("美股期货+中概股+港股", max_items=5)
+        return self.fetch_eastmoney_search("美股 纳斯达克 标普", dimension="海外", max_items=8)
 
-    def fetch_xueqiu_hot(self, keyword: str = "") -> list:
-        """雪球热搜"""
-        return self.fetch_eastmoney_news("雪球+热门+讨论", max_items=5)
+
+def collect_direct_news(limit_each: int = 15) -> list:
+    """轻量直连快讯：仅三大直连源（见闻/同花顺/新浪），并发拉取约1-2秒。
+    供可视化面板等高频场景复用；不写 news_result.json，不动引擎采集契约。
+    返回已去重、已情绪标注的 item 列表（与 v1 契约同字段）。"""
+    collector = NewsCollectorV21(timeout=8)
+    results = []
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = [
+            pool.submit(collector.fetch_wallstreetcn_live, "", "快讯"),
+            pool.submit(collector.fetch_ths_news, "", "快讯"),
+            pool.submit(collector.fetch_sina_roll, "", "快讯"),
+        ]
+        for fu in futures:
+            try:
+                results.extend(fu.result())
+            except Exception:
+                continue
+    seen, unique = set(), []
+    for item in results:
+        title = (item.get("title") or "").strip()
+        if not title or len(title) < 8:
+            continue
+        h = hashlib.md5(title.encode()).hexdigest()
+        if h in seen:
+            continue
+        seen.add(h)
+        item["title"] = title[:120]
+        s, score = classify_sentiment_v2(item["title"], item.get("content", ""))
+        item["sentiment"] = s
+        item["sentiment_score"] = score
+        unique.append(item)
+    unique.sort(key=lambda x: x.get("date", ""), reverse=True)
+    return unique
+
+
+# ============================================================
+# 当日新闻归档（快讯是流，不落盘就会被冲掉——AI 需要全天图景）
+# ============================================================
+NEWS_ARCHIVE_DIR = DATA_DIR / "news_history"
+
+
+def archive_news(items):
+    """把一批快讯合并进当日归档（按标题去重），返回当日全量归档列表。
+    每日一个文件 data/news_history/news_YYYY-MM-DD.json，上限800条防膨胀。"""
+    NEWS_ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+    path = NEWS_ARCHIVE_DIR / f"news_{datetime.now():%Y-%m-%d}.json"
+    try:
+        day = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        day = []
+    seen = {x.get("id") for x in day}
+    for it in items:
+        title = (it.get("title") or "").strip()
+        if not title:
+            continue
+        hid = hashlib.md5(title.encode()).hexdigest()
+        if hid in seen:
+            continue
+        seen.add(hid)
+        day.append({
+            "id": hid, "title": title[:120],
+            "label": it.get("label") or sentiment_label_cn(it),
+            "score": it.get("sentiment_score", 0),
+            "source": it.get("source", ""), "date": it.get("date", ""),
+            "url": it.get("url", ""),
+            "collected_at": datetime.now().isoformat(timespec="seconds"),
+        })
+    day = day[-800:]
+    path.write_text(json.dumps(day, ensure_ascii=False), encoding="utf-8")
+    return day
+
+
+def load_day_archive(date_str=None):
+    """读某日归档（缺省今天）。"""
+    day = date_str or datetime.now().strftime("%Y-%m-%d")
+    path = NEWS_ARCHIVE_DIR / f"news_{day}.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+
+
+def day_summary(day_items):
+    """全天累计统计：多空计数 + 当日最强利空/利好榜（供 AI 与看板使用）。"""
+    scored = [x for x in day_items if isinstance(x.get("score"), (int, float))]
+    up = [x for x in scored if x["score"] >= 2]
+    down = [x for x in scored if x["score"] <= -2]
+    top_bad = sorted(down, key=lambda x: x["score"])[:10]
+    top_good = sorted(up, key=lambda x: -x["score"])[:10]
+    titles = lambda lst: [{"title": x.get("title", ""), "source": x.get("source", "")}
+                          for x in lst]
+    return {"up": len(up), "down": len(down),
+            "flat": len(day_items) - len(up) - len(down),
+            "total": len(day_items),
+            "top_bad": titles(top_bad), "top_good": titles(top_good)}
 
 
 # ============================================================
 # 主采集流程
 # ============================================================
 def collect_all(dimensions: list = None, mode: str = "full") -> dict:
-    """六维全量采集"""
-    collector = NewsCollectorV2()
+    collector = NewsCollectorV21()
 
     if mode == "quick":
         dim_names = ["快讯"]
@@ -497,16 +516,16 @@ def collect_all(dimensions: list = None, mode: str = "full") -> dict:
     source_stats = {}
     stats_lock = threading.Lock()
 
-    def call_source(source_name, func, keyword):
+    def call_source(source_name, func, *args):
         started = time.perf_counter()
         try:
-            items = func(keyword) or []
+            items = func(*args) or []
             status = "ok" if items else "empty"
             error = ""
         except Exception as exc:
             items = []
             status = "error"
-            error = f"{type(exc).__name__}: {exc}"[:300]
+            error = f"{type(exc).__name__}: {exc}"[:200]
         elapsed_ms = round((time.perf_counter() - started) * 1000)
         with stats_lock:
             stat = source_stats.setdefault(source_name, {
@@ -525,49 +544,50 @@ def collect_all(dimensions: list = None, mode: str = "full") -> dict:
         return items
 
     def search_task(kw_text: str):
-        """单个搜索任务"""
+        """单个关键词的多源采集"""
         results = []
-        # 快讯层搜索
         if "快讯" in dim_names:
-            results.extend(call_source("cls_telegram", collector.fetch_cls_telegram, kw_text))
-            results.extend(call_source("eastmoney_news", collector.fetch_eastmoney_news, kw_text))
-            results.extend(call_source("wallstreetcn_live", collector.fetch_wallstreetcn_live, kw_text))
-        # 政策层
+            results.extend(call_source("eastmoney_search",
+                                       collector.fetch_eastmoney_search, kw_text, "快讯"))
         if "政策" in dim_names:
-            results.extend(call_source("eastmoney_policy", collector.fetch_eastmoney_policy, kw_text))
-            results.extend(call_source("miit_gov", collector.fetch_miit_gov, kw_text))
-            results.extend(call_source("nea_gov", collector.fetch_nea_gov, kw_text))
-        # 公告层
-        if "公告" in dim_names:
-            results.extend(call_source("eastmoney_fund_announce", collector.fetch_eastmoney_fund_announce, kw_text))
-            results.extend(call_source("cninfo_announce", collector.fetch_cninfo_announce, kw_text))
-            results.extend(call_source("tiantian_announce", collector.fetch_tiantian_announce, kw_text))
-        # 宏观层
-        if "宏观" in dim_names:
-            results.extend(call_source("eastmoney_macro", collector.fetch_eastmoney_macro, kw_text))
-            results.extend(call_source("pbc_gov", collector.fetch_pbc_gov, kw_text))
-            results.extend(call_source("investing_macro", collector.fetch_investing_macro, kw_text))
-        # 资金层
-        if "资金" in dim_names:
-            results.extend(call_source("eastmoney_capital", collector.fetch_eastmoney_capital, kw_text))
-            results.extend(call_source("10jqka_capital", collector.fetch_10jqka_capital, kw_text))
-        # 海外层
-        if "海外" in dim_names:
-            results.extend(call_source("investing_global", collector.fetch_investing_global, kw_text))
-            results.extend(call_source("eastmoney_global", collector.fetch_eastmoney_global, kw_text))
-            results.extend(call_source("xueqiu_hot", collector.fetch_xueqiu_hot, kw_text))
+            results.extend(call_source("eastmoney_policy",
+                                       collector.fetch_eastmoney_policy, kw_text))
         return results
 
-    # 收集所有关键词
-    all_keywords = set()
-    for sector, layers in KEYWORD_LAYERS.items():
+    # 收集核心关键词
+    all_keywords = []
+    for layers in KEYWORD_LAYERS.values():
         for kw in layers["core"]:
-            main = kw.split("+")[0] if "+" in kw else kw
-            all_keywords.add(main)
+            if kw not in all_keywords:
+                all_keywords.append(kw)
+    # 搜索型维度控制在预算内（东财限流保护）
+    if len(all_keywords) > 12:
+        all_keywords = all_keywords[:12]
 
-    # 并发搜索
     print(f"\n  📡 启动六维采集: {'+'.join(dim_names)} × {len(all_keywords)}个关键词...\n")
-    with ThreadPoolExecutor(max_workers=8) as executor:
+
+    # 快讯直连源（无需关键词扇出，一次拉满）
+    direct_results = []
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = {
+            pool.submit(call_source, "wallstreetcn_live",
+                        collector.fetch_wallstreetcn_live, "", "快讯"): "wallstreetcn_live",
+            pool.submit(call_source, "ths_news",
+                        collector.fetch_ths_news, "", "快讯"): "ths_news",
+            pool.submit(call_source, "sina_roll",
+                        collector.fetch_sina_roll, "", "快讯"): "sina_roll",
+        }
+        for future in as_completed(futures):
+            try:
+                direct_results.extend(future.result())
+            except Exception:
+                pass
+    if "快讯" in dim_names:
+        all_news.extend(direct_results)
+        print(f"    ✅ 直连快讯源: {len(direct_results)}条")
+
+    # 搜索层（东财，限速+预算）
+    with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {executor.submit(search_task, kw): kw for kw in all_keywords}
         for future in as_completed(futures):
             kw = futures[future]
@@ -575,43 +595,77 @@ def collect_all(dimensions: list = None, mode: str = "full") -> dict:
                 results = future.result()
                 all_news.extend(results)
                 print(f"    ✅ {kw}: {len(results)}条")
-            except:
+            except Exception:
                 print(f"    ❌ {kw}: 失败")
 
-    # 去重
+    # 聚合维度（固定查询，各跑一次，不随关键词扇出）
+    one_shot = []
+    if "公告" in dim_names:
+        one_shot.append(("eastmoney_fund_announce", collector.fetch_eastmoney_fund_announce))
+    if "宏观" in dim_names:
+        one_shot.append(("eastmoney_macro", collector.fetch_eastmoney_macro))
+    if "资金" in dim_names:
+        one_shot.append(("eastmoney_capital", collector.fetch_eastmoney_capital))
+    if "海外" in dim_names:
+        one_shot.append(("eastmoney_global", collector.fetch_eastmoney_global))
+    for name, fn in one_shot:
+        results = call_source(name, fn, "")
+        all_news.extend(results)
+        print(f"    ✅ 聚合维度 {name}: {len(results)}条")
+
+    # 一次成功的直连源也要在"非快讯"模式下留状态记录
+    if "快讯" not in dim_names:
+        source_stats.setdefault("wallstreetcn_live",
+                                {"status": "not_enabled", "items": 0, "calls": 0,
+                                 "errors": [], "elapsed_ms": 0})
+
+    # 去重 + 情绪
     seen = set()
     unique = []
     for item in all_news:
         h = hashlib.md5(item["title"].encode()).hexdigest()
-        if h not in seen:
-            seen.add(h)
-            # 情绪分类
-            sentiment, score = classify_sentiment_v2(item["title"], item.get("content", ""))
-            item["sentiment"] = sentiment
-            item["sentiment_score"] = score
-            unique.append(item)
+        if h in seen:
+            continue
+        seen.add(h)
+        sentiment, score = classify_sentiment_v2(item["title"], item.get("content", ""))
+        item["sentiment"] = sentiment
+        item["sentiment_score"] = score
+        unique.append(item)
 
-    # 按日期排序
     unique.sort(key=lambda x: x.get("date", ""), reverse=True)
+
+    # 情绪指数: 0-100，50=中性。按情绪分数加权（偏多计正、偏空计负）
+    sentiment_index = compute_sentiment_index(unique)
+
+    # 落盘日度情绪序列（情绪 vs 价格背离检测的数据底座）
+    try:
+        from fundos_config import DATA_DIR as _DD
+        sdir = _DD / "sentiment_history"
+        sdir.mkdir(parents=True, exist_ok=True)
+        spath = sdir / f"sentiment_{datetime.now():%Y-%m-%d}.json"
+        spath.write_text(json.dumps(
+            {"date": datetime.now().strftime("%Y-%m-%d"),
+             "saved_at": datetime.now().isoformat(timespec="seconds"),
+             "dimensions": dim_names, **sentiment_index},
+            ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass
 
     source_status = {}
     for dimension in dim_names:
         count = sum(1 for item in unique if item.get("dimension") == dimension)
-        source_status[dimension] = {
-            "status": "ok" if count else "empty",
-            "items": count,
-        }
-    enabled_sources = {source for dimension in dim_names for source in DIMENSIONS[dimension]["sources"]}
+        source_status[dimension] = {"status": "ok" if count else "empty", "items": count}
+    enabled_sources = {s for d in dim_names for s in DIMENSIONS[d]["sources"]}
     for source in enabled_sources:
         source_status[source] = source_stats.get(source, {
             "status": "not_enabled", "items": 0, "calls": 0,
-            "errors": [], "elapsed_ms": 0,
-        })
+            "errors": [], "elapsed_ms": 0})
     for source, stat in source_status.items():
         if isinstance(stat, dict):
             stat["error"] = "; ".join(stat.pop("errors", []))
     return {"news": unique, "dimensions": dim_names,
             "source_status": source_status,
+            "sentiment_index": sentiment_index,
             "collected_at": datetime.now().isoformat()}
 
 
@@ -619,12 +673,11 @@ def collect_all(dimensions: list = None, mode: str = "full") -> dict:
 # 输出: 按持仓基金分组
 # ============================================================
 def format_by_fund(data: dict) -> str:
-    """按持仓基金分组输出日报"""
     news = data["news"]
     dims = data["dimensions"]
 
     lines = []
-    lines.append(f"# 📰 基金持仓情报日报")
+    lines.append("# 📰 基金持仓情报日报")
     lines.append(f"> 采集时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append(f"> 维度: {' · '.join(dims)}")
     lines.append(f"> 采集条数: {len(news)}")
@@ -632,7 +685,6 @@ def format_by_fund(data: dict) -> str:
     lines.append("---")
     lines.append("")
 
-    # 六维热度
     dim_counts = {}
     for item in news:
         d = item.get("dimension", "快讯")
@@ -646,75 +698,46 @@ def format_by_fund(data: dict) -> str:
         lines.append(f"| {dim_name} | {bar} | {count}条 |")
     lines.append("")
 
-    # 整体情绪
     pos = sum(1 for n in news if "偏多" in n.get("sentiment", ""))
     neg = sum(1 for n in news if "偏空" in n.get("sentiment", ""))
-    neu = len(news) - pos - neg
-    lines.append(f"## 🎯 整体情绪: 🟢{pos} · 🔴{neg} · ⚪{neu}")
+    lines.append(f"## 🎯 整体情绪: 🟢{pos} · 🔴{neg} · ⚪{len(news)-pos-neg}")
     lines.append("")
     lines.append("---")
     lines.append("")
 
-    # ⚠️ 重点提醒 (关联度≥2的新闻)
-    lines.append("## ⚠️ 重点提醒")
-    lines.append("")
-    high_rel = [n for n in news if n.get("relevance", 0) >= 2]
-    if high_rel:
-        for item in high_rel[:10]:
-            lines.append(f"- {item['sentiment']} [{item.get('dimension','')}] {item['title']}")
-            if item.get("url"):
-                lines.append(f"  [{item['source']}]({item['url']}) — {item.get('date','')}")
-    else:
-        lines.append("*今日无高关联度新闻*")
-    lines.append("")
-
-    # 按你的持仓分组
-    lines.append("---")
-    lines.append("")
     lines.append("## 📋 按你的持仓")
     lines.append("")
 
     for fund_name, sectors in FUND_SECTOR_MAP.items():
-        lines.append(f"### {fund_name[:25]}")
+        lines.append(f"### {fund_name}")
         lines.append(f"*板块: {', '.join(sectors)}*")
         lines.append("")
 
-        # 匹配该基金的新闻
         fund_news = []
+        seen_titles = set()
         for item in news:
             title = item.get("title", "")
+            rel = 0
             for sector in sectors:
                 layers = KEYWORD_LAYERS.get(sector, {})
-                for level in ["core", "expand"]:
+                for level in ("core", "expand"):
                     for kw in layers.get(level, []):
-                        main = kw.split("+")[0] if "+" in kw else kw
-                        if main in title:
-                            # 给关联度打分
-                            rel = 3 if level == "core" else 2
-                            item_copy = dict(item)
-                            item_copy["relevance"] = rel
-                            fund_news.append(item_copy)
-                            break
-                    else:
-                        continue
-                    break
+                        if kw in title:
+                            rel = max(rel, 3 if level == "core" else 2)
+            if rel > 0 and title not in seen_titles:
+                seen_titles.add(title)
+                item_copy = dict(item)
+                item_copy["relevance"] = rel
+                fund_news.append(item_copy)
 
-        # 去重
-        seen_titles = set()
-        fund_news_unique = []
-        for n in fund_news:
-            if n["title"] not in seen_titles:
-                seen_titles.add(n["title"])
-                fund_news_unique.append(n)
+        fund_news.sort(key=lambda x: x.get("relevance", 0), reverse=True)
 
-        fund_news_unique.sort(key=lambda x: x.get("relevance", 0), reverse=True)
-
-        if fund_news_unique:
-            fund_pos = sum(1 for n in fund_news_unique if "偏多" in n.get("sentiment", ""))
-            fund_neg = sum(1 for n in fund_news_unique if "偏空" in n.get("sentiment", ""))
-            lines.append(f"🟢{fund_pos} 🔴{fund_neg} | 共{len(fund_news_unique)}条")
+        if fund_news:
+            fund_pos = sum(1 for n in fund_news if "偏多" in n.get("sentiment", ""))
+            fund_neg = sum(1 for n in fund_news if "偏空" in n.get("sentiment", ""))
+            lines.append(f"🟢{fund_pos} 🔴{fund_neg} | 共{len(fund_news)}条")
             lines.append("")
-            for item in fund_news_unique[:6]:
+            for item in fund_news[:6]:
                 lines.append(f"- {item['sentiment']} [{item.get('dimension','')}] {item['title'][:80]}")
                 lines.append(f"  *{item['source']} {item.get('date','')}*")
         else:
@@ -732,7 +755,6 @@ def format_by_fund(data: dict) -> str:
 
 
 def format_console(data: dict):
-    """控制台输出"""
     news = data["news"]
     dims = data["dimensions"]
 
@@ -746,31 +768,37 @@ def format_console(data: dict):
     print(f"  情绪: 🟢{pos} 🔴{neg} ⚪{len(news)-pos-neg}")
     print("-" * 70)
 
+    # 六维统计
+    dim_counts = {}
+    for item in news:
+        d = item.get("dimension", "快讯")
+        dim_counts[d] = dim_counts.get(d, 0) + 1
+    stat = " | ".join(f"{d}:{c}" for d, c in dim_counts.items())
+    print(f"  六维分布: {stat}")
+    print("-" * 70)
+
     for fund_name, sectors in FUND_SECTOR_MAP.items():
-        print(f"\n  📌 {fund_name[:30]}  ({', '.join(sectors)})")
+        print(f"\n  📌 {fund_name}  ({', '.join(sectors)})")
         fund_news = []
+        seen = set()
         for item in news:
             title = item.get("title", "")
+            rel = 0
             for sector in sectors:
                 layers = KEYWORD_LAYERS.get(sector, {})
-                for level in ["core", "expand"]:
+                for level in ("core", "expand"):
                     for kw in layers.get(level, []):
-                        main = kw.split("+")[0] if "+" in kw else kw
-                        if main in title:
-                            item_copy = dict(item)
-                            item_copy["relevance"] = 3 if level == "core" else 2
-                            fund_news.append(item_copy)
-                            break
-                    else:
-                        continue
-                    break
-
-        seen = set()
-        count = 0
+                        if kw in title:
+                            rel = max(rel, 3 if level == "core" else 2)
+            if rel > 0 and title not in seen:
+                seen.add(title)
+                item_copy = dict(item)
+                item_copy["relevance"] = rel
+                fund_news.append(item_copy)
         fund_news.sort(key=lambda x: x.get("relevance", 0), reverse=True)
+        count = 0
         for item in fund_news:
-            if item["title"] not in seen and count < 4:
-                seen.add(item["title"])
+            if count < 4:
                 print(f"    {item['sentiment']} {item['title'][:65]}")
                 count += 1
         if count == 0:
@@ -784,14 +812,14 @@ def format_console(data: dict):
 # CLI
 # ============================================================
 def main():
-    parser = argparse.ArgumentParser(description="FundOS 六维新闻情报系统 v2.0")
+    parser = argparse.ArgumentParser(description="FundOS 六维新闻情报系统 v2.1")
     parser.add_argument("--mode", choices=["quick", "full"], default="full",
-                       help="quick=仅快讯 / full=全部六维")
+                        help="quick=仅快讯 / full=全部六维")
     parser.add_argument("--dimensions", "-d",
-                       help="逗号分隔: 快讯,政策,公告,宏观,资金,海外")
+                        help="逗号分隔: 快讯,政策,公告,宏观,资金,海外")
     parser.add_argument("--output", "-o", help="输出文件路径")
     parser.add_argument("--format", "-f", choices=["markdown", "console", "json"],
-                       default="console")
+                        default="console")
     parser.add_argument("--clear-cache", action="store_true", help="清除缓存")
     parser.add_argument("--list-dimensions", action="store_true", help="列出六维定义")
     parser.add_argument("--list-keywords", action="store_true", help="列出板块关键词")
@@ -806,7 +834,7 @@ def main():
         return
 
     if args.list_dimensions:
-        print("\n📡 FundOS 六维采集架构:\n")
+        print("\n📡 FundOS 六维采集架构 (v2.1, 仅实测可用源):\n")
         for dim, info in DIMENSIONS.items():
             print(f"  {dim} (优先级{info['priority']})")
             print(f"    {info['desc']}")
@@ -824,15 +852,12 @@ def main():
             print()
         return
 
-    # 解析维度
     dimensions = None
     if args.dimensions:
         dimensions = [d.strip() for d in args.dimensions.split(",")]
 
-    # 采集
     data = collect_all(dimensions=dimensions, mode=args.mode)
 
-    # 输出
     if args.format == "json" or (args.output and args.output.endswith(".json")):
         output = json.dumps(data, ensure_ascii=False, indent=2, default=str)
     elif args.format == "markdown" or (args.output and args.output.endswith(".md")):

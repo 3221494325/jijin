@@ -11,19 +11,11 @@ from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-DATA_FILE = Path(r"D:\基金项目\manual_updates.json")
+DATA_FILE = Path(__file__).resolve().parent / "manual_updates.json"
 
-# 用户持仓
-FUNDS = [
-    ("018735", "华夏绿电"),
-    ("012922", "全球成长"),
-    ("017641", "标普500"),
-    ("019172", "纳斯达克100"),
-    ("019764", "半导体"),
-    ("019018", "信息产业"),
-    ("011608", "科创50联接"),
-    ("022365", "科技智选"),
-]
+# 持仓从统一配置派生（v1.1: 修复旧版硬编码错误代码/缺 019759 的问题）
+from fundos_config import FUND_META
+FUNDS = [(code, meta["name"]) for code, meta in FUND_META.items()]
 
 
 def load_data():

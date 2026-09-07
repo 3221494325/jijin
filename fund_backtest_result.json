@@ -1,0 +1,191 @@
+{
+  "generated_at": "2026-08-28T21:51:52",
+  "days": 365,
+  "results": [
+    {
+      "code": "018735",
+      "name": "华夏绿电",
+      "days": 100,
+      "rule_ret_pct": 4.89,
+      "hold_ret_pct": -0.91,
+      "rule_mdd_pct": -12.36,
+      "hold_mdd_pct": -18.46,
+      "exits": [
+        "+15%@1.2724"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": -3.63,
+        "lump_ret_pct": -20.73,
+        "invested": 1000.0
+      }
+    },
+    {
+      "code": "019172",
+      "name": "纳斯达克100",
+      "days": 120,
+      "rule_ret_pct": 17.54,
+      "hold_ret_pct": 17.1,
+      "rule_mdd_pct": -7.6,
+      "hold_mdd_pct": -10.83,
+      "exits": [
+        "+15%@1.7520",
+        "+20%@1.8056"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 6.26,
+        "lump_ret_pct": -2.41,
+        "invested": 1200.0
+      }
+    },
+    {
+      "code": "017641",
+      "name": "标普500",
+      "days": 120,
+      "rule_ret_pct": 12.76,
+      "hold_ret_pct": 12.76,
+      "rule_mdd_pct": -5.96,
+      "hold_mdd_pct": -5.96,
+      "exits": [],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": false,
+      "aip": {
+        "aip_ret_pct": 6.11,
+        "lump_ret_pct": -6.03,
+        "invested": 1200.0
+      }
+    },
+    {
+      "code": "011608",
+      "name": "科创50联接",
+      "days": 100,
+      "rule_ret_pct": 24.09,
+      "hold_ret_pct": 30.03,
+      "rule_mdd_pct": -14.94,
+      "hold_mdd_pct": -28.1,
+      "exits": [
+        "+15%@1.1615",
+        "+20%@1.2074"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 0.25,
+        "lump_ret_pct": 4.02,
+        "invested": 1000.0
+      }
+    },
+    {
+      "code": "001513",
+      "name": "信息产业A",
+      "days": 100,
+      "rule_ret_pct": 28.37,
+      "hold_ret_pct": 37.59,
+      "rule_mdd_pct": -18.98,
+      "hold_mdd_pct": -34.3,
+      "exits": [
+        "+15%@6.9560",
+        "+20%@7.3040"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 0.78,
+        "lump_ret_pct": 10.07,
+        "invested": 1000.0
+      }
+    },
+    {
+      "code": "022365",
+      "name": "科技智选",
+      "days": 100,
+      "rule_ret_pct": 27.5,
+      "hold_ret_pct": 37.07,
+      "rule_mdd_pct": -15.23,
+      "hold_mdd_pct": -29.18,
+      "exits": [
+        "+15%@4.6036",
+        "+20%@4.6534"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 3.27,
+        "lump_ret_pct": 9.66,
+        "invested": 1000.0
+      }
+    },
+    {
+      "code": "012922",
+      "name": "全球成长",
+      "days": 120,
+      "rule_ret_pct": 28.59,
+      "hold_ret_pct": 42.01,
+      "rule_mdd_pct": -19.81,
+      "hold_mdd_pct": -34.35,
+      "exits": [
+        "+15%@3.0515",
+        "+20%@3.1692"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 5.4,
+        "lump_ret_pct": 18.34,
+        "invested": 1200.0
+      }
+    },
+    {
+      "code": "019764",
+      "name": "半导体",
+      "days": 100,
+      "rule_ret_pct": 33.6,
+      "hold_ret_pct": 52.7,
+      "rule_mdd_pct": -22.55,
+      "hold_mdd_pct": -38.37,
+      "exits": [
+        "+15%@1.7897",
+        "+20%@1.8405"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 12.05,
+        "lump_ret_pct": 22.16,
+        "invested": 1000.0
+      }
+    },
+    {
+      "code": "019759",
+      "name": "半导体A",
+      "days": 100,
+      "rule_ret_pct": 33.75,
+      "hold_ret_pct": 52.99,
+      "rule_mdd_pct": -22.54,
+      "hold_mdd_pct": -38.34,
+      "exits": [
+        "+15%@1.8110",
+        "+20%@1.8628"
+      ],
+      "eval_hit": false,
+      "hardstop_hit": false,
+      "tp_hit": true,
+      "aip": {
+        "aip_ret_pct": 12.18,
+        "lump_ret_pct": 22.39,
+        "invested": 1000.0
+      }
+    }
+  ]
+}
