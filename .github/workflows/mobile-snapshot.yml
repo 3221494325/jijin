@@ -25,6 +25,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Build mobile snapshot
         env:
+          TZ: Asia/Shanghai
           FUNDOS_LLM_API_KEY: ${{ secrets.FUNDOS_LLM_API_KEY }}
           FUNDOS_LLM_BASE_URL: ${{ secrets.FUNDOS_LLM_BASE_URL }}
           FUNDOS_LLM_MODEL: ${{ secrets.FUNDOS_LLM_MODEL }}
