@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FundOS · 个人基金财经看板</title>
+<title>FundOS · 投资驾驶舱</title>
 <script src="/static/echarts.min.js"
         onerror="var s=document.createElement('script');s.src='https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js';document.head.appendChild(s);"></script>
 <style>
@@ -98,6 +98,39 @@ td{padding:5px 8px;border-bottom:1px solid #d8d0bf}
 @media(max-width:1050px){.layout{grid-template-columns:1fr;grid-template-areas:"news" "nav" "hold" "board" "sent" "risk" "idx"}
  .strip{grid-template-columns:repeat(4,1fr)} .strip .cell{border-bottom:1px solid #c9c0ad}
  h1{letter-spacing:4px;font-size:22px}}
+/* 驾驶舱：保留既有模块和接口，优先展示决策与数据边界。 */
+:root{--bg:#f3f5f9;--paper:#fff;--ink:#18263b;--line:#dde3ec;--faint:#66748a;--gold:#926512}
+body{max-width:1560px;margin:auto;padding:24px 32px;font-family:system-ui,"Microsoft YaHei",sans-serif}
+.masthead{border:0;padding:0 0 18px;text-align:left}
+.mast-top{gap:18px;align-items:center}.mh-side{flex:initial}
+h1{font-size:25px;letter-spacing:-.5px;flex:1}h1 .sub{letter-spacing:1px}
+.mast-sub{justify-content:flex-start;flex-wrap:wrap;margin-top:12px}
+.btn{background:#284eae;border-radius:7px;letter-spacing:0;padding:8px 16px}
+.quick-nav{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+.quick-nav a{color:#284eae;text-decoration:none;padding:7px 15px;background:#e8eefb;border-radius:7px}
+a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid #6088e0;outline-offset:3px}
+.strip{grid-template-columns:repeat(4,minmax(0,1fr));border:0;gap:12px;background:none}
+.strip .cell{background:var(--paper);border:1px solid var(--line);border-radius:12px;text-align:left;padding:18px}
+.strip .cell:first-child{background:#182f5a;color:white}.strip .cell:first-child .k{color:#bdcce5}
+.strip .k{font-size:12px}.strip .v{font-size:28px;letter-spacing:-.5px}
+.strip .cell:nth-child(n+5){padding:10px 18px}.strip .cell:nth-child(n+5) .v{font-size:18px}
+.card{border-radius:12px;padding:20px;min-width:0;scroll-margin-top:15px}
+.card h2{letter-spacing:0;border-bottom:1px solid var(--line);padding-bottom:12px;gap:12px;flex-wrap:wrap}
+.card h2 small{letter-spacing:0}.layout{gap:18px;grid-template-columns:1.5fr 1fr;grid-template-areas:"nav exposure" "hold hold" "risk sent" "board news" "idx idx"}
+.area-exposure{grid-area:exposure}.news{max-height:290px}
+td{padding:12px 8px;border-color:var(--line)}th{white-space:nowrap}tr:hover td{background:#f7f9fd}
+.cockpit-focus{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-top:18px}
+.focus-action{border-left:4px solid #365fb8}.focus-title{font-size:20px;font-weight:700;margin:8px 0}
+.status-lines{white-space:pre-line;color:var(--faint);font-size:12px;line-height:1.9}
+.details-guide{margin-top:18px}.details-guide summary{cursor:pointer;font-weight:700;padding:4px}
+.details-guide[open] summary{margin-bottom:16px}
+.exposure-row{margin:14px 0}.exposure-label{display:flex;justify-content:space-between;gap:10px;font-size:12px}
+.exposure-track{height:8px;border-radius:5px;background:#edf1f8;margin-top:7px;overflow:hidden}
+.exposure-track span{display:block;height:100%;background:#5276bd;border-radius:5px}
+.sent-bars .bar{background:#f7f9fd;border-radius:8px}.disclaim{border-color:var(--line)}
+.load-status{padding:9px 0;color:#926512;font-size:12px}select{font:inherit;padding:5px;border:1px solid var(--line);border-radius:6px;background:white}
+@media(max-width:1050px){.layout{grid-template-columns:1fr;grid-template-areas:"nav" "exposure" "hold" "risk" "sent" "board" "news" "idx"}.cockpit-focus{grid-template-columns:1fr}}
+@media(max-width:600px){body{padding:16px 12px}.mh-side,.sub{display:none}.strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.strip .cell{padding:14px}.strip .v{font-size:23px}.card{padding:15px}h1{font-size:23px}.mast-sub{gap:7px}.card h2 small{display:block}.chart{max-width:100%}}
 </style>
 </head>
 <body>
@@ -105,31 +138,38 @@ td{padding:5px 8px;border-bottom:1px solid #d8d0bf}
 <header class="masthead">
   <div class="mast-top">
     <div class="mh-side">第 <span id="issueNo">—</span> 期 · 个人内部资料</div>
-    <h1>FundOS 财经看板<span class="sub">　FUND OBSERVER</span></h1>
+    <h1>FundOS 投资驾驶舱<span class="sub">　PORTFOLIO WORKSPACE</span></h1>
     <div class="mh-side r">口径：<b class="up-t">红涨</b> / <b class="down-t">绿跌</b></div>
   </div>
   <div class="mast-sub">
-    <span>更新于 <b id="ts">—</b></span><span>|</span>
+    <span>页面汇总于 <b id="ts">—</b></span><span>|</span>
     <span>每60秒自动刷新</span><span>|</span>
     <span>本地服务 · 仅自用</span>
     <button class="btn" id="btnRefresh" onclick="manualRefresh()">立即刷新</button>
   </div>
 </header>
 
+<nav class="quick-nav" aria-label="工作台导航"><a href="#cards">总览</a><a href="#holdings">持仓</a><a href="#riskSection">风险</a><a href="#marketSection">市场</a><a href="#guideDetails">完整指南</a></nav>
+<div id="loadStatus" class="load-status" role="status">正在读取数据…</div>
 <div id="alertBox"></div>
 
 <section class="strip" id="cards"></section>
 
-<section class="card" style="margin-top:14px">
+<section class="cockpit-focus">
+  <article class="card focus-action"><h2>优先关注<small>按规则级别排序 · 不替代完整指南</small></h2><div id="focusTitle" class="focus-title">等待规则数据</div><div id="focusAction"></div><div id="focusBoundary" class="note"></div></article>
+  <article class="card"><h2>数据状态<small>刷新页面 ≠ 净值更新</small></h2><div id="dataStatus" class="status-lines">等待数据</div></article>
+</section>
+<details class="card details-guide" id="guideDetails"><summary>完整操作指南 · 依据、动作与风控边界</summary>
   <h2>今日操作指南<small>规则引擎 · 确定性输出 · 每条含依据/动作/边界 · 非投资建议</small></h2>
   <div id="guideEnv" style="font-size:13px;margin-bottom:4px"></div>
   <div id="guideOutlook" style="margin:6px 0 2px"></div>
   <ol class="directives" id="guideDirectives"></ol>
   <div style="overflow-x:auto"><div id="guideTable"></div></div>
   <div class="forbid" id="guideForbid" style="display:none"></div>
-</section>
+</details>
 
 <main class="layout">
+  <section class="card area-exposure"><h2>持仓板块分布<small>按持仓分类 · 非穿透底层资产</small></h2><div id="exposure"></div><div class="note">科技与 QDII 可能交叉，不作为互斥资产类别叠加。</div></section>
   <section class="card area-nav">
     <h2>净值归一走势<small>近120交易日 · 起点=1 · 点击图例可隐藏基金</small></h2>
     <div id="nav" class="chart" style="height:330px"></div>
@@ -140,12 +180,12 @@ td{padding:5px 8px;border-bottom:1px solid #d8d0bf}
     <ul class="news" id="news"></ul>
   </aside>
 
-  <section class="card area-hold">
-    <h2>持仓行情<small>市值单位:元 · 今估为估算值</small></h2>
+  <section class="card area-hold" id="holdings">
+    <h2>持仓行情<small>市值单位:元 · 今估为估算值</small><label class="small">排序 <select id="holdSort" onchange="if(lastData) draw(lastData)"><option value="value">金额从高到低</option><option value="ret_pct">收益率从低到高</option><option value="name">基金名称</option></select></label></h2>
     <div style="overflow-x:auto"><div id="holdTable"></div></div>
   </section>
 
-  <section class="card area-board">
+  <section class="card area-board" id="marketSection">
     <h2>行业板块 · 涨幅前10<small id="boardDate">—</small></h2>
     <div id="boards" class="chart" style="height:280px"></div>
   </section>
@@ -157,7 +197,7 @@ td{padding:5px 8px;border-bottom:1px solid #d8d0bf}
     <div id="sentHist" class="chart" style="height:100px"></div>
   </section>
 
-  <section class="card area-risk">
+  <section class="card area-risk" id="riskSection">
     <h2>风险账本<small>近120日 · 夏普rf=0年化</small></h2>
     <div style="overflow-x:auto"><div id="riskTable"></div></div>
     <div class="note" id="riskNote"></div>
@@ -181,6 +221,8 @@ td{padding:5px 8px;border-bottom:1px solid #d8d0bf}
 
 <script>
 const charts = {};
+let lastData = null;
+const escapeHTML = v => String(v ?? "—").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function chart(id){
   if(!charts[id]){
     echarts.registerTheme('newsprint',{
@@ -200,11 +242,12 @@ function chart(id){
 const cls = v => v>0?'up':(v<0?'down':'flat');
 const fmt = (v,d=2)=> (v==null||isNaN(v)?'-':Number(v).toFixed(d));
 const pct = v => (v>0?'+':'')+fmt(v)+'%';
-const money = v => Number(v).toLocaleString('zh-CN',{maximumFractionDigits:0});
+const money = v => v == null || !Number.isFinite(Number(v)) ? "—" : Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
 const LABEL_CLS = {'利好':'lh','利空':'lk','中性':'zx'};
 
 function draw(d){
-  document.getElementById('ts').textContent = (d.updated_at||'-').slice(11);
+  lastData = d;
+  document.getElementById('ts').textContent = d.updated_at||'—';
   document.getElementById('issueNo').textContent = (d.updated_at||'').slice(0,10).replace(/-/g,'')||'—';
 
   // 号外：触发提醒
@@ -215,6 +258,26 @@ function draw(d){
 
   // 数据速览
   const p = d.portfolio||{};
+  const holdings = d.holdings || [];
+  const priority = {'指令':0,'警告':1,'观察':2};
+  const first = [...(d.guide?.directives||[])].sort((a,b)=>(priority[a.level]??3)-(priority[b.level]??3))[0];
+  document.getElementById('focusTitle').textContent = first ? first.level+' · '+first.title : '暂无规则触发项';
+  document.getElementById('focusAction').textContent = first?.action || '请核对数据日期及完整指南；无触发项不代表无风险。';
+  document.getElementById('focusBoundary').textContent = first ? '依据：'+first.evidence+' ｜ 边界：'+first.boundary : '未提供动作时，不生成额外买卖建议。';
+  const dates = [...new Set(holdings.map(h=>h.nav_date).filter(Boolean))].sort();
+  const delayed = holdings.filter(h=>(h.today_source||'').includes('滞后')).length;
+  document.getElementById('dataStatus').textContent = [
+    '持仓基准：'+(p.as_of||'未知'),
+    '盘后核验：'+(p.daily_checked_at||'未提供'),
+    '净值日期：'+(dates.length ? dates[0]+' ～ '+dates[dates.length-1] : '未知'),
+    '估算 '+holdings.filter(h=>h.freshness==='估算').length+' 笔 · 明示滞后 '+delayed+' 笔',
+    '新闻截至：'+(d.news_time||'未知')+' ｜ 板块日期：'+(d.boards?.date||'未知'),
+    '各来源日期不一致；已公布不等于今日，估算不等于结算收益。'
+  ].join('\n');
+  const sectors = {};
+  holdings.forEach(h=>{ const key=h.sector||'未分类'; if(Number.isFinite(h.weight)) sectors[key]=(sectors[key]||0)+h.weight; });
+  document.getElementById('exposure').innerHTML = Object.entries(sectors).sort((a,b)=>b[1]-a[1]).map(([name,w])=>
+    '<div class="exposure-row"><div class="exposure-label"><span>'+escapeHTML(name)+'</span><b>'+fmt(w,1)+'%</b></div><div class="exposure-track"><span style="width:'+Math.max(0,Math.min(100,w))+'%"></span></div></div>').join('') || '<div class="note">暂无持仓分布数据</div>';
   const cells = [
     ['组合市值','¥'+money(p.total_value),''],
     ['组合盈亏',(p.total_ret>0?'+':'')+money(p.total_ret), cls(p.total_ret)],
@@ -256,7 +319,8 @@ function draw(d){
   }
 
   // 持仓行情表
-  const hs = d.holdings||[];
+  const sortKey = document.getElementById('holdSort').value;
+  const hs = [...holdings].sort((a,b)=>sortKey==='name' ? a.name.localeCompare(b.name,'zh-CN') : sortKey==='ret_pct' ? (a.ret_pct??Infinity)-(b.ret_pct??Infinity) : (b.value??-Infinity)-(a.value??-Infinity));
   document.getElementById('holdTable').innerHTML =
    `<table><tr><th>基金</th><th class="num">市值</th><th class="num">占比</th><th class="num">盈亏</th>
      <th class="num">盈亏%</th><th class="num">前日</th><th class="num">今估</th><th>净值日</th></tr>` +
@@ -395,13 +459,13 @@ function draw(d){
 
   // AI 总裁研判
   const st = d.llm_status||{};
-  const ai = d.llm_brief;
+  const ai = d.llm_brief || {};
   const aiMeta = document.getElementById('aiMeta');
   const aiBody = document.getElementById('aiBody');
   if(st.configured){
     aiMeta.textContent = `模型 ${st.model} · 生成于 ${(ai.generated_at||'').slice(11,16)}` +
       (ai.stale ? ' · ⚠️ 市场结构已变化，建议重新生成' : ' · 与当前指南同步');
-    aiBody.innerHTML = renderMD(ai.brief_md);
+    aiBody.innerHTML = renderMD(ai.brief_md || '暂无研判内容，请手动生成。');
   } else {
     aiMeta.textContent = '未配置大模型 API —— 当前为纯规则模式（指南不受影响）';
     aiBody.innerHTML = '<div class="note">启用方法（免费，约2分钟）：<br>' +
@@ -429,6 +493,12 @@ async function regenAI(){
   const b = document.getElementById('aiBtn');
   b.disabled = true; b.textContent = 'AI 研判中…（约20-60秒）';
   try {
+    const pageLocation = typeof location === 'undefined' ? {protocol:'', pathname:''} : location;
+    if(pageLocation.protocol === 'file:' || pageLocation.pathname.includes('/mobile_site/')){
+      b.textContent = '静态快照不支持即时 AI';
+      setTimeout(()=>{b.textContent='生成 / 刷新 AI 研判';},3000);
+      return;
+    }
     const r = await fetch('/api/llm/refresh');
     const j = await r.json();
     if(j.error) { b.textContent = '失败：' + j.error.slice(0,60); setTimeout(()=>{b.textContent='生成 / 刷新 AI 研判';},3000); }
@@ -444,16 +514,25 @@ function safeChart(id, fn){
   try { fn(chart(id)); } catch(e) { console.error(id, e); el.innerHTML = '<div class="note">此图渲染失败: '+e.message+'</div>'; }
 }
 
-function load(){
-  fetch('/api/data').then(r=>r.json()).then(draw).catch(e=>console.error(e));
+async function load(){
+  const status = document.getElementById('loadStatus');
+  try {
+    const pageLocation = typeof location === 'undefined' ? {pathname:''} : location;
+    const endpoint = pageLocation.pathname.includes('/mobile_site/') ? 'data.json' : '/api/data';
+    const r = await fetch(endpoint);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    draw(await r.json());
+    status.textContent = '已读取页面数据；实际数据日期以各模块标注为准。';
+  } catch(e) {
+    status.textContent = '刷新失败，当前显示可能为旧数据；请检查本地服务。';
+    console.error(e);
+  }
 }
-function manualRefresh(){
+async function manualRefresh(){
   const b = document.getElementById('btnRefresh');
-  b.disabled = true; b.textContent = '排版中…';
-  fetch('/api/data').then(r=>r.json())
-    .then(d=>{ draw(d); b.textContent = '已更新 ' + ((d.updated_at||'').slice(11) || ''); })
-    .catch(e=>{ b.textContent = '刷新失败'; console.error(e); })
-    .finally(()=>{ setTimeout(()=>{ b.disabled=false; b.textContent='立即刷新'; }, 2000); });
+  b.disabled = true; b.textContent = '刷新中…';
+  try { await load(); }
+  finally { b.disabled=false; b.textContent='立即刷新'; }
 }
 load();
 setInterval(load, 60000);
