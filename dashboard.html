@@ -494,7 +494,7 @@ async function regenAI(){
   b.disabled = true; b.textContent = 'AI 研判中…（约20-60秒）';
   try {
     const pageLocation = typeof location === 'undefined' ? {protocol:'', pathname:''} : location;
-    if(pageLocation.protocol === 'file:' || pageLocation.pathname.includes('/mobile_site/')){
+    if(pageLocation.protocol === 'file:' || pageLocation.hostname.endsWith('.github.io') || pageLocation.pathname.includes('/mobile_site/')){
       b.textContent = '静态快照不支持即时 AI';
       setTimeout(()=>{b.textContent='生成 / 刷新 AI 研判';},3000);
       return;
@@ -518,8 +518,8 @@ async function load(){
   const status = document.getElementById('loadStatus');
   try {
     const pageLocation = typeof location === 'undefined' ? {pathname:''} : location;
-    const endpoint = pageLocation.pathname.includes('/mobile_site/') ? 'data.json' : '/api/data';
-    const r = await fetch(endpoint);
+    let r = await fetch('/api/data');
+    if(!r.ok) r = await fetch('data.json?ts='+Date.now());
     if(!r.ok) throw new Error('HTTP '+r.status);
     draw(await r.json());
     status.textContent = '已读取页面数据；实际数据日期以各模块标注为准。';
