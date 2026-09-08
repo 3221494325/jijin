@@ -2,7 +2,9 @@
 """Generate a static, mobile-safe FundOS snapshot for scheduled hosting."""
 import json
 import os
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import dashboard
 
@@ -22,6 +24,13 @@ def public_payload(payload):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     payload = public_payload(dashboard.collect())
+    now = datetime.now(ZoneInfo("Asia/Shanghai"))
+    payload["snapshot_meta"] = {
+        "source": "github_actions",
+        "generated_at": now.isoformat(timespec="seconds"),
+        "timezone": "Asia/Shanghai",
+        "status": "success",
+    }
     if os.environ.get("FUNDOS_LLM_API_KEY"):
         try:
             import fundos_llm

@@ -1,7 +1,7 @@
 # FundOS 项目总档案（交接文档 / PROJECT_HANDOVER）
 
 > 目的：任何 Agent（或未来的你）接手本项目时，从这一份文档出发即可了解全貌、找到任何东西、安全地运维或彻底清除。
-> 最后更新：2026-08-30。配套文档：[CHANGELOG.md](CHANGELOG.md)（每次更新做了什么）、[AGENTS.md](AGENTS.md)（Agent 行为规范）、[ARCHITECTURE.md](ARCHITECTURE.md)（架构与数据源矩阵）。
+> 最后更新：2026-09-08。配套文档：[CHANGELOG.md](CHANGELOG.md)（每次更新做了什么）、[AGENTS.md](AGENTS.md)（Agent 行为规范）、[ARCHITECTURE.md](ARCHITECTURE.md)（架构与数据源矩阵）。
 
 ---
 

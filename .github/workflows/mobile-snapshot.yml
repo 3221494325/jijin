@@ -2,6 +2,10 @@ name: FundOS mobile snapshot
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "mobile_site/data.json"
+      - "mobile_site/index.html"
   schedule:
     - cron: "15 13 * * 1-5"
 
@@ -24,12 +28,16 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Build mobile snapshot
+        if: github.event_name != 'push'
         env:
           TZ: Asia/Shanghai
           FUNDOS_LLM_API_KEY: ${{ secrets.FUNDOS_LLM_API_KEY }}
           FUNDOS_LLM_BASE_URL: ${{ secrets.FUNDOS_LLM_BASE_URL }}
           FUNDOS_LLM_MODEL: ${{ secrets.FUNDOS_LLM_MODEL }}
         run: python export_mobile_snapshot.py
+      - name: Use computer snapshot
+        if: github.event_name == 'push'
+        run: test -s mobile_site/data.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: mobile_site

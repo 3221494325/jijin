@@ -17,6 +17,7 @@ import sys
 import threading
 import webbrowser
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -70,7 +71,12 @@ SENTIMENT_DIR = DATA_DIR / "sentiment_history"
 # ============================================================
 def collect():
     """聚合面板数据。任何子模块失败都不拖垮整体（优雅降级为缺省块）。"""
-    payload = {"updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    now = datetime.now(ZoneInfo("Asia/Shanghai"))
+    payload = {"updated_at": now.strftime("%Y-%m-%d %H:%M:%S"),
+               "snapshot_meta": {"source": "local_computer",
+                                  "generated_at": now.isoformat(timespec="seconds"),
+                                  "timezone": "Asia/Shanghai",
+                                  "status": "success"}}
 
     # ---- 持仓 + 指数 + 今日估算（fundos_core，净值带10分钟缓存）----
     try:

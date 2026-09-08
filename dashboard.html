@@ -267,6 +267,7 @@ function draw(d){
   const dates = [...new Set(holdings.map(h=>h.nav_date).filter(Boolean))].sort();
   const delayed = holdings.filter(h=>(h.today_source||'').includes('滞后')).length;
   document.getElementById('dataStatus').textContent = [
+    '快照来源：'+(d.snapshot_meta?.source==='local_computer'?'电脑同步':'云端生成')+' ｜ 生成于：'+(d.snapshot_meta?.generated_at||d.updated_at||'未知'),
     '持仓基准：'+(p.as_of||'未知'),
     '盘后核验：'+(p.daily_checked_at||'未提供'),
     '净值日期：'+(dates.length ? dates[0]+' ～ '+dates[dates.length-1] : '未知'),
