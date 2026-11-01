@@ -4,6 +4,29 @@
 
 ---
 
+## 2026-11-01 · 桌面程序化 + 视觉系统重做（v7）
+
+**变成"一个软件"**
+- `dashboard.py --app`：用 Edge 的 `--app` 模式开独立窗口（无地址栏、无标签页），双击即用；找不到 Edge 自动回退默认浏览器。
+- `启动FundOS.cmd`：未运行则起服务开窗口，已在运行则只把窗口叫出来。
+- `assets/`：应用图标（多尺寸 `.ico` + 192/512 png）、`manifest.json`；服务端新增 `/favicon.ico`、`/manifest.json`、`/assets/*` 白名单路由（带路径穿越防护），浏览器里也能"安装为应用"。
+- **修掉的隐藏 bug**：Windows 上 `allow_reuse_address=True` 让第二个实例能抢占 8899，两个进程同时 listen、连接被随机分走，而"已在运行"检测永远不触发。改成 `Server` 子类，`os.name == "nt"` 时禁用 SO_REUSEADDR（已加单测）。
+
+**视觉系统（追加 v7 层，覆盖"报纸皮肤"遗留观感）**
+- 统一设计令牌：深空蓝底 + 发丝边 + 12/14px 圆角 + 单一阴影与焦点环；字体从衬线改现代无衬线，数字统一等宽 + `tabular-nums`。
+- 报头去双线改应用顶栏、标题渐变；卡片去掉 2px 黑边，改"内高光 + 悬浮微亮"，标题加青色竖条。
+- 表格吸顶表头 + 行悬停；按钮/分段控件统一胶囊形；自定义滚动条、`:focus-visible`、`prefers-reduced-motion`、打印样式。
+- 首屏冷启动：服务仍在算数据时每 3 秒自动重试（最多 6 次），不再把"—"当结论展示。
+
+**接入 WorkBuddy 自动化（试运行）**
+- 新建 automation「FundOS 盘后简报」：工作日 20:45，只读 `fund_engine_result.json` / `daily_check_result.json` / `xray_history.json`，输出 200 字以内三要素简报。**不替代**现有 Windows 计划任务（那套负责真正拉数据），只补"人话播报"这一层。
+
+**验证**
+- `tests/test_fundos.py` 57 项通过（新增端口复用回归 1 项）；`tests/test_dashboard.cjs` 通过。
+- 真机核验：`/manifest.json`、`/assets/*` 200，`/assets/../dashboard.py` 404；Edge 应用窗口标题为「FundOS · 投资驾驶舱」。
+
+---
+
 ## 2026-11-01 · 手机端下线 + 电脑端深化（v6）
 
 **下线（用户决定：常年不在家，为一块看板养服务器不值）**

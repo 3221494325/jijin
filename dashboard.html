@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07111f">
+<meta name="theme-color" content="#060e1a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/icon-192.png">
+<link rel="manifest" href="/manifest.json">
 <title>FundOS · 投资驾驶舱</title>
 <script src="/static/echarts.min.js"
         onerror="var s=document.createElement('script');s.src='https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js';document.head.appendChild(s);"></script>
@@ -353,6 +356,147 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
   .directives{grid-template-columns:1fr!important}
   .alert{padding:8px 10px;font-size:12px;overflow-wrap:anywhere}
   .xr-more{display:inline-block}
+}
+
+/* ============================================================
+   v7 视觉系统：统一设计令牌 / 现代无衬线 / 精致化组件
+   放在最后，覆盖前面几层"报纸皮肤"的遗留观感
+   ============================================================ */
+:root{
+  --bg:#060e1a; --paper:#0b1626; --ink:#e9f2ff; --line:rgba(148,180,220,.13);
+  --faint:#8ea6c0; --mute:#8ea6c0; --chip:#101f33;
+  --ok:#31d8a4; --bad:#ff6f7f; --warn:#f6c96b; --cyan:#5ee7ff;
+  --r-lg:14px; --r-md:10px; --r-sm:7px;
+  --shadow:0 1px 0 rgba(255,255,255,.035) inset, 0 12px 32px -12px rgba(0,0,0,.55);
+  --ring:0 0 0 2px rgba(94,231,255,.45);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei UI",
+         "HarmonyOS Sans SC","Noto Sans SC",system-ui,sans-serif;
+  --num:ui-monospace,"SF Mono","JetBrains Mono",Consolas,monospace;
+}
+body{
+  font-family:var(--font); font-size:13.5px; line-height:1.62; color:var(--ink);
+  background:
+    radial-gradient(1100px 520px at 8% -12%, rgba(94,231,255,.075), transparent 62%),
+    radial-gradient(900px 480px at 96% -6%, rgba(255,111,127,.055), transparent 58%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+::selection{background:rgba(94,231,255,.28)}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--r-sm)}
+*{scrollbar-width:thin;scrollbar-color:rgba(148,180,220,.28) transparent}
+*::-webkit-scrollbar{width:9px;height:9px}
+*::-webkit-scrollbar-thumb{background:rgba(148,180,220,.24);border-radius:99px}
+*::-webkit-scrollbar-thumb:hover{background:rgba(148,180,220,.38)}
+*::-webkit-scrollbar-track{background:transparent}
+
+/* 报头：去掉报纸双线，改成应用顶栏 */
+.masthead{border-top:0;border-bottom:1px solid var(--line);padding:6px 2px 14px;text-align:left}
+.masthead:after{content:none}
+.mh-side.r b{font-weight:700}
+.mast-top{align-items:center;gap:16px}
+.mh-side{font-size:11.5px;letter-spacing:.3px;color:var(--faint)}
+h1{font-size:23px;letter-spacing:.5px;font-weight:800;
+   background:linear-gradient(92deg,#eaf4ff,#a9d8ff 60%,#5ee7ff);
+   -webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .sub{font-size:10.5px;letter-spacing:2.4px;color:var(--mute);font-weight:500;
+        -webkit-text-fill-color:var(--mute)}
+.mast-sub{margin-top:9px;justify-content:flex-start;gap:10px;font-size:11.5px;color:var(--faint)}
+
+/* 卡片：发丝边 + 内高光 + 悬浮微亮 */
+.card{background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,0)) , var(--paper);
+      border:1px solid var(--line);border-radius:var(--r-lg);padding:15px 17px;
+      box-shadow:var(--shadow);transition:border-color .18s ease, transform .18s ease}
+.card:hover{border-color:rgba(94,231,255,.26)}
+.card h2{
+  font-size:13px;font-weight:700;letter-spacing:.6px;color:#d7e7fb;
+  border-bottom:0;padding:0 0 0 11px;margin:0 0 12px;position:relative;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  text-transform:none;
+}
+.card h2::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:3px;border-radius:2px;
+  background:linear-gradient(180deg,var(--cyan),rgba(94,231,255,.15))}
+.card h2 small{font-size:10.5px;letter-spacing:.2px;color:var(--mute);font-weight:400}
+h2[style]{padding-left:11px}
+
+/* 数据条 */
+.strip{gap:10px;border:0;background:transparent;margin-top:14px}
+.strip .cell{border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;text-align:left;
+  background:linear-gradient(180deg,rgba(255,255,255,.025),transparent),var(--paper)}
+.strip .k{font-size:10.5px;letter-spacing:.4px;color:var(--mute)}
+.strip .v{font-size:22px;font-weight:750;margin-top:3px;letter-spacing:-.2px;
+  font-variant-numeric:tabular-nums;font-family:var(--num)}
+
+/* 提示 / 号外 */
+.alert{border:1px solid rgba(255,111,127,.5);border-left-width:3px;border-radius:var(--r-md);
+  background:linear-gradient(90deg,rgba(255,111,127,.12),rgba(255,111,127,.03));padding:11px 14px}
+.alert b{letter-spacing:.6px}
+.forbid{border:1px solid rgba(255,111,127,.45);border-radius:var(--r-md);
+  background:rgba(255,111,127,.08);color:#ff9aa5}
+.note{color:var(--mute);font-size:11.5px}
+.small{color:var(--mute);font-size:11px;font-weight:400}
+
+/* 按钮 / 分段控件 */
+.btn{background:rgba(94,231,255,.1);color:var(--cyan);border:1px solid rgba(94,231,255,.42);
+  border-radius:99px;padding:6px 15px;font:inherit;font-size:11.5px;font-weight:600;
+  letter-spacing:.2px;cursor:pointer;transition:background .16s,transform .16s}
+.btn:hover{background:rgba(94,231,255,.18)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.5;cursor:progress}
+.seg-group{border-radius:99px;border-color:var(--line);background:rgba(255,255,255,.03)}
+.seg{border:0;border-radius:0;padding:4px 12px;font-weight:600;font-size:11px;color:var(--mute)}
+.seg.active{background:rgba(94,231,255,.16);color:var(--cyan);box-shadow:inset 0 0 0 1px rgba(94,231,255,.35)}
+.directive-confirm{border-radius:99px;border-color:rgba(94,231,255,.42);background:rgba(94,231,255,.12);color:var(--cyan)}
+.directive-confirm.done{border-color:rgba(49,216,164,.5);background:rgba(49,216,164,.14);color:var(--ok)}
+
+/* 表格：吸顶表头 + 行悬停 */
+table{width:100%;border-collapse:collapse}
+th{position:sticky;top:0;z-index:1;background:rgba(11,22,38,.92);backdrop-filter:blur(6px);
+  font-size:10.5px;letter-spacing:.4px;color:var(--mute);font-weight:600;
+  border-bottom:1px solid var(--line);padding:7px 8px}
+td{padding:8px;border-bottom:1px solid rgba(148,180,220,.07);font-size:12.5px}
+tbody tr:hover td, tr:hover td{background:rgba(94,231,255,.045)}
+td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+
+/* 导航 / 摘要条 */
+.quick-nav{gap:7px;margin:14px 0}
+.quick-nav a{border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.025);
+  color:#b9cee6;padding:6px 14px;font-size:11.5px;font-weight:600;text-decoration:none;
+  transition:all .16s ease}
+.quick-nav a:hover{color:var(--cyan);border-color:rgba(94,231,255,.42);background:rgba(94,231,255,.1)}
+.sticky-bar{background:rgba(6,14,26,.86);border-bottom:1px solid var(--line);
+  box-shadow:0 8px 24px -14px rgba(0,0,0,.8)}
+.sb-brand{background:linear-gradient(92deg,#eaf4ff,#5ee7ff);-webkit-background-clip:text;
+  background-clip:text;color:transparent;font-weight:800;letter-spacing:1.6px}
+.sb-kv b{font-family:var(--num);font-variant-numeric:tabular-nums}
+.load-status{border-radius:99px;font-size:11.5px;background:rgba(14,26,42,.7);
+  border:1px solid var(--line);padding:5px 13px}
+
+/* 指标 / 体检 / 温度计 / 风险预算 微调 */
+.kpi{border-radius:var(--r-md);border-color:var(--line);background:rgba(255,255,255,.022)}
+.kpi .k{font-size:10.5px;color:var(--mute);letter-spacing:.3px}
+.kpi .v{font-family:var(--num);font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+.xr{border-radius:var(--r-md)}
+.xr-name{letter-spacing:.2px}
+.th-track,.rb-track{border-radius:99px;box-shadow:inset 0 0 0 1px rgba(148,180,220,.08)}
+.th-legend,.card-foot{color:var(--mute)}
+.heat .hcell{border-radius:var(--r-sm);border-color:rgba(148,180,220,.1)}
+.news{border-radius:var(--r-sm)}
+.news li{border-bottom:1px solid rgba(148,180,220,.07)}
+.exposure-track,.exposure-track span{border-radius:99px}
+
+/* 动效克制动效 */
+@media (prefers-reduced-motion: no-preference){
+  .card,.quick-nav a,.btn,.seg,.xr{transition-duration:.16s}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+}
+
+/* 打印：去掉装饰，保留数据 */
+@media print{
+  body{background:#fff;color:#111}
+  .card{box-shadow:none;border-color:#ddd;background:#fff}
+  .sticky-bar,.to-top,.quick-nav,.btn{display:none!important}
 }
 </style>
 </head>
@@ -1168,6 +1312,7 @@ function renderCorr(d){
   }, true));
 }
 
+let coldRetry = 0;
 async function load(force){
   const status = document.getElementById('loadStatus');
   status.className = 'load-status';
@@ -1180,6 +1325,15 @@ async function load(force){
     const serverBuild = (r.headers && r.headers.get) ? r.headers.get('X-FundOS-Build') : null;
     const d = await r.json();
     draw(d);
+    // 冷启动：服务还在算第一批数据，返回的是降级空壳 —— 3 秒后自动重试，别让首屏停在"—"
+    if(d.degraded && !d.portfolio && coldRetry < 6){
+      coldRetry += 1;
+      status.className = 'load-status';
+      status.textContent = '正在计算首屏数据…（第 ' + coldRetry + ' 次重试，约十几秒）';
+      setTimeout(()=>load(), 3000);
+      return;
+    }
+    coldRetry = 0;
     let msg = d.data_quality==='stale' ? '已读取缓存快照；后台正在刷新数据。'
       : d.data_quality==='partial' ? '已读取部分数据；部分数据源暂不可用。'
       : '已读取页面数据；实际数据日期以各模块标注为准。';

@@ -575,6 +575,13 @@ class TestDashboardHelpers(unittest.TestCase):
         self.assertIsNone(dashboard.breakeven_pct(-100))
         self.assertIsNone(dashboard.breakeven_pct(None))
 
+    def test_server_disallows_port_hijack_on_windows(self):
+        import os
+        import dashboard
+        # Windows 的 SO_REUSEADDR 允许第二个实例抢占同一端口，
+        # 会造成两个进程同时 listen、"已在运行"检测永远不触发
+        self.assertEqual(dashboard.Server.allow_reuse_address, os.name != "nt")
+
     def test_market_clock_weekend(self):
         from datetime import datetime
         import dashboard

@@ -14,6 +14,7 @@
 import argparse
 import hashlib
 import json
+import os
 from datetime import datetime, timedelta
 from email.utils import formatdate
 import sys
@@ -728,6 +729,17 @@ class Handler(BaseHTTPRequestHandler):
                            "application/javascript; charset=utf-8")
             else:
                 self._send(404, "echarts not bundled", "text/plain; charset=utf-8")
+        elif path in ("/favicon.ico", "/manifest.json") or path.startswith("/assets/"):
+            # 应用外壳资源：图标与 manifest，只允许白名单文件名，避免路径穿越
+            name = path.rsplit("/", 1)[-1]
+            types = {".ico": "image/x-icon", ".png": "image/png",
+                     ".json": "application/manifest+json", ".svg": "image/svg+xml"}
+            target = ROOT / "assets" / name
+            if name and "/" not in name and ".." not in name and target.is_file():
+                self._send(200, target.read_bytes(),
+                           types.get(target.suffix.lower(), "application/octet-stream"))
+            else:
+                self._send(404, "not found", "text/plain; charset=utf-8")
         elif path == "/api/llm/refresh":
             try:
                 import fundos_llm
@@ -795,6 +807,37 @@ class Handler(BaseHTTPRequestHandler):
                        "application/json; charset=utf-8")
 
 
+class Server(ThreadingHTTPServer):
+    """Windows 下必须关闭 SO_REUSEADDR，否则第二个实例能"抢占"同一端口，
+
+    结果是两个进程同时 listen 8899、连接被随机分走，而"已在运行"的检测永远不会触发。
+    """
+    allow_reuse_address = (os.name != "nt")
+    daemon_threads = True
+
+
+def _open_app_window(url):
+    """用 Edge 的 --app 模式开独立窗口（无地址栏、无标签页），Windows 自带 WebView2。
+
+    返回 True 表示已按"桌面应用"方式打开；False 交给调用方回退默认浏览器。
+    """
+    import shutil
+    import subprocess
+    for exe in (shutil.which("msedge"),
+                r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+                r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"):
+        if not exe or not Path(exe).exists():
+            continue
+        try:
+            subprocess.Popen([exe, f"--app={url}", "--window-size=1500,940",
+                              "--no-first-run", "--disable-features=Translate"],
+                             close_fds=True)
+            return True
+        except OSError:
+            continue
+    return False
+
+
 def main():
     # 无控制台模式守卫（pythonw 自启动时 stdout/stderr 为 None，print 会崩）
     if sys.stdout is None:
@@ -805,16 +848,22 @@ def main():
     parser = argparse.ArgumentParser(description="FundOS 可视化面板")
     parser.add_argument("--port", type=int, default=PORT_DEFAULT)
     parser.add_argument("--no-browser", action="store_true")
+    parser.add_argument("--app", action="store_true",
+                        help="以独立应用窗口打开（Edge --app，无地址栏）")
     args = parser.parse_args()
     # 只绑本机回环：这是纯私人看板，不对外提供访问（手机端方案已下线）
     host = "127.0.0.1"
     url = f"http://127.0.0.1:{args.port}"
     try:
-        server = ThreadingHTTPServer((host, args.port), Handler)
+        server = Server((host, args.port), Handler)
     except OSError as exc:
         if "10048" in str(exc) or "in use" in str(exc).lower():
-            # 已有实例在跑（如登录自启动的常驻服务），静默退出即可
+            # 已有实例在跑（如登录自启动的常驻服务）：不重复起服务，只把窗口叫出来
             print(f"面板已在运行: {url}")
+            if args.app:
+                _open_app_window(url)
+            elif not args.no_browser:
+                webbrowser.open(url)
             return 0
         raise
     print(f"📊 FundOS 可视化面板已启动: {url}  (Ctrl+C 停止)")
@@ -832,7 +881,14 @@ def main():
     except OSError:
         pass
     if not args.no_browser:
-        threading.Timer(0.8, webbrowser.open, args=(url,)).start()
+        if args.app:
+            # 应用窗口：等 0.8 秒让服务就绪，再用 Edge --app 打开（无地址栏）
+            def _boot_app():
+                if not _open_app_window(url):
+                    webbrowser.open(url)
+            threading.Timer(0.8, _boot_app).start()
+        else:
+            threading.Timer(0.8, webbrowser.open, args=(url,)).start()
     try:
         server.serve_forever()
     except KeyboardInterrupt:

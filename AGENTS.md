@@ -51,7 +51,8 @@
 | fundos_console_v2.py | 交互控制台（[1]行情 [2]诊断 [5]新闻 [7]扫描 [8]记录 [9]技能库） |
 | notify.py | 通知（Windows弹窗 + 可选Server酱微信，FUNDOS_SCT_KEY 环境变量启用） |
 | auto_pipeline.py | 自动化流水线（morning晨报/afternoon触发警报/evening晚报；install/uninstall 注册计划任务；catchup 补跑当天遗漏——电脑不常开也能自动追平） |
-| dashboard.py | 可视化面板（python dashboard.py → http://127.0.0.1:8899，只绑回环，不对外；红涨绿跌，60秒自刷新，图标库已本地化）。页面模板每次请求读盘 + 注入构建号；非交易日按 market_clock() 标注口径 |
+| dashboard.py | 可视化面板（python dashboard.py → http://127.0.0.1:8899，只绑回环，不对外；红涨绿跌，60秒自刷新，图标库已本地化）。`--app` 用 Edge 独立窗口打开（无地址栏，等同桌面程序）；单实例：端口被占时只把窗口叫出来。`assets/` 提供 `/favicon.ico`、`/assets/*`、`/manifest.json`（白名单，禁路径穿越） |
+| 启动FundOS.cmd | 双击启动：未运行则起服务并开应用窗口，已在运行则只叫出窗口 |
 | tests/test_fundos.py | 单元测试（python tests/test_fundos.py） |
 
 **维护红线**: 新增持仓/改成本 → 只改 `fundos_config.FUND_META`（并按其注释重推 cost_nav）；
