@@ -198,4 +198,24 @@ assert.ok(ds.includes("板块 已过期→回退抓取"));
 assert.ok(ds.includes("指数 未接入"));
 assert.ok(!ds.includes("undefined"));
 
+// ---- v10：产业景气 ----
+context.v10 = {
+  build: "cockpit-xray-v4",
+  edb: [
+    {name:"集成电路产量", value:542.7, unit:"亿块", yoy:18.4, month:"2026-09"},
+    {name:"光伏电池产量", value:120.5, unit:"万千瓦", yoy:-3.2, month:"2026-09"},
+  ],
+  holdings: [], portfolio: {}, news: [],
+};
+vm.runInContext("draw(v10)", context);
+assert.ok(elements.edbList.innerHTML.includes("集成电路产量"));
+assert.ok(elements.edbList.innerHTML.includes("+18.4%"), "同比为正要带加号");
+assert.ok(elements.edbList.innerHTML.includes("-3.2%"));
+assert.ok(/edb-item[\s\S]*?class="up"/.test(elements.edbList.innerHTML) || elements.edbList.innerHTML.includes(" up"), "正增长用 up 配色");
+assert.ok(elements.edbMeta.textContent.includes("2026-09"));
+assert.ok(!elements.edbList.innerHTML.includes("undefined"));
+
+vm.runInContext("draw({edb:[]})", context);
+assert.ok(elements.edbList.innerHTML.includes("暂无产业指标"));
+
 console.log("Dashboard rendering contract checks passed");

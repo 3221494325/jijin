@@ -312,8 +312,10 @@ def collect():
         try:
             import fundos_bridge
             payload["bridge_health"] = fundos_bridge.health()
+            payload["edb"] = fundos_bridge.edb_snapshot()
         except Exception:  # noqa: BLE001
             payload["bridge_health"] = []
+            payload["edb"] = []
         payload["global_indices"] = [{"name": v["name"], "price": v["price"],
                                       "chg_pct": round(v["chg_pct"], 2)}
                                      for v in proxies.values()]

@@ -298,6 +298,18 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
 /* 申赎状态（决定指令能不能落地） */
 .fstate{margin-top:14px;padding-top:12px;border-top:1px dashed #24384f}
 .fstate h3 .small{font-weight:400;color:var(--mute)}
+
+/* 产业景气（月频经济指标） */
+.edb{margin-top:14px;padding-top:12px;border-top:1px dashed #24384f}
+.edb h3{font-size:12px;font-weight:700;color:#b9c9dd;letter-spacing:.5px;margin-bottom:9px}
+.edb h3 .small{font-weight:400;color:var(--mute)}
+.edb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.edb-item{display:flex;align-items:baseline;gap:8px;padding:7px 10px;border-radius:8px;min-width:0;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:11.5px;color:#cfe0f5}
+.edb-item b{flex:1 1 auto;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.edb-item span{flex:0 0 auto;color:var(--mute);font-family:var(--num)}
+.edb-item em{flex:0 0 auto;font-style:normal;font-weight:700;font-family:var(--num);font-size:12px}
+.edb-foot{margin-top:7px;font-size:10.5px;color:var(--mute)}
 .fstate-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:8px}
 .fs-item{display:flex;align-items:baseline;gap:8px;padding:7px 10px;border-radius:8px;min-width:0;
   background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:11.5px;color:#cfe0f5}
@@ -624,6 +636,10 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
   <section class="card area-board" id="marketSection">
     <h2>行业板块 · 涨幅前10<small id="boardDate">—</small></h2>
     <div id="boards" class="chart" style="height:280px"></div>
+    <div class="edb">
+      <h3>产业景气 <span class="small" id="edbMeta">—</span></h3>
+      <div class="edb-grid" id="edbList"></div>
+    </div>
   </section>
 
   <section class="card area-contrib">
@@ -1007,6 +1023,7 @@ function draw(d){
   renderCorr(d);
   renderThermo(d);
   renderFState(d);
+  renderEdb(d);
   renderRiskBudget(d);
 
   Object.values(charts).forEach(c=>c.resize());
@@ -1102,6 +1119,34 @@ function renderNav(d){
       formatter:v => cost ? (v*100).toFixed(0)+'%' : fmt(v,2)}},
     series: series
   }, true));
+}
+
+// ============ 产业景气（月频指标，解释"为什么跌/涨"的产业面） ============
+function renderEdb(d){
+  const el = document.getElementById('edbList');
+  const meta = document.getElementById('edbMeta');
+  if(!el) return;
+  const rows = d.edb || [];
+  if(!rows.length){
+    el.innerHTML = '<div class="note">暂无产业指标（需同花顺 EDB 快照）</div>';
+    if(meta) meta.textContent = '';
+    return;
+  }
+  if(meta){
+    const months = [...new Set(rows.map(r=>r.month).filter(Boolean))].sort();
+    meta.textContent = months.length ? '数据月 ' + months[months.length-1] : '';
+  }
+  el.innerHTML = rows.map(r=>{
+    const yoy = (r.yoy==null || !isFinite(r.yoy)) ? null : Number(r.yoy);
+    const cls2 = yoy==null ? 'flat' : (yoy>=0 ? 'up' : 'down');
+    const val = (r.value==null) ? '—' : fmt(r.value, 1) + (r.unit ? ' ' + r.unit : '');
+    const tip = r.name + '：' + val + (yoy==null ? '' : '，同比 ' + (yoy>0?'+':'') + fmt(yoy,1) + '%') +
+                (r.month ? '（' + r.month + '）' : '') + (r.note ? ' ｜ ' + r.note : '');
+    return '<div class="edb-item" title="' + escapeHTML(tip) + '">' +
+      '<b>' + escapeHTML(r.name) + '</b>' +
+      '<span>' + val + '</span>' +
+      '<em class="' + cls2 + '">' + (yoy==null ? '—' : (yoy>0?'+':'') + fmt(yoy,1) + '%') + '</em></div>';
+  }).join('');
 }
 
 // ============ 申赎状态：决定指令能不能落地 ============

@@ -28,11 +28,14 @@ NAV_FILE = "nav_snapshot.json"
 BOARD_FILE = "board_snapshot.json"
 INDEX_FILE = "index_snapshot.json"
 FUND_STATE_FILE = "fund_state_snapshot.json"
+EDB_FILE = "edb_snapshot.json"
 
-# 快照允许的最大陈旧度：净值留 4 天（覆盖周末 + QDII 滞后），板块/指数留 5 天
+# 快照允许的最大陈旧度：净值留 4 天（覆盖周末 + QDII 滞后），板块/指数/景气留 5-40 天
 NAV_MAX_AGE = timedelta(days=4)
 BOARD_MAX_AGE = timedelta(days=5)
 INDEX_MAX_AGE = timedelta(days=5)
+# 产业经济指标是月频、次月中旬才发布，陈旧度按 40 天算，否则月中就整片失效
+EDB_MAX_AGE = timedelta(days=40)
 
 
 def _load(name):
@@ -94,6 +97,7 @@ KIND_FILES = {
     "board": BOARD_FILE,
     "index": INDEX_FILE,
     "fund_state": FUND_STATE_FILE,
+    "edb": EDB_FILE,
 }
 
 # kind -> (文件, 最大陈旧度, 中文标签)
@@ -102,6 +106,7 @@ KIND_META = {
     "board": (BOARD_FILE, BOARD_MAX_AGE, "板块"),
     "index": (INDEX_FILE, INDEX_MAX_AGE, "指数"),
     "fund_state": (FUND_STATE_FILE, NAV_MAX_AGE, "申赎"),
+    "edb": (EDB_FILE, EDB_MAX_AGE, "景气"),
 }
 
 
@@ -175,3 +180,30 @@ def index_snapshot():
     if not (data.get("cn") or data.get("global")):
         return None
     return data
+
+
+def edb_snapshot():
+    """产业景气指标（同花顺 fetch_edb）。
+
+    {"as_of":"2026-09","items":[{name,value,unit,yoy,month,source}]}；过期/缺失返回 []
+    指标是月频，次月中旬才有上月值，所以陈旧度放宽到 40 天。
+    """
+    data = _load(EDB_FILE)
+    if not data or not _age_ok(data, EDB_MAX_AGE):
+        return []
+    items = data.get("items")
+    if not isinstance(items, list):
+        return []
+    out = []
+    for it in items:
+        if not isinstance(it, dict) or not it.get("name"):
+            continue
+        out.append({
+            "name": str(it.get("name")),
+            "value": it.get("value"),
+            "unit": it.get("unit") or "",
+            "yoy": it.get("yoy"),
+            "month": it.get("month") or "",
+            "note": it.get("note") or "",
+        })
+    return out

@@ -729,6 +729,38 @@ class TestExternalBridge(unittest.TestCase):
             self.assertEqual(h["board"]["status"], "expired")
             self.assertEqual(h["board"]["days_left"], 0)
 
+    def test_edb_snapshot_filters_and_expires(self):
+        """产业指标是月频、次月中旬才发布，陈旧度放宽到 40 天；缺 name 的脏行要丢掉。"""
+        from datetime import datetime, timedelta
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            b = self._bridge(tmp)
+            self.assertEqual(b.edb_snapshot(), [])
+
+            b.write_snapshot("edb", {"as_of": "2026-09", "items": [
+                {"name": "集成电路产量", "value": 542.7, "unit": "亿块", "yoy": 18.4, "month": "2026-09"},
+                {"value": 1},          # 缺 name
+                "not-a-dict",          # 类型不对
+            ]}, "ifind-mcp")
+            rows = b.edb_snapshot()
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(rows[0]["name"], "集成电路产量")
+            self.assertEqual(rows[0]["yoy"], 18.4)
+            self.assertEqual(rows[0]["unit"], "亿块")
+
+            path = Path(tmp) / "edb_snapshot.json"
+            recent = (datetime.now(b.BJ_TZ) - timedelta(days=30)).isoformat(timespec="seconds")
+            path.write_text(json.dumps({"generated_at": recent,
+                                        "items": [{"name": "光伏电池产量", "value": 1, "yoy": -3.2}]}),
+                            encoding="utf-8")
+            self.assertEqual(len(b.edb_snapshot()), 1, "30 天前的月频指标仍应有效")
+
+            stale = (datetime.now(b.BJ_TZ) - timedelta(days=41)).isoformat(timespec="seconds")
+            path.write_text(json.dumps({"generated_at": stale,
+                                        "items": [{"name": "光伏电池产量", "value": 1, "yoy": -3.2}]}),
+                            encoding="utf-8")
+            self.assertEqual(b.edb_snapshot(), [], "超过 40 天必须失效")
+
 
 # ---------- 磁盘缓存写入必须是原子的 ----------
 class TestDiskCacheWrite(unittest.TestCase):
