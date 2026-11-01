@@ -276,12 +276,52 @@ def collect():
             "eval_line": round(THRESHOLDS["eval_line"] * 100, 1),
             "hard_stop": round(THRESHOLDS["hard_stop"] * 100, 1),
         }
+        # 申赎状态（盈米交易规则快照）：直接决定"指令能不能执行"——限购 10 元的基金补不了仓
+        try:
+            import fundos_bridge
+            fstate = fundos_bridge.fund_state_snapshot()
+        except Exception:  # noqa: BLE001
+            fstate = {}
+        if fstate:
+            frows = []
+            for h in payload["holdings"]:
+                st = fstate.get(h["code"]) or {}
+                if not st:
+                    continue
+                max_buy = st.get("max_buy")
+                try:
+                    limited = max_buy is not None and float(max_buy) <= 1000
+                except (TypeError, ValueError):
+                    limited = False
+                frows.append({
+                    "code": h["code"], "name": h["name"],
+                    "min_buy": st.get("min_buy"),
+                    "max_buy": max_buy,
+                    "limited": limited,
+                    "fee_text": st.get("fee_text") or "—",
+                    "mgr_pct": st.get("mgr"),
+                    "redeem_card_days": st.get("card_days"),
+                    "redeem_wallet_days": st.get("wallet_days"),
+                })
+            payload["fund_state"] = frows
+            payload["data_sources"]["fund_state"] = {"status": "ok", "funds": len(frows)}
         payload["indices"] = [{"name": v["name"], "price": v["price"],
                                "chg_pct": round(v["chg_pct"], 2)}
                               for v in indices.values()]
         payload["global_indices"] = [{"name": v["name"], "price": v["price"],
                                       "chg_pct": round(v["chg_pct"], 2)}
                                      for v in proxies.values()]
+        # 全球主要指数（5 个，独立于 QDII 代理）：代理只覆盖持仓的海外敞口，
+        # 这张表是"环球市场行情"该有的样子；恒生/日经靠同花顺快照补缺
+        try:
+            world = fundos_data.fetch_global_indices()
+            payload["world_indices"] = [{"name": v["name"], "price": round(v["price"], 2),
+                                         "chg_pct": round(v["chg_pct"], 2)}
+                                        for v in world.values()]
+            payload["data_sources"]["world_indices"] = {"status": "ok", "count": len(world)}
+        except Exception as exc:  # noqa: BLE001
+            payload["world_indices"] = []
+            payload["data_sources"]["world_indices"] = {"status": "error", "error": str(exc)[:120]}
         payload["data_sources"]["portfolio"] = {"status": "ok", "as_of": str(snap_date)}
     except Exception as exc:  # noqa: BLE001 — 面板不能崩
         payload["error_core"] = str(exc)[:200]

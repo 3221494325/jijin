@@ -160,4 +160,24 @@ assert.ok(costOpt.series[0].markLine && costOpt.series[0].markLine.data[0].yAxis
 assert.ok(!costOpt.series.some(s => s.name === "组合"), "成本模式不应混入组合线");
 assert.equal(costOpt.yAxis.axisLabel.formatter(0.98), "98%");
 
+// ---- v8：申赎状态 + 主要指数 ----
+context.v8 = {
+  build: "cockpit-xray-v4",
+  fund_state: [
+    {name:"标普500", code:"017641", min_buy:1, max_buy:10, limited:true, fee_text:"1.20%", mgr_pct:0.5, redeem_card_days:6},
+    {name:"半导体A", code:"019759", min_buy:1, max_buy:null, limited:false, fee_text:"1.50%", mgr_pct:1.2, redeem_card_days:2},
+  ],
+  world_indices: [{name:"恒生指数", price:23294.42, chg_pct:1.46},
+                  {name:"日经225", price:63290.11, chg_pct:-2.12}],
+  indices: [], global_indices: [],
+};
+vm.runInContext("draw(v8)", context);
+assert.ok(elements.fstateMeta.textContent.includes("标普500"), "限购标的必须点名");
+assert.ok(elements.fstateMeta.textContent.includes("补不了仓"));
+assert.ok(elements.fstateList.innerHTML.includes("fs-item lim"), "限购项要有警示样式");
+assert.ok(elements.fstateList.innerHTML.includes("不限"), "无上限的标的要显示不限");
+assert.ok(elements.worldTable.innerHTML.includes("恒生指数"), "主要指数要渲染");
+assert.ok(elements.worldTable.innerHTML.includes("主要指数"));
+assert.ok(!elements.fstateList.innerHTML.includes("undefined"));
+
 console.log("Dashboard rendering contract checks passed");

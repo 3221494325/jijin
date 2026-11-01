@@ -292,8 +292,21 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
 
 /* 距止损线温度计 */
 .thermo{margin-top:14px;padding-top:12px;border-top:1px dashed #24384f}
-.thermo h3,.rb h3{font-size:12px;font-weight:700;color:#b9c9dd;letter-spacing:.5px;margin-bottom:9px}
+.thermo h3,.rb h3,.fstate h3{font-size:12px;font-weight:700;color:#b9c9dd;letter-spacing:.5px;margin-bottom:9px}
 .thermo h3 .small,.rb h3 .small{font-weight:400;color:var(--mute)}
+
+/* 申赎状态（决定指令能不能落地） */
+.fstate{margin-top:14px;padding-top:12px;border-top:1px dashed #24384f}
+.fstate h3 .small{font-weight:400;color:var(--mute)}
+.fstate-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:8px}
+.fs-item{display:flex;align-items:baseline;gap:8px;padding:7px 10px;border-radius:8px;min-width:0;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:11.5px;color:#cfe0f5}
+.fs-item b{flex:1 1 auto;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fs-item span{flex:0 0 auto;color:var(--mute);white-space:nowrap;font-family:var(--num)}
+.fs-item i{flex:0 0 auto;font-style:normal;color:var(--mute);font-size:10.5px;font-family:var(--num)}
+.fs-item.lim{border-color:rgba(255,111,127,.5);background:rgba(255,111,127,.1)}
+.fs-item.lim span{color:#ff9aa5;font-weight:600}
+.world-label{font-size:10.5px;color:var(--mute);letter-spacing:.5px;margin:0 0 4px}
 .th-row{display:grid;grid-template-columns:94px 1fr 76px;gap:10px;align-items:center;margin:5px 0}
 .th-name{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .th-track{position:relative;height:10px;border-radius:5px;background:#16283c;overflow:hidden}
@@ -592,6 +605,10 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
   <section class="card area-hold" id="holdings">
     <h2>持仓行情<small>市值单位:元 · 今估为估算值</small><label class="small">排序 <select id="holdSort" onchange="if(lastData) draw(lastData)"><option value="value">金额从高到低</option><option value="ret_pct">收益率从低到高</option><option value="name">基金名称</option></select></label></h2>
     <div style="overflow-x:auto"><div id="holdTable"></div></div>
+    <div class="fstate">
+      <h3>申赎状态 <span class="small" id="fstateMeta">—</span></h3>
+      <div class="fstate-grid" id="fstateList"></div>
+    </div>
     <div class="thermo">
       <h3>距止损线还有多远 <span class="small" id="thermoMeta">—</span></h3>
       <div class="th-legend">
@@ -639,8 +656,9 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
   </section>
 
   <section class="card area-idx">
-    <h2>环球市场行情</h2>
+    <h2>环球市场行情<small id="worldMeta">QDII 估值代理 + 主要指数</small></h2>
     <div id="idxTable"></div>
+    <div id="worldTable" style="margin-top:10px"></div>
   </section>
 </main>
 
@@ -877,6 +895,19 @@ function draw(d){
   document.getElementById('idxTable').innerHTML =
     '<div class="idx-grid">' + mkTable(rows.slice(0,half)) + mkTable(rows.slice(half)) + '</div>';
 
+  // 主要指数（与 QDII 代理分开展示：代理用于估值，指数用于看环境）
+  const wt = document.getElementById('worldTable');
+  if(wt){
+    const wrows = d.world_indices || [];
+    if(wrows.length){
+      const half2 = Math.ceil(wrows.length/2);
+      wt.innerHTML = '<div class="world-label">主要指数</div><div class="idx-grid">' +
+        mkTable(wrows.slice(0,half2)) + mkTable(wrows.slice(half2)) + '</div>';
+    } else {
+      wt.innerHTML = '';
+    }
+  }
+
   // 操作指南（规则引擎）
   const g = d.guide||{};
   window.currentGuideDirectives = g.directives||[];
@@ -967,6 +998,7 @@ function draw(d){
   renderContrib(d);
   renderCorr(d);
   renderThermo(d);
+  renderFState(d);
   renderRiskBudget(d);
 
   Object.values(charts).forEach(c=>c.resize());
@@ -1062,6 +1094,36 @@ function renderNav(d){
       formatter:v => cost ? (v*100).toFixed(0)+'%' : fmt(v,2)}},
     series: series
   }, true));
+}
+
+// ============ 申赎状态：决定指令能不能落地 ============
+function renderFState(d){
+  const el = document.getElementById('fstateList');
+  const meta = document.getElementById('fstateMeta');
+  if(!el) return;
+  const rows = d.fund_state || [];
+  if(!rows.length){
+    el.innerHTML = '<div class="note">暂无申赎数据（需要盈米交易规则快照）</div>';
+    if(meta) meta.textContent = '';
+    return;
+  }
+  const limited = rows.filter(r=>r.limited);
+  if(meta){
+    meta.textContent = limited.length
+      ? '单日限购 ≤1000 元：' + limited.map(r=>r.name).join('、') + ' —— 这些标的补不了仓'
+      : '全部标的可正常申购';
+  }
+  el.innerHTML = rows.map(r=>{
+    const cap = (r.max_buy == null) ? '不限' : money(r.max_buy) + ' 元';
+    const tip = r.name + '：起购 ' + money(r.min_buy) + ' 元 / 单日上限 ' + cap +
+      ' / 申购费 ' + r.fee_text +
+      ' / 管理费 ' + (r.mgr_pct == null ? '—' : fmt(r.mgr_pct, 2) + '%') +
+      ' / 赎回到卡 T+' + (r.redeem_card_days == null ? '—' : r.redeem_card_days);
+    return '<div class="fs-item' + (r.limited ? ' lim' : '') + '" title="' + escapeHTML(tip) + '">' +
+      '<b>' + escapeHTML(r.name) + '</b>' +
+      '<span>上限 ' + cap + '</span>' +
+      '<i>T+' + (r.redeem_card_days == null ? '—' : r.redeem_card_days) + '</i></div>';
+  }).join('');
 }
 
 // ============ 距止损线温度计 ============

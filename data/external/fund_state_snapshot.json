@@ -1,0 +1,79 @@
+{
+ "as_of": "2026-11-01",
+ "funds": {
+  "018734": {
+   "min_buy": 1,
+   "max_buy": null,
+   "fee_text": "1.00%",
+   "fee_pct": 1.0,
+   "mgr": 0.5,
+   "card_days": 3,
+   "wallet_days": 1
+  },
+  "012922": {
+   "min_buy": 1,
+   "max_buy": 10000,
+   "fee_text": "—",
+   "fee_pct": null,
+   "mgr": 1.2,
+   "card_days": 6,
+   "wallet_days": 4
+  },
+  "017641": {
+   "min_buy": 1,
+   "max_buy": 10,
+   "fee_text": "1.20%",
+   "fee_pct": 1.2,
+   "mgr": 0.5,
+   "card_days": 6,
+   "wallet_days": 4
+  },
+  "019172": {
+   "min_buy": 1,
+   "max_buy": 10,
+   "fee_text": "1.20%",
+   "fee_pct": 1.2,
+   "mgr": 0.5,
+   "card_days": 6,
+   "wallet_days": 4
+  },
+  "011608": {
+   "min_buy": 1,
+   "max_buy": null,
+   "fee_text": "0.60%",
+   "fee_pct": 0.6,
+   "mgr": 0.15,
+   "card_days": 2,
+   "wallet_days": 1
+  },
+  "001513": {
+   "min_buy": 1,
+   "max_buy": null,
+   "fee_text": "1.50%",
+   "fee_pct": 1.5,
+   "mgr": 1.2,
+   "card_days": 3,
+   "wallet_days": 1
+  },
+  "022364": {
+   "min_buy": 1,
+   "max_buy": 50000,
+   "fee_text": "1.50%",
+   "fee_pct": 1.5,
+   "mgr": 1.2,
+   "card_days": 2,
+   "wallet_days": 1
+  },
+  "019759": {
+   "min_buy": 1,
+   "max_buy": null,
+   "fee_text": "1.50%",
+   "fee_pct": 1.5,
+   "mgr": 1.2,
+   "card_days": 2,
+   "wallet_days": 1
+  }
+ },
+ "source": "yingmi-mcp",
+ "generated_at": "2026-11-01T14:51:06+08:00"
+}

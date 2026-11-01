@@ -27,6 +27,7 @@ EXT_DIR = Path(os.environ.get("FUNDOS_EXTERNAL_DIR") or (ROOT / "data" / "extern
 NAV_FILE = "nav_snapshot.json"
 BOARD_FILE = "board_snapshot.json"
 INDEX_FILE = "index_snapshot.json"
+FUND_STATE_FILE = "fund_state_snapshot.json"
 
 # 快照允许的最大陈旧度：净值留 4 天（覆盖周末 + QDII 滞后），板块/指数留 5 天
 NAV_MAX_AGE = timedelta(days=4)
@@ -88,15 +89,37 @@ def board_snapshot():
     return data
 
 
+KIND_FILES = {
+    "nav": NAV_FILE,
+    "board": BOARD_FILE,
+    "index": INDEX_FILE,
+    "fund_state": FUND_STATE_FILE,
+}
+
+
 def write_snapshot(kind, payload, source):
-    """写快照（供 Agent 侧调用）。kind: 'nav' | 'board' | 'index'"""
+    """写快照（供 Agent 侧调用）。kind: nav / board / index / fund_state
+
+    未知 kind 直接报错 —— 曾因为默认值静默写进了 nav_snapshot.json，把净值快照冲掉。
+    """
+    if kind not in KIND_FILES:
+        raise ValueError(f"unknown snapshot kind: {kind}")
     EXT_DIR.mkdir(parents=True, exist_ok=True)
-    name = {"nav": NAV_FILE, "board": BOARD_FILE, "index": INDEX_FILE}.get(kind, NAV_FILE)
+    name = KIND_FILES[kind]
     body = dict(payload or {})
     body["source"] = source
     body["generated_at"] = datetime.now(BJ_TZ).isoformat(timespec="seconds")
     (EXT_DIR / name).write_text(json.dumps(body, ensure_ascii=False, indent=1), encoding="utf-8")
     return EXT_DIR / name
+
+
+def fund_state_snapshot():
+    """申赎状态快照 {code: {...}}，过期返回 {}。数据来自盈米 BatchGetFundTradeRules。"""
+    data = _load(FUND_STATE_FILE)
+    if not data or not _age_ok(data, NAV_MAX_AGE):
+        return {}
+    funds = data.get("funds")
+    return funds if isinstance(funds, dict) else {}
 
 
 def index_snapshot():
