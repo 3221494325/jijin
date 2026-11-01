@@ -35,8 +35,12 @@ def main():
         return 1
     if run("git", "push", "origin", "main").returncode:
         print("推送失败：手机端仍保留上一版快照。", file=sys.stderr)
+        print("排查：① GitHub 是否可达（本机需开代理，仓库已配 http.proxy=http://127.0.0.1:7890）；"
+              "② 是否已授权（首次需在系统终端执行 git push 完成一次浏览器登录，凭据会被缓存）。",
+              file=sys.stderr)
         return 1
     print("同步提交已推送，等待 GitHub Pages 部署完成。")
+    print("线上地址：https://3221494325.github.io/jijin/（约 1-3 分钟后生效）")
     return 0
 
 if __name__ == "__main__":
