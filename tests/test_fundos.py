@@ -686,6 +686,24 @@ class TestExternalBridge(unittest.TestCase):
             self.assertIn("generated_at", snap)
             self.assertEqual(snap["industry"][0]["name"], "酒店餐饮")
 
+    def test_index_snapshot_fills_gaps_only(self):
+        import tempfile
+        import fundos_data
+        with tempfile.TemporaryDirectory() as tmp:
+            b = self._bridge(tmp)
+            b.write_snapshot("index", {"global": {
+                "gb_hsi": {"name": "恒生指数", "price": 23294.42, "chg_pct": 1.4625},
+                "gb_$dji": {"name": "道琼斯", "price": 99999, "chg_pct": 0},
+            }}, "ifind-mcp")
+            live = {"gb_$dji": {"name": "道琼斯", "price": 51770.31, "chg_pct": -1.09}}
+            out = fundos_data._index_snapshot_fill(["gb_$dji", "gb_hsi", "gb_$n225"], live, "global")
+            # 已有的实时值（哪怕和快照不同）绝不能被快照覆盖
+            self.assertEqual(out["gb_$dji"]["price"], 51770.31)
+            # 缺失的用快照补上
+            self.assertEqual(out["gb_hsi"]["price"], 23294.42)
+            self.assertEqual(out["gb_hsi"]["source"], "ifind")
+            self.assertNotIn("gb_$n225", out)   # 快照里没有的，保持缺失
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

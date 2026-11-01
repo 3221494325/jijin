@@ -26,10 +26,12 @@ EXT_DIR = Path(os.environ.get("FUNDOS_EXTERNAL_DIR") or (ROOT / "data" / "extern
 
 NAV_FILE = "nav_snapshot.json"
 BOARD_FILE = "board_snapshot.json"
+INDEX_FILE = "index_snapshot.json"
 
-# 快照允许的最大陈旧度：净值留 4 天（覆盖周末 + QDII 滞后），板块留 5 天
+# 快照允许的最大陈旧度：净值留 4 天（覆盖周末 + QDII 滞后），板块/指数留 5 天
 NAV_MAX_AGE = timedelta(days=4)
 BOARD_MAX_AGE = timedelta(days=5)
+INDEX_MAX_AGE = timedelta(days=5)
 
 
 def _load(name):
@@ -87,11 +89,25 @@ def board_snapshot():
 
 
 def write_snapshot(kind, payload, source):
-    """写快照（供 Agent 侧调用）。kind: 'nav' | 'board'"""
+    """写快照（供 Agent 侧调用）。kind: 'nav' | 'board' | 'index'"""
     EXT_DIR.mkdir(parents=True, exist_ok=True)
-    name = NAV_FILE if kind == "nav" else BOARD_FILE
+    name = {"nav": NAV_FILE, "board": BOARD_FILE, "index": INDEX_FILE}.get(kind, NAV_FILE)
     body = dict(payload or {})
     body["source"] = source
     body["generated_at"] = datetime.now(BJ_TZ).isoformat(timespec="seconds")
     (EXT_DIR / name).write_text(json.dumps(body, ensure_ascii=False, indent=1), encoding="utf-8")
     return EXT_DIR / name
+
+
+def index_snapshot():
+    """指数快照 {"as_of":..., "cn": {code:{name,price,chg_pct}}, "global": {...}}，过期则 None。
+
+    用法约定：只用来**补缺**（抓取链路没返回的指数），不用来覆盖已有的实时值 ——
+    盘中快照是上一交易日的，覆盖会写脏当天行情。
+    """
+    data = _load(INDEX_FILE)
+    if not data or not _age_ok(data, INDEX_MAX_AGE):
+        return None
+    if not (data.get("cn") or data.get("global")):
+        return None
+    return data

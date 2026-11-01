@@ -245,9 +245,51 @@ def fetch_indices(codes=None, *, use_cache=True):
         except (ValueError, IndexError):
             continue
     if not out:
-        raise DataError("新浪A股指数无有效数据")
+        out = _index_snapshot_fill(codes, {}, "cn")
+        if not out:
+            raise DataError("新浪A股指数无有效数据")
+    else:
+        out = _index_snapshot_fill(codes, out, "cn")
     _disk_cache_put(key, out)
     return out
+
+
+def _index_snapshot_fill(codes, out, group):
+    """用连接器指数快照（同花顺 iFinD）**补缺**。
+
+    只填抓取链路没拿到的代码，已有的实时值不覆盖 —— 快照是上一交易日收盘，
+    盘中覆盖会把当天行情写脏。group: 'cn' | 'global'
+    """
+    try:
+        import fundos_bridge
+        snap = fundos_bridge.index_snapshot()
+    except Exception:  # noqa: BLE001
+        return out
+    if not snap:
+        return out
+    part = snap.get(group) or {}
+    filled = dict(out or {})
+    for code in codes:
+        if code in filled:
+            continue
+        row = part.get(code)
+        if not isinstance(row, dict):
+            continue
+        try:
+            price = float(row.get("price"))
+            chg = float(row.get("chg_pct") or 0)
+        except (TypeError, ValueError):
+            continue
+        if price <= 0:
+            continue
+        filled[code] = {
+            "name": row.get("name") or GLOBAL_INDEX_MAP.get(code) or INDEX_MAP.get(code) or code,
+            "price": price,
+            "prev_close": round(price / (1 + chg / 100), 4) if chg > -100 else price,
+            "chg_pct": chg, "open": None, "high": None, "low": None,
+            "source": "ifind",
+        }
+    return filled
 
 
 def fetch_global_indices(codes=None, *, use_cache=True):
@@ -277,7 +319,12 @@ def fetch_global_indices(codes=None, *, use_cache=True):
         except (ValueError, IndexError):
             continue
     if not out:
-        raise DataError("新浪全球指数无有效数据")
+        # 抓取全挂时，用连接器快照兜底（同花顺 iFinD 的 .GI 指数）
+        out = _index_snapshot_fill(codes, {}, "global")
+        if not out:
+            raise DataError("新浪全球指数无有效数据")
+    else:
+        out = _index_snapshot_fill(codes, out, "global")
     _disk_cache_put(key, out)
     return out
 
