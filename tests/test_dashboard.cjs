@@ -124,4 +124,40 @@ assert.ok(elements.navMeta.textContent.includes("起点=1"));
 vm.runInContext("draw({xray:{},perf:{},contribution:[]})", context);
 assert.ok(elements.xraySummary.textContent.includes("暂无体检数据"));
 assert.ok(elements.perfKpi.innerHTML.includes("—"));
+
+// ---- v7：图表配置契约（stub echarts 捕获 setOption，验证双口径真的换了数据）----
+const els2 = {};
+for (const [, id] of html.matchAll(/id="([^"]+)"/g)) {
+  els2[id] = {innerHTML:"", textContent:"", style:{}, value:"value", dataset:{}};
+}
+const captured = [];
+const ctx2 = vm.createContext({
+  console,
+  document: {getElementById: id => els2[id] || {innerHTML:"",textContent:"",style:{},value:"value"},
+             querySelectorAll: () => []},
+  window: {addEventListener(){}}, setInterval(){}, setTimeout, navigator:{},
+  fetch: async () => ({ok:true, json: async () => ({}), headers:{get: () => null}}),
+  echarts: {registerTheme(){}, init(){ return {setOption(o){ captured.push(o); }, resize(){}}; }},
+});
+vm.runInContext(html.split('<script>')[1].split('</script>')[0], ctx2);
+ctx2.navData = {
+  nav_series: {series: [
+    {name:"半导体A", code:"019759", dates:["2026-10-29","2026-10-30"],
+     data:[1, 0.98], cost_nav: 2.42, data_cost:[1.02, 0.99]},
+    {name:"标普500", code:"017641", dates:["2026-10-29","2026-10-30"],
+     data:[1, 1.01], cost_nav: 1.68, data_cost:[0.997, 1.007]},
+  ]},
+  perf: {curve:{dates:["2026-10-29","2026-10-30"], nav:[0.99,0.985]}},
+};
+vm.runInContext("draw(navData)", ctx2);
+const navOpt = () => captured.filter(o => o && o.series && o.series[0] && o.series[0].name === "半导体A").pop();
+assert.deepEqual(navOpt().series[0].data, [1, 0.98], "归一模式应使用 data");
+assert.ok(navOpt().series.some(s => s.name === "组合"), "归一模式应有组合曲线");
+vm.runInContext("setNavMode('cost')", ctx2);
+const costOpt = navOpt();
+assert.deepEqual(costOpt.series[0].data, [1.02, 0.99], "相对成本模式应使用 data_cost");
+assert.ok(costOpt.series[0].markLine && costOpt.series[0].markLine.data[0].yAxis === 1, "成本模式应有 1.00 参考线");
+assert.ok(!costOpt.series.some(s => s.name === "组合"), "成本模式不应混入组合线");
+assert.equal(costOpt.yAxis.axisLabel.formatter(0.98), "98%");
+
 console.log("Dashboard rendering contract checks passed");
