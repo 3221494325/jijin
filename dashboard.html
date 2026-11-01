@@ -1366,6 +1366,7 @@ async function confirmDirective(encodedKey){
     const result = await r.json();
     if(!r.ok || !result.ok) throw new Error(result.error||'保存失败');
     await load();
+    setTimeout(()=>load(), 6000);
   } catch(e) { alert('记录失败：'+e.message); }
 }
 async function cancelDirective(encodedKey){
@@ -1379,6 +1380,7 @@ async function cancelDirective(encodedKey){
     const result = await r.json();
     if(!r.ok || !result.ok) throw new Error(result.error||'保存失败');
     await load();
+    setTimeout(()=>load(), 6000);
   } catch(e) { alert('取消失败：'+e.message); }
 }
 load();

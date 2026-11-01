@@ -585,6 +585,25 @@ def _save_directive_state(state):
     tmp.replace(DIRECTIVE_STATE)
 
 
+def _patch_cached_directive(payload, key, record):
+    """在已缓存的 payload 上就地更新某条指令的执行状态。
+
+    确认/取消只影响这一条指令，没必要整页重算；更要紧的是不能把 payload 清空，
+    否则下一次 /api/data 会落到"首次同步"分支返回空壳，页面所有数字变"—"。
+    """
+    try:
+        for d in (payload.get("guide") or {}).get("directives") or []:
+            if d.get("execution_key") != key:
+                continue
+            merged = dict(d.get("execution") or {})
+            merged.update(record or {})
+            d["execution"] = merged
+            if merged.get("status") in ("confirmed", "cancelled"):
+                merged["next_step"] = _directive_next_step(d)
+    except Exception:  # noqa: BLE001 — 就地补丁失败不该影响接口返回
+        pass
+
+
 def _directive_next_step(directive):
     """Return the follow-up state for the instruction lifecycle."""
     execution = directive.get("execution") or {}
@@ -797,9 +816,20 @@ class Handler(BaseHTTPRequestHandler):
                                  if action == "cancelled" and previous.get("cancelled_at") else {}),
                               ("cancelled_at" if action == "cancelled" else "confirmed_at"): now}
                 _save_directive_state(state)
+            # 只把缓存标记为过期，绝不能把 payload 清空：
+            # 清空会让下一次 /api/data 落到"首次同步"分支，返回空壳，整页数据全变成"—"。
             with _cache_lock:
-                _cache["payload"] = None
                 _cache["ts"] = 0
+                cached = _cache.get("payload")
+                need_refresh = not _cache["refreshing"]
+                if need_refresh:
+                    _cache["refreshing"] = True
+            if cached:
+                # 就地更新已缓存的那条指令状态，让页面立刻看到结果（不用等服务端重算）
+                _patch_cached_directive(cached, key, state[key])
+            if need_refresh and cached is not None:
+                threading.Thread(target=_refresh_payload, daemon=True,
+                                 name="fundos-post-refresh").start()
             self._send(200, json.dumps({"ok": True, "execution": state[key]}, ensure_ascii=False),
                        "application/json; charset=utf-8")
         except Exception as exc:

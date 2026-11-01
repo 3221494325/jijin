@@ -582,6 +582,22 @@ class TestDashboardHelpers(unittest.TestCase):
         # 会造成两个进程同时 listen、"已在运行"检测永远不触发
         self.assertEqual(dashboard.Server.allow_reuse_address, os.name != "nt")
 
+    def test_patch_cached_directive_updates_in_place(self):
+        """确认/取消只补丁那条指令，不能把整页缓存清空（否则页面全变"—"）。"""
+        import dashboard
+        payload = {"guide": {"directives": [
+            {"execution_key": "k1", "title": "止摊 + 反弹分批退出", "level": "指令",
+             "rule": "stop-loss-admission", "execution": {"status": "pending"}},
+            {"execution_key": "k2", "title": "别的指令", "level": "观察",
+             "rule": "x", "execution": {"status": "pending"}},
+        ]}, "portfolio": {"total_value": 2639.11}}
+        dashboard._patch_cached_directive(payload, "k1", {"status": "cancelled", "title": "x"})
+        first, second = payload["guide"]["directives"]
+        self.assertEqual(first["execution"]["status"], "cancelled")
+        self.assertIn("next_step", first["execution"])          # 取消后要给出下一步提示
+        self.assertEqual(second["execution"]["status"], "pending")   # 不误伤其它指令
+        self.assertEqual(payload["portfolio"]["total_value"], 2639.11)  # 数据本身不动
+
     def test_market_clock_weekend(self):
         from datetime import datetime
         import dashboard
