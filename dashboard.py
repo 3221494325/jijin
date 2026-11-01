@@ -538,7 +538,8 @@ def get_payload():
                 threading.Thread(target=_refresh_payload, daemon=True, name="fundos-data-refresh").start()
         payload = _cache["payload"]
     if payload is not None:
-        return _decorate_payload(payload, stale=age is not None and age > DATA_TTL)
+        # 刷新本身要十几秒，超过 TTL 就判 stale 会天天误报；用 3×TTL 才算真陈旧
+        return _decorate_payload(payload, stale=age is not None and age > DATA_TTL * 3)
     # 首次访问给数据聚合一个有限窗口；超时也必须返回可识别的降级响应。
     _cache_ready.wait(timeout=3)
     with _cache_lock:
@@ -624,7 +625,7 @@ class Handler(BaseHTTPRequestHandler):
             body = {"ok": ready and not error, "service": "FundOS dashboard",
                     "build": BUILD_ID, "timezone": "Asia/Shanghai",
                     "cache_age_seconds": age, "refreshing": refreshing,
-                    "data_quality": "unavailable" if not ready else ("partial" if error else ("stale" if age and age > DATA_TTL else "fresh")),
+                    "data_quality": "unavailable" if not ready else ("partial" if error else ("stale" if age and age > DATA_TTL * 3 else "fresh")),
                     "last_error": error,
                     "sources": (_cache["payload"].get("data_sources", {}) if ready else {})}
             self._send(200, json.dumps(body, ensure_ascii=False),
