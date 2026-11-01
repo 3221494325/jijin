@@ -6,3 +6,7 @@ mobile_site/index.html
 mobile_site/data.json
 # 本地验收截图与临时探针（只在需要留证时留在磁盘，不进版本库）
 _接管快照/
+
+# 打包产物（体积大，按需本地重建：pyinstaller FundOS.spec）
+dist/
+build/

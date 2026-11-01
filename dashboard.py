@@ -31,7 +31,20 @@ DIRECTIVE_STATE = ROOT / "data" / "state" / "directive_execution.json"
 XRAY_HISTORY = ROOT / "data" / "state" / "xray_history.json"
 BJ_TZ = ZoneInfo("Asia/Shanghai")
 # 版本号单点定义：页面通过 __FUNDOS_BUILD__ 占位符注入，避免前后端各写一份而错位
-BUILD_ID = "cockpit-xray-v4"
+BUILD_ID = "cockpit-xray-v5"
+
+# 模型供应商预设（OpenAI 兼容协议；key 只存本机 data/llm/config.json）
+LLM_PRESETS = [
+    {"id": "zhipu", "name": "智谱 GLM-4-Flash（免费）",
+     "base_url": "https://open.bigmodel.cn/api/paas/v4", "model": "glm-4-flash-250414"},
+    {"id": "siliconflow", "name": "硅基流动 SiliconFlow",
+     "base_url": "https://api.siliconflow.cn/v1", "model": "Qwen/Qwen2.5-7B-Instruct"},
+    {"id": "modelscope", "name": "魔搭 ModelScope（每日额度）",
+     "base_url": "https://api-inference.modelscope.cn/v1", "model": "Qwen/Qwen2.5-7B-Instruct"},
+    {"id": "deepseek", "name": "DeepSeek",
+     "base_url": "https://api.deepseek.com/v1", "model": "deepseek-chat"},
+    {"id": "custom", "name": "自定义（OpenAI 兼容）", "base_url": "", "model": ""},
+]
 _directive_state_lock = threading.Lock()
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -173,6 +186,8 @@ def _xray_row(day, xray, payload):
     counts = xray.get("counts") or {}
     return {"date": day, "score": xray.get("score"), "grade": xray.get("grade"),
             "fail": counts.get("fail", 0), "warn": counts.get("warn", 0),
+            # 规则数：新增/删减规则会改变分母，历史分不可直接比 —— 前端据此打标记
+            "rules": counts.get("total", 0),
             "tech": (payload.get("guide") or {}).get("tech_weight"),
             "qdii": (payload.get("guide") or {}).get("qdii_weight"),
             "max_dd": risk.get("max_dd_pct"), "sharpe": risk.get("sharpe")}
@@ -374,6 +389,22 @@ def collect():
         x = ana.get("xirr") or {}
         payload["xirr_note"] = ("资金流水重建，未含结构调账，仅供粗略参考"
                                 if x.get("portfolio") is not None else "流水不足，无法计算")
+        # 周度对比：用组合净值曲线算近 1/5/20 个交易日的变化，回答"这一周到底变了什么"
+        curve = payload["perf"].get("curve") or {}
+        navs = [v for v in (curve.get("nav") or []) if isinstance(v, (int, float))]
+        dates = curve.get("dates") or []
+
+        def _chg(n):
+            if len(navs) > n and navs[-1] and navs[-1 - n]:
+                return round((navs[-1] / navs[-1 - n] - 1) * 100, 2)
+            return None
+
+        payload["week_compare"] = {
+            "d1": _chg(1), "d5": _chg(5), "d20": _chg(20),
+            "from": dates[-6] if len(dates) > 5 else (dates[0] if dates else None),
+            "to": dates[-1] if dates else None,
+            "points": len(navs),
+        }
         payload["data_sources"]["analytics"] = {"status": "ok"}
     except Exception as exc:  # noqa: BLE001
         payload["error_analytics"] = str(exc)[:200]
@@ -557,7 +588,8 @@ def collect():
             nav_pct=nav_pct_map,
             indices={"sh000688": idx688},
             sector_news=sector_news,
-            industry=industry_in)
+            industry=industry_in,
+            edb=payload.get("edb") or [])
         state = _load_directive_state()
         for directive in payload["guide"].get("directives", []):
             key = _directive_key(directive)
@@ -594,6 +626,16 @@ def collect():
         except Exception as exc:  # noqa: BLE001 — 历史写入失败不影响体检本身
             payload["xray_history"] = load_xray_history()
             payload["xray_history_error"] = str(exc)[:120]
+        # 与上一数据日对比：分数变化 + 规则数是否变过（变过就没法直接比）
+        hist = payload.get("xray_history") or []
+        if len(hist) >= 2:
+            prev, cur = hist[-2], hist[-1]
+            payload["xray_delta"] = {
+                "date_prev": prev.get("date"),
+                "score_prev": prev.get("score"), "score_cur": cur.get("score"),
+                "rules_prev": prev.get("rules"), "rules_cur": cur.get("rules"),
+                "rule_changed": (prev.get("rules") or 0) != (cur.get("rules") or 0),
+            }
     except Exception as exc:  # noqa: BLE001
         payload["error_xray"] = str(exc)[:200]
         payload["data_sources"]["xray"] = {"status": "error", "error": str(exc)[:160]}
@@ -808,6 +850,18 @@ class Handler(BaseHTTPRequestHandler):
                            types.get(target.suffix.lower(), "application/octet-stream"))
             else:
                 self._send(404, "not found", "text/plain; charset=utf-8")
+        elif path == "/api/settings/llm":
+            try:
+                import fundos_llm
+                self._send(200, json.dumps({
+                    "ok": True,
+                    "status": fundos_llm.status(),
+                    "presets": LLM_PRESETS,
+                }, ensure_ascii=False), "application/json; charset=utf-8")
+            except Exception as exc:  # noqa: BLE001
+                self._send(500, json.dumps({"ok": False, "error": str(exc)[:200]},
+                                           ensure_ascii=False),
+                           "application/json; charset=utf-8")
         elif path == "/api/llm/refresh":
             try:
                 import fundos_llm
@@ -832,8 +886,59 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self._send(404, "not found", "text/plain; charset=utf-8")
 
+    def _handle_llm_settings(self, path):
+        """模型设置：保存/测试（密钥只落本机 data/llm/config.json）。"""
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+            raw = self.rfile.read(length).decode("utf-8") if length else "{}"
+            body = json.loads(raw or "{}")
+        except (ValueError, json.JSONDecodeError):
+            body = {}
+        try:
+            import fundos_llm
+        except Exception as exc:  # noqa: BLE001
+            self._send(500, json.dumps({"ok": False, "error": str(exc)[:200]},
+                                       ensure_ascii=False),
+                       "application/json; charset=utf-8")
+            return
+        base_url = str(body.get("base_url") or "").strip()
+        model = str(body.get("model") or "").strip()
+        api_key = str(body.get("api_key") or "").strip()
+        try:
+            if path.endswith("/test"):
+                if not (base_url and model):
+                    raise ValueError("base_url 与 model 必填")
+                key = api_key or (fundos_llm.load_config() or {}).get("api_key", "")
+                if not key:
+                    raise ValueError("缺少 API Key")
+                ok, msg = fundos_llm.test_call(key, base_url, model)
+                self._send(200, json.dumps({"ok": ok, "message": msg}, ensure_ascii=False),
+                           "application/json; charset=utf-8")
+                return
+            if not (base_url and model):
+                raise ValueError("base_url 与 model 必填")
+            prev = fundos_llm.load_config() or {}
+            key = api_key or prev.get("api_key", "")
+            if not key:
+                raise ValueError("首次配置需要填 API Key")
+            fundos_llm.save_config(key, base_url, model)
+            try:                      # 换模型后旧简评作废
+                fundos_llm.CACHE_FILE.unlink(missing_ok=True)
+            except OSError:
+                pass
+            self._send(200, json.dumps({"ok": True, "status": fundos_llm.status()},
+                                       ensure_ascii=False),
+                       "application/json; charset=utf-8")
+        except Exception as exc:  # noqa: BLE001
+            self._send(400, json.dumps({"ok": False, "error": str(exc)[:200]},
+                                       ensure_ascii=False),
+                       "application/json; charset=utf-8")
+
     def do_POST(self):
         path = urlparse(self.path).path
+        if path in ("/api/settings/llm", "/api/settings/llm/test"):
+            self._handle_llm_settings(path)
+            return
         if path not in ("/api/directive/confirm", "/api/directive/cancel"):
             self._send(404, "not found", "text/plain; charset=utf-8")
             return

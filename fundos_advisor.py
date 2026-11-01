@@ -127,8 +127,33 @@ def build_industry_outlook(industry, held_sectors, holdings=None):
             "strength_gap_pct": strength_gap_pct, "notes": notes}
 
 
+def edb_signals(edb, holdings=None):
+    """月频产业指标 → 每只持仓的产业信号。
+
+    返回 {基金代码: {"name","yoy","streak","month"}}；只保留 related 命中的基金。
+    streak = 由最新月份向前数、连续同比为负的月数（区分"翻负一个月"与"持续衰退"）。
+    与 fundos_xray 的 industry_cycle 同源判定，避免两处各写一套。
+    """
+    by_code = {}
+    for item in edb or []:
+        yoy = item.get("yoy")
+        if yoy is None:
+            continue
+        trend = [t for t in (item.get("trend") or []) if t.get("yoy") is not None]
+        streak = 0
+        for t in reversed(trend):
+            if float(t["yoy"]) < 0:
+                streak += 1
+            else:
+                break
+        for code in (item.get("related") or []):
+            by_code[code] = {"name": item.get("name"), "yoy": float(yoy),
+                             "streak": streak, "month": item.get("month") or ""}
+    return by_code
+
+
 def build_guide(*, holdings, sentiment=None, nav_pct=None, indices=None,
-                sector_news=None, industry=None, now=None):
+                sector_news=None, industry=None, edb=None, now=None):
     """规则引擎主入口。所有参数可注入，便于测试与复用。
 
     holdings:    [{name, code, ret_pct, sector, weight}]（fundos_core 口径）
@@ -137,6 +162,7 @@ def build_guide(*, holdings, sentiment=None, nav_pct=None, indices=None,
     indices:     {"sh000688": 当日涨跌%}
     sector_news: {新闻板块名: {"up": 利好条数, "down": 利空条数}}
     industry:    行业前瞻输入（见 build_industry_outlook），缺省跳过
+    edb:         月频产业指标 []{name,yoy,month,related,trend}，用于否决"摊平/加仓"
     """
     now = now or datetime.now()
     holdings = holdings or []
@@ -196,6 +222,29 @@ def build_guide(*, holdings, sentiment=None, nav_pct=None, indices=None,
             "立即停止任何摊平；利用反弹窗口分批（每次≤1/3）降低暴露",
             "不以回本为唯一卖出条件；接近 -25% 硬止损前须完成主要减仓",
             "stop-loss-admission / timely-correction / 铁律4")
+
+    # ---------- 产业面否决：月频指标不支持摊平/加仓 ----------
+    # 日频价格看的是情绪，月频产量看的是需求；两者背离时以产业面否决加仓、不否决卖出。
+    sig = edb_signals(edb) if edb else {}
+    if sig and holdings:
+        weak = [(h, sig[h.get("code")]) for h in holdings
+                if sig.get(h.get("code")) and sig[h["code"]]["yoy"] < 0]
+        if weak:
+            weak.sort(key=lambda x: (x[1]["streak"] >= 3, x[0].get("weight", 0)), reverse=True)
+            hard = any(s["streak"] >= 3 for _, s in weak)
+            refs = "；".join(
+                f"{h['name']}←{s['name']} {s['yoy']:+.1f}%"
+                + (f"（连续{s['streak']}月为负）" if s["streak"] >= 3 else f"（{s['month']}）")
+                for h, s in weak[:3])
+            kept = sum(h.get("weight", 0) for h, _ in weak)
+            add("警告" if hard else "观察",
+                "产业面不支持摊平：" + "、".join(h["name"] for h, _ in weak[:3]),
+                f"{refs}；这些标的合计持仓 {kept:.1f}%。月频产量与日频净值不同源，"
+                "产业同比为负时，价格下跌属估值重定价而非跌出便宜。",
+                "这些标的暂停摊平与左侧加仓；等对应指标同比连续两月收窄或转正再评估。"
+                if hard else "暂缓新增，已有仓位按各自触发线管理。",
+                "产业指标只用于否决买入，不作为卖出理由；指标为月频，滞后于价格。",
+                "industry-cycle / 铁律4")
 
     # ---------- 追高风险 ----------
     hot = [h["name"] for h in holdings if nav_pct.get(h.get("code"), 0) >= 85]

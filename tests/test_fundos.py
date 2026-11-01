@@ -853,5 +853,65 @@ class TestXrayIndustryRule(unittest.TestCase):
         self.assertIn("未接入", r["value_text"])
 
 
+class TestAdvisorIndustryVeto(unittest.TestCase):
+    """月频产业指标进入操作指南：只否决买入，不否决卖出。"""
+
+    EDB = [
+        {"name": "智能手机产量", "yoy": -26.6, "month": "2026-09",
+         "related": ["022364", "001513"],
+         "trend": [{"month": "2026-07", "yoy": -22.9},
+                   {"month": "2026-08", "yoy": -22.3},
+                   {"month": "2026-09", "yoy": -26.6}]},
+        {"name": "集成电路产量", "yoy": 18.4, "month": "2026-09",
+         "related": ["019759", "011608"],
+         "trend": [{"month": "2026-08", "yoy": 20.6},
+                   {"month": "2026-09", "yoy": 18.4}]},
+        {"name": "太阳能电池产量", "yoy": -5.1, "month": "2026-09",
+         "related": ["018734"],
+         "trend": [{"month": "2026-08", "yoy": -12.9},
+                   {"month": "2026-09", "yoy": -5.1}]},
+    ]
+
+    def _h(self, code, name, weight=10.0, ret=-5.0, sector="tech"):
+        return {"code": code, "name": name, "weight": weight, "ret_pct": ret, "sector": sector}
+
+    def _veto(self, holdings, edb=None):
+        from fundos_advisor import build_guide
+        g = build_guide(holdings=holdings, edb=self.EDB if edb is None else edb)
+        return next((d for d in g["directives"] if d["title"].startswith("产业面")), None)
+
+    def test_signals_map_codes_and_streak(self):
+        from fundos_advisor import edb_signals
+        sig = edb_signals(self.EDB)
+        self.assertEqual(sig["022364"]["name"], "智能手机产量")
+        self.assertEqual(sig["022364"]["streak"], 3)
+        self.assertEqual(sig["011608"]["streak"], 0)      # 集成电路同比为正
+        self.assertNotIn("999999", sig)
+
+    def test_three_month_negative_is_warning(self):
+        d = self._veto([self._h("022364", "科技智选", 16.4, -33.2)])
+        self.assertIsNotNone(d)
+        self.assertEqual(d["level"], "警告")
+        self.assertIn("连续3月为负", d["evidence"])
+        self.assertIn("暂停摊平", d["action"])
+
+    def test_positive_industry_not_listed(self):
+        """集成电路 +18.4%：半导体A 深亏也不该被产业面否决加仓。"""
+        self.assertIsNone(self._veto([self._h("019759", "半导体A", 12.0, -37.7)]))
+
+    def test_single_month_negative_is_observe(self):
+        edb = [{"name": "太阳能电池产量", "yoy": -5.1, "month": "2026-09",
+                "related": ["018734"], "trend": [{"month": "2026-09", "yoy": -5.1}]}]
+        d = self._veto([self._h("018734", "华夏绿电", 16.8, -8.1, "green")], edb)
+        self.assertEqual(d["level"], "观察")
+        self.assertIn("暂缓新增", d["action"])
+
+    def test_no_edb_no_veto(self):
+        self.assertIsNone(self._veto([self._h("022364", "科技智选")], []))
+
+    def test_unrelated_holding_ignored(self):
+        self.assertIsNone(self._veto([self._h("512880", "证券ETF", 10.0)]))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

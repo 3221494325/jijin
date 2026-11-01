@@ -37,8 +37,9 @@
 | fundos_data.py | 统一数据层（重试/多源回退/净值历史与板块快照沉淀）。优先读 `fundos_bridge` 的官方快照，缺失或过期才走抓取链路 |
 | fundos_bridge.py | 官方连接器快照桥：读 `data/external/{nav,board,index,fund_state}_snapshot.json`（Agent 用盈米/融聚汇/同花顺 MCP 拉取后写入，带 generated_at）。净值/申赎留 4 天、板块/指数留 5 天，过期即退回抓取。指数快照**只补缺不覆盖**；`write_snapshot` 对未知 kind 直接报错（曾因默认值冲掉净值快照） |
 | fundos_analytics.py | 组合风险分析（回撤/夏普/波动率/相关性/分位/XIRR） |
-| fundos_advisor.py | 操作指南引擎（规则化批示：分级指令/单基金建议/禁止清单，纯函数可单测） |
-| fundos_xray.py | 组合体检引擎（13 条静态规则：集中度/分散度/风险/数据健康，输出通过-不通过+阈值+动作，纯函数可单测） |
+| fundos_advisor.py | 操作指南引擎（规则化批示：分级指令/单基金建议/禁止清单，纯函数可单测）。`edb` 入参把月频产业指标变成"否决加仓"指令，与 `fundos_xray` 的 industry_cycle 同源（`edb_signals`） |
+| fundos_xray.py | 组合体检引擎（14 条规则：集中度/分散度/风险/产业周期/数据健康，输出通过-不通过+阈值+动作，纯函数可单测）。**规则数变化会改变分值分母，历史分不可跨版本直接比较**（页面已标注跳台阶） |
+| app_shell.py | 桌面外壳：pywebview 原生窗口加载本地服务，不启动浏览器；打包 `pyinstaller --onefile --windowed --name FundOS app_shell.py`，运行时读同目录 `desktop.json` 找 pythonw |
 | fundos_llm.py | 大模型接入层（OpenAI兼容，默认智谱GLM；FUNDOS_LLM_API_KEY 启用，未配置自动降级纯规则模式） |
 | backtest.py | 策略回测（触发线规则 vs 死扛；--aip 定投对照） |
 | fund_engine.py | 总编排引擎（run 支持并行与 --offline） |

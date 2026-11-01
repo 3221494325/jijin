@@ -9,7 +9,7 @@ for (const [, id] of html.matchAll(/id="([^"]+)"/g)) {
   assert.ok(!elements[id], "duplicate id: " + id);
   elements[id] = {innerHTML:"", textContent:"", style:{}, value:"value"};
 }
-const context = vm.createContext({console, document:{getElementById:id=>{assert.ok(elements[id], id); return elements[id];}}, window:{addEventListener(){}}, setInterval(){}, fetch:async()=>({ok:true,json:async()=>({})})});
+const context = vm.createContext({console, document:{getElementById:id=>{assert.ok(elements[id], id); return elements[id];}, addEventListener(){}, body:{classList:{add(){},remove(){}}}}, window:{addEventListener(){}}, setInterval(){}, fetch:async()=>({ok:true,json:async()=>({})})});
 vm.runInContext(html.split('<script>')[1].split('</script>')[0], context);
 vm.runInContext("draw({})", context);
 assert.ok(elements.cards.innerHTML.includes("¥—"));
@@ -134,7 +134,7 @@ const captured = [];
 const ctx2 = vm.createContext({
   console,
   document: {getElementById: id => els2[id] || {innerHTML:"",textContent:"",style:{},value:"value"},
-             querySelectorAll: () => []},
+             querySelectorAll: () => [], addEventListener(){}},
   window: {addEventListener(){}}, setInterval(){}, setTimeout, navigator:{},
   fetch: async () => ({ok:true, json: async () => ({}), headers:{get: () => null}}),
   echarts: {registerTheme(){}, init(){ return {setOption(o){ captured.push(o); }, resize(){}}; }},
@@ -217,5 +217,48 @@ assert.ok(!elements.edbList.innerHTML.includes("undefined"));
 
 vm.runInContext("draw({edb:[]})", context);
 assert.ok(elements.edbList.innerHTML.includes("暂无产业指标"));
+
+// ---- v11：周度对比 / 体检分变化 / 规则数跳台阶标记 / 模型设置 ----
+context.v11 = {
+  week_compare: {d1: -1.25, d5: 3.4, d20: -6.1, from: "2026-10-23", to: "2026-10-30", points: 120},
+  xray_delta: {date_prev: "2026-10-30", score_prev: 45, score_cur: 37,
+               rules_prev: 13, rules_cur: 14, rule_changed: true},
+  xray_history: [
+    {date: "2026-10-28", score: 45, rules: 13},
+    {date: "2026-10-29", score: 45, rules: 13},
+    {date: "2026-10-30", score: 37, rules: 14},
+  ],
+};
+vm.runInContext("draw(v11)", context);
+assert.ok(elements.weekGrid.innerHTML.includes("近 5 日"), "周度对比要有 5 日格");
+assert.ok(elements.weekGrid.innerHTML.includes("+3.40%"), "5 日为正要带加号");
+assert.ok(elements.weekGrid.innerHTML.includes("-6.10%"));
+assert.ok(elements.weekMeta.textContent.includes("2026-10-23"));
+assert.ok(!elements.weekGrid.innerHTML.includes("undefined"));
+assert.ok(elements.weekFoot.textContent.includes("45 → 37"), "要显示上一数据日的分差");
+assert.ok(elements.xrayDelta.innerHTML.includes("规则数 13 → 14"), "规则数变化必须点名");
+assert.ok(elements.xrayDelta.innerHTML.includes("不可与更早历史直接比较"));
+assert.ok(elements.xrayTrend.innerHTML.includes("跨台阶不可直接比"), "趋势线要标跳台阶");
+assert.ok(elements.xrayTrend.innerHTML.includes("circle"), "跳台阶处要有标记点");
+
+// 规则数没变时不该出现口径提示
+context.v11b = JSON.parse(JSON.stringify(context.v11));
+context.v11b.xray_delta.rule_changed = false;
+context.v11b.xray_delta.rules_cur = 13;
+context.v11b.xray_history[2].rules = 13;
+vm.runInContext("draw(v11b)", context);
+assert.ok(!elements.xrayDelta.innerHTML.includes("规则数"));
+assert.ok(!elements.xrayTrend.innerHTML.includes("跨台阶"));
+
+// 空输入不能渲染出 undefined
+vm.runInContext("draw({week_compare:{}, xray_history:[]})", context);
+assert.ok(!elements.weekGrid.innerHTML.includes("undefined"));
+assert.ok(elements.xrayTrend.innerHTML.includes("积累中"));
+
+// 模型设置：弹窗结构与接口必须存在
+assert.ok(html.includes('id="setMask"') && html.includes('id="setPreset"'), "模型设置弹窗结构");
+assert.ok(html.includes("openSettings()") && html.includes("saveModel()"), "设置需可打开可保存");
+assert.ok(html.includes("testModel()"), "设置需可测试连通");
+assert.ok(html.includes("/api/settings/llm"), "设置要读后端配置");
 
 console.log("Dashboard rendering contract checks passed");

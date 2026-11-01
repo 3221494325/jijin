@@ -524,6 +524,36 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
   .card{box-shadow:none;border-color:#ddd;background:#fff}
   .sticky-bar,.to-top,.quick-nav,.btn{display:none!important}
 }
+
+/* ---------- 模型设置弹窗 ---------- */
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#c3d6ea}
+.btn-ghost:hover{background:rgba(94,231,255,.12);border-color:rgba(94,231,255,.4);color:var(--cyan)}
+.modal-mask{position:fixed;inset:0;background:rgba(3,8,15,.72);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+.modal-mask.show{display:flex}
+.modal{width:min(520px,100%);background:var(--paper);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:20px 22px;box-shadow:0 24px 60px -20px rgba(0,0,0,.8)}
+.modal h3{font-size:14px;font-weight:700;color:#dcebfb;margin-bottom:14px}
+.modal h3 .small{font-weight:400;color:var(--mute)}
+.fld{display:grid;grid-template-columns:78px 1fr;align-items:center;gap:10px;margin-bottom:10px}
+.fld span{font-size:12px;color:var(--mute)}
+.fld input,.fld select{width:100%;background:#0a1524;border:1px solid var(--line);
+  border-radius:8px;color:var(--ink);font:inherit;font-size:12.5px;padding:8px 10px}
+.fld input:focus,.fld select:focus{outline:none;border-color:rgba(94,231,255,.5)}
+.modal-note{font-size:11.5px;color:var(--mute);margin:4px 0 14px;line-height:1.6}
+.modal-note.ok{color:var(--ok)} .modal-note.bad{color:var(--bad)}
+.modal-actions{display:flex;gap:9px;justify-content:flex-end}
+
+/* ---------- 周度对比 ---------- */
+.week-block{margin-top:14px;padding-top:12px;border-top:1px dashed #24384f}
+.week-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.week-cell{background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:9px;padding:9px 11px}
+.week-cell .k{font-size:10.5px;color:var(--mute)}
+.week-cell .v{font-size:17px;font-weight:700;font-family:var(--num);margin-top:2px}
+.week-foot{margin-top:7px;font-size:10.5px;color:var(--mute)}
+.xray-delta{margin-top:8px;font-size:11.5px;color:var(--warn)}
+.xray-delta .r{color:var(--mute)}
 </style>
 </head>
 <body>
@@ -551,6 +581,7 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
     <span class="mast-meta">每60秒自动刷新</span><span class="mast-meta mast-sep">|</span>
     <span class="mast-meta">本地服务 · 仅自用</span>
     <button class="btn" id="btnRefresh" onclick="manualRefresh()">刷新数据</button>
+    <button class="btn btn-ghost" id="btnModel" onclick="openSettings()">模型</button>
     <span class="build-tag" id="buildTag">build —</span>
   </div>
 </header>
@@ -574,6 +605,7 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
     <div class="xray-counts" id="xrayCounts"></div>
   </div>
   <div class="xray-trend" id="xrayTrend"></div>
+  <div class="xray-delta" id="xrayDelta"></div>
   <button class="xr-more" id="xrMore" onclick="document.body.classList.toggle('xr-expanded');this.textContent=document.body.classList.contains('xr-expanded')?'收起解读':'展开解读'">展开解读</button>
   <div class="xray-grid" id="xrayGrid"></div>
   <div class="card-foot">规则口径与 <b>fundos_config.THRESHOLDS</b> 同源；不通过项只说明结构问题，动作仍以“今日操作指南”为准。<span id="xrayMeta"></span></div>
@@ -607,6 +639,11 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
     <div id="ddChart" class="chart" style="height:180px;margin-top:8px"></div>
     <h2 style="margin-top:14px;font-size:13px">月度收益<small>红涨绿跌 · 按自然月</small></h2>
     <div class="heat" id="monthHeat"></div>
+    <div class="week-block">
+      <h2 style="font-size:13px;margin-bottom:8px">周度对比<small id="weekMeta">—</small></h2>
+      <div class="week-grid" id="weekGrid"></div>
+      <div class="week-foot" id="weekFoot"></div>
+    </div>
     <div class="card-foot">水下曲线 = 相对历史峰值的回撤深度；回撤 20% 需上涨 25% 才回本，这是仓位比选基更重要的原因。</div>
   </section>
 
@@ -689,6 +726,24 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
   免责声明 —— 本看板为个人数据统计与客观展示，不构成任何投资建议；情绪标签与指数为算法自动标注，存在误判；基金有风险，决策请独立判断。
   <div class="card-foot" style="text-align:center">模块设计参考：组合体检规则形态借鉴 Ghostfolio X-Ray，绩效/水下曲线与月度收益借鉴 Portfolio Performance，多源回退与 Provider 分层借鉴 OpenBB / akshare。口径与阈值以本仓库 fundos_config 为准。</div>
 </footer>
+
+<div class="modal-mask" id="setMask" onclick="if(event.target===this) closeSettings()">
+  <div class="modal" role="dialog" aria-label="模型设置">
+    <h3>模型设置 <span class="small">OpenAI 兼容协议 · 密钥只存本机</span></h3>
+    <label class="fld"><span>供应商</span>
+      <select id="setPreset" onchange="applyPreset()"></select>
+    </label>
+    <label class="fld"><span>Base URL</span><input id="setBase" spellcheck="false" placeholder="https://..."></label>
+    <label class="fld"><span>模型名</span><input id="setModel" spellcheck="false" placeholder="glm-4-flash-250414"></label>
+    <label class="fld"><span>API Key</span><input id="setKey" type="password" spellcheck="false" placeholder="留空表示沿用已保存的密钥"></label>
+    <div class="modal-note" id="setNote">密钥写入 data/llm/config.json，不会进版本库。</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="testModel()">测试连通</button>
+      <button class="btn" onclick="saveModel()">保存</button>
+      <button class="btn btn-ghost" onclick="closeSettings()">关闭</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const charts = {};
@@ -1019,7 +1074,9 @@ function draw(d){
   // 体检 / 绩效 / 盈亏贡献 / 相关性 / 止损距离 / 风险预算
   renderXray(d.xray);
   renderXrayTrend(d.xray_history);
+  renderXrayDelta(d);
   renderPerf(d);
+  renderWeek(d);
   renderContrib(d);
   renderCorr(d);
   renderThermo(d);
@@ -1122,7 +1179,91 @@ function renderNav(d){
   }, true));
 }
 
-// ============ 产业景气（月频指标，解释"为什么跌/涨"的产业面） ============
+// ============ 周度对比 + 体检分变化 ============
+function renderWeek(d){
+  const grid = document.getElementById('weekGrid');
+  if(!grid) return;
+  const w = d.week_compare || {};
+  const cell = (k, v) => '<div class="week-cell"><div class="k">' + k + '</div><div class="v ' + cls(v) + '">' +
+    (v == null ? '—' : (v > 0 ? '+' : '') + fmt(v, 2) + '%') + '</div></div>';
+  grid.innerHTML = cell('近 1 日', w.d1) + cell('近 5 日（一周）', w.d5) + cell('近 20 日（一月）', w.d20);
+  const meta = document.getElementById('weekMeta');
+  if(meta) meta.textContent = (w.from && w.to)
+    ? (w.from + ' → ' + w.to + ' · ' + (w.points || 0) + ' 个交易日 · 权重近似')
+    : '数据不足';
+  const xd = d.xray_delta;
+  const foot = document.getElementById('weekFoot');
+  if(foot) foot.textContent = (xd && xd.score_prev != null && xd.score_cur != null)
+    ? ('同期体检分 ' + xd.score_prev + ' → ' + xd.score_cur + '（对比 ' + xd.date_prev + '）')
+    : '';
+}
+
+function renderXrayDelta(d){
+  const el = document.getElementById('xrayDelta');
+  if(!el) return;
+  const xd = d.xray_delta;
+  if(!xd || xd.score_prev == null || xd.score_cur == null){ el.innerHTML = ''; return; }
+  const diff = xd.score_cur - xd.score_prev;
+  let html = '较上一数据日（' + escapeHTML(String(xd.date_prev || '')) + '）：' +
+             xd.score_prev + ' → ' + xd.score_cur + '（' + (diff > 0 ? '+' : '') + diff + '）';
+  if(xd.rule_changed){
+    html += '<span class="r">　规则数 ' + (xd.rules_prev || '—') + ' → ' + (xd.rules_cur || '—') +
+            '，分值变化含口径变化，不可与更早历史直接比较</span>';
+  }
+  el.innerHTML = html;
+}
+
+// ============ 模型设置 ============
+let SET_PRESETS = [];
+const _val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+function _setNote(msg, cls){ const n = document.getElementById('setNote'); if(!n) return; n.className = 'modal-note ' + (cls || ''); n.textContent = msg; }
+
+async function openSettings(){
+  document.getElementById('setMask').classList.add('show');
+  _setNote('读取当前配置…');
+  try {
+    const r = await fetch('/api/settings/llm');
+    const d = await r.json();
+    SET_PRESETS = d.presets || [];
+    const st = d.status || {};
+    const sel = document.getElementById('setPreset');
+    sel.innerHTML = SET_PRESETS.map(p => '<option value="' + p.id + '">' + escapeHTML(p.name) + '</option>').join('');
+    document.getElementById('setBase').value = st.base_url || '';
+    document.getElementById('setModel').value = st.model || '';
+    document.getElementById('setKey').value = '';
+    const hit = SET_PRESETS.find(p => p.base_url && st.base_url && p.base_url === st.base_url);
+    if(hit) sel.value = hit.id;
+    _setNote(st.configured
+      ? ('已配置：' + (st.model || '—') + '（密钥 ' + (st.key_masked || '已设置') + '）。改完保存即生效。')
+      : '尚未配置密钥 —— 当前为纯规则模式，不调用大模型。');
+  } catch(e) { _setNote('读取失败：' + e.message, 'bad'); }
+}
+function closeSettings(){ document.getElementById('setMask').classList.remove('show'); }
+function applyPreset(){
+  const p = SET_PRESETS.find(x => x.id === _val('setPreset'));
+  if(p && p.base_url){ document.getElementById('setBase').value = p.base_url; document.getElementById('setModel').value = p.model; }
+}
+async function testModel(){
+  _setNote('测试中（最多 45 秒）…');
+  try {
+    const r = await fetch('/api/settings/llm/test', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({base_url:_val('setBase'), model:_val('setModel'), api_key:_val('setKey')})});
+    const d = await r.json();
+    _setNote(d.message || d.error || '未知结果', d.ok ? 'ok' : 'bad');
+  } catch(e) { _setNote('测试失败：' + e.message, 'bad'); }
+}
+async function saveModel(){
+  try {
+    const r = await fetch('/api/settings/llm', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({base_url:_val('setBase'), model:_val('setModel'), api_key:_val('setKey')})});
+    const d = await r.json();
+    if(!r.ok || !d.ok) throw new Error(d.error || '保存失败');
+    _setNote('已保存：' + (d.status && d.status.model ? d.status.model : '') + '，下次刷新生效', 'ok');
+    setTimeout(closeSettings, 900);
+  } catch(e) { _setNote('保存失败：' + e.message, 'bad'); }
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSettings(); });
+
 function renderEdb(d){
   const el = document.getElementById('edbList');
   const meta = document.getElementById('edbMeta');
@@ -1280,6 +1421,8 @@ function renderXray(x){
 }
 
 // ============ 体检分趋势（回答"结构有没有在改善"） ============
+// 注意：规则数变过的地方分数会跳台阶（分母变了），必须在曲线上标出来，
+// 否则自己看历史时会误读成"组合突然变差/变好"。
 function renderXrayTrend(hist){
   const el = document.getElementById('xrayTrend');
   if(!el) return;
@@ -1293,17 +1436,34 @@ function renderXrayTrend(hist){
   const vals = rows.map(r=>r.score);
   const min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
   const span = Math.max(1, max - min);
-  const pts = vals.map((v,i)=>{
-    const x = pad + (W - 2*pad) * (i / (rows.length - 1));
-    const y = H - pad - ((v - min) / span) * (H - 2*pad);
-    return x.toFixed(1) + ',' + y.toFixed(1);
-  }).join(' ');
+  const px = i => pad + (W - 2*pad) * (i / (rows.length - 1));
+  const py = v => H - pad - ((v - min) / span) * (H - 2*pad);
+  const pts = vals.map((v,i)=> px(i).toFixed(1) + ',' + py(v).toFixed(1)).join(' ');
+
+  // 规则数变化点：这些位置的分数不可与左侧直接比
+  const breaks = [];
+  for(let i=1;i<rows.length;i++){
+    const a = rows[i-1].rules, b = rows[i].rules;
+    if(a != null && b != null && a !== b) breaks.push({i:i, from:a, to:b, date:rows[i].date});
+  }
+  const marks = breaks.map(b=>
+    '<line x1="' + px(b.i).toFixed(1) + '" y1="0" x2="' + px(b.i).toFixed(1) + '" y2="' + H +
+    '" stroke="#ffb347" stroke-width="1" stroke-dasharray="2 2" opacity=".85"/>' +
+    '<circle cx="' + px(b.i).toFixed(1) + '" cy="' + py(vals[b.i]).toFixed(1) +
+    '" r="2.2" fill="#ffb347"/>').join('');
+
   const first = vals[0], latest = vals[vals.length-1];
   const good = latest >= first;
+  const label = breaks.length
+    ? '体检分 ' + first + ' → ' + latest + '（' + rows.length + ' 日）· 规则数 ' +
+      breaks.map(b=>b.from + '→' + b.to).join('、') + ' 处有跳台阶（' +
+      breaks[breaks.length-1].date + '），跨台阶不可直接比'
+    : '体检分 ' + first + ' → ' + latest + '（' + rows[0].date + ' 起 ' + rows.length + ' 个交易日）';
   el.innerHTML =
     '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
+    marks +
     '<polyline points="' + pts + '" fill="none" stroke="' + (good ? '#39d6a0' : '#ff6b7a') + '" stroke-width="1.6"/></svg>' +
-    '<span>体检分 ' + first + ' → ' + latest + '（' + rows[0].date + ' 起 ' + rows.length + ' 个交易日）</span>';
+    '<span>' + label + '</span>';
 }
 
 // ============ 绩效：水下曲线 + 月度热力 ============
@@ -1502,6 +1662,8 @@ async function cancelDirective(encodedKey){
 load();
 setInterval(load, 60000);
 window.addEventListener('resize', ()=>Object.values(charts).forEach(c=>c.resize()));
+// 深链：?panel=model 直接打开模型设置（EXE 快捷方式 / 排查时用，省一次点击）
+if(typeof location !== 'undefined' && /[?&]panel=model/.test(location.search||'')) setTimeout(openSettings, 400);
 
 // 滚过首屏后显示粘性摘要条与回到顶部
 function onScroll(){
