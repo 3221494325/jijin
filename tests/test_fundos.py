@@ -705,5 +705,48 @@ class TestExternalBridge(unittest.TestCase):
             self.assertNotIn("gb_$n225", out)   # 快照里没有的，保持缺失
 
 
+# ---------- 磁盘缓存写入必须是原子的 ----------
+class TestDiskCacheWrite(unittest.TestCase):
+    def test_write_is_atomic_and_leaves_no_tmp(self):
+        """Windows 下多线程同时覆盖同一缓存文件会报 Permission denied，
+        导致整个 payload 降级成 partial —— 用临时文件 + os.replace 规避。"""
+        import tempfile
+        import fundos_data
+        with tempfile.TemporaryDirectory() as tmp:
+            old = fundos_data.CACHE_DIR
+            fundos_data.CACHE_DIR = Path(tmp)
+            try:
+                fundos_data._disk_cache_put("nav_x", {"a": 1})
+                fundos_data._disk_cache_put("nav_x", {"a": 2})   # 覆盖不残留 .tmp
+                names = sorted(p.name for p in Path(tmp).iterdir())
+                self.assertEqual(names, ["nav_x.json"])
+                self.assertEqual(fundos_data._disk_cache("nav_x", 60)[0], {"a": 2})
+            finally:
+                fundos_data.CACHE_DIR = old
+
+    def test_concurrent_writes_do_not_raise(self):
+        import tempfile
+        import threading
+        import fundos_data
+        with tempfile.TemporaryDirectory() as tmp:
+            old = fundos_data.CACHE_DIR
+            fundos_data.CACHE_DIR = Path(tmp)
+            errors = []
+            try:
+                def worker(i):
+                    try:
+                        for _ in range(20):
+                            fundos_data._disk_cache_put("nav_y", {"i": i})
+                    except Exception as exc:  # noqa: BLE001
+                        errors.append(exc)
+                ts = [threading.Thread(target=worker, args=(i,)) for i in range(6)]
+                for t in ts: t.start()
+                for t in ts: t.join()
+                self.assertEqual(errors, [], f"并发写缓存不应抛异常: {errors[:1]}")
+                self.assertEqual([p.name for p in Path(tmp).iterdir()], ["nav_y.json"])
+            finally:
+                fundos_data.CACHE_DIR = old
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

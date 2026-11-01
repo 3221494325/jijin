@@ -11,7 +11,9 @@
 失败抛出 DataError（不再裸 except 吞错），由上层决定降级策略。
 """
 import json
+import os
 import re
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -95,10 +97,24 @@ def _disk_cache(key, ttl_sec):
 
 
 def _disk_cache_put(key, data):
+    """写缓存：临时文件 + 原子替换。
+
+    Windows 上直接 write_text 覆盖同一文件时，若另一个线程（后台预热）正在写，
+    会抛 WinError 13「Permission denied」，把整个 payload 拖成 partial。
+    """
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     path = CACHE_DIR / f"{key}.json"
-    path.write_text(json.dumps({"_ts": time.time(), "data": data},
-                               ensure_ascii=False), encoding="utf-8")
+    payload = json.dumps({"_ts": time.time(), "data": data}, ensure_ascii=False)
+    tmp = path.with_name(f"{path.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+    try:
+        tmp.write_text(payload, encoding="utf-8")
+        os.replace(tmp, path)          # 同盘原子替换，读方看不到半截文件
+    except OSError:
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+        # 缓存写失败不影响主流程：数据已在内存里，下次重算即可
 
 
 # ============================================================
