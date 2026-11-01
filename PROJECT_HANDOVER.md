@@ -189,4 +189,35 @@ del "%USERPROFILE%\Desktop\FundOS看板.url"
 rmdir /s /q D:\基金项目
 ```
 
+---
+
+## 接力点（2026-11-01 16:10，v12）
+
+> 换会话/换人继续时先读这一节，能省掉重新摸地形的时间。
+
+### 现在在哪
+- 看板已是**桌面程序**：`启动FundOS.cmd` 双击 → Edge `--app` 独立窗口（`dashboard.py --app`），只绑 `127.0.0.1:8899`。
+- 数据源从"纯抓取"改成**官方连接器 + 文件桥**：`fundos_bridge.py` 读 `data/external/{nav,board,index,fund_state,edb}_snapshot.json`，缺失或过期自动回退抓取。兜底已实测：净值/板块/指数仍可用，但板块退回新浪 49 个行业口径、全球指数少恒生与日经、申赎与景气两块空着。
+- 页面新增：净值双口径、距止损线温度计、风险预算（权重 vs 风险份额）、申赎状态（限购红标）、主要指数、产业景气、官方快照时效体检。
+- 测试基线：`python tests/test_fundos.py` **66 项**；`node tests/test_dashboard.cjs` 契约断言。
+
+### 立刻要做的两件事
+1. **补齐产业景气**（当前只有集成电路产量 542.7 亿块 / +18.4% / 2026-09）：
+   - `太阳能电池:产量:当月同比`（对应华夏绿电）
+   - `微型计算机设备:产量:当月同比` 或 `智能手机:产量:当月同比`（对应信息产业A / 科技智选）
+   - 用同花顺 `fetch_edb`，**必须用官方指标全名**——"光伏电池产量""智能手机出货量"这类口语名命中不了。
+2. **四类快照续期**：净值/申赎 11-04 到期、板块/指数 11-05 到期（页面"官方快照：剩 N 天"就是它）。数据源：盈米 `BatchGetFundNavHistory` + `BatchGetFundTradeRules`、融聚汇 `market_structure.get_industry_data(rank)`、同花顺 `get_security_indicators(market=指数)`，然后用 `fundos_bridge.write_snapshot()` 写入。
+
+### 踩过的坑（别重踩）
+- **连接器只在会话启动时挂载**：连接器页显示"已连接"不代表当前会话能用。先 `ToolSearch` 验证工具在不在；`ListMcpResources` 里没有对应 server 就是没挂上，需新开会话。
+- `write_snapshot()` 对未知 kind 直接抛错（曾用默认值把 `nav_snapshot.json` 冲掉）。
+- 指数快照**只补缺不覆盖**：快照是上一交易日收盘，盘中覆盖会写脏当天行情。
+- EDB 是月频、次月中旬才发布，陈旧度按 40 天算，别用 4-5 天。
+- Windows 下 `_disk_cache_put` 必须"临时文件 + os.replace"，否则并发写报 Permission denied 并把 payload 拖成 partial。
+
+### 一句话接力指令（贴给新会话即可）
+> 读 D:\基金项目\PROJECT_HANDOVER.md 的「接力点」一节；用同花顺 fetch_edb 补齐太阳能电池产量、微型计算机设备产量两项景气指标，并把四类官方快照续期；改完跑 python tests/test_fundos.py 和 node tests/test_dashboard.cjs。
+
+---
+
 **给接手 Agent 的话**：本项目行为规范以 `AGENTS.md` 为准（涉及基金分析必须总裁人格输出+免责声明）；改任何引擎代码前先读第七节红线；改完跑 `python tests/test_fundos.py`（42 项全过为底线）；每日自动化的三个时点与补跑逻辑见第四节，不要重复注册。
