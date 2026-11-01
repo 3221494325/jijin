@@ -640,5 +640,52 @@ class TestDashboardHelpers(unittest.TestCase):
                 dashboard.XRAY_HISTORY = old
 
 
+# ---------- 官方连接器快照桥（盈米净值 / 融聚汇板块） ----------
+class TestExternalBridge(unittest.TestCase):
+    def _bridge(self, tmp):
+        import fundos_bridge
+        old = fundos_bridge.EXT_DIR
+        fundos_bridge.EXT_DIR = Path(tmp)
+        self.addCleanup(lambda: setattr(fundos_bridge, "EXT_DIR", old))
+        return fundos_bridge
+
+    def test_nav_snapshot_fresh_and_sorted(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            b = self._bridge(tmp)
+            b.write_snapshot("nav", {"funds": {"019759": [
+                {"date": "2026-10-30", "nav": 1.5101},
+                {"date": "2026-10-29", "nav": 1.6177},
+                {"date": "bad", "nav": 1.0},          # 脏数据要丢掉
+                {"date": "2026-10-28", "nav": -1},    # 非法净值要丢掉
+            ]}}, "yingmi-mcp")
+            rows = b.nav_snapshot("019759")
+            self.assertEqual([r["date"] for r in rows], ["2026-10-29", "2026-10-30"])
+            self.assertEqual(rows[-1]["nav"], 1.5101)
+
+    def test_nav_snapshot_expires(self):
+        import json
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            b = self._bridge(tmp)
+            (Path(tmp) / "nav_snapshot.json").write_text(json.dumps({
+                "generated_at": "2020-01-01T00:00:00+08:00",
+                "funds": {"019759": [{"date": "2026-10-30", "nav": 1.5101}]},
+            }), encoding="utf-8")
+            self.assertEqual(b.nav_snapshot("019759"), [], "过期快照必须退回抓取链路")
+
+    def test_board_snapshot_and_write_stamp(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            b = self._bridge(tmp)
+            self.assertIsNone(b.board_snapshot())
+            b.write_snapshot("board", {"industry": [{"name": "酒店餐饮", "chg_pct": 4.34}]},
+                             "fiu-mcp-server")
+            snap = b.board_snapshot()
+            self.assertEqual(snap["source"], "fiu-mcp-server")
+            self.assertIn("generated_at", snap)
+            self.assertEqual(snap["industry"][0]["name"], "酒店餐饮")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

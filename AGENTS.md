@@ -34,7 +34,8 @@
 | 脚本 | 功能 |
 |------|------|
 | fundos_config.py | 统一配置层（持仓/成本基准/阈值 单一事实来源，勿在其他脚本复制持仓表） |
-| fundos_data.py | 统一数据层（重试/多源回退/净值历史与板块快照沉淀） |
+| fundos_data.py | 统一数据层（重试/多源回退/净值历史与板块快照沉淀）。优先读 `fundos_bridge` 的官方快照，缺失或过期才走抓取链路 |
+| fundos_bridge.py | 官方连接器快照桥：读 `data/external/nav_snapshot.json` / `board_snapshot.json`（Agent 用盈米/融聚汇 MCP 拉取后写入，带 generated_at）。净值留 4 天、板块留 5 天，过期即退回抓取 |
 | fundos_analytics.py | 组合风险分析（回撤/夏普/波动率/相关性/分位/XIRR） |
 | fundos_advisor.py | 操作指南引擎（规则化批示：分级指令/单基金建议/禁止清单，纯函数可单测） |
 | fundos_xray.py | 组合体检引擎（13 条静态规则：集中度/分散度/风险/数据健康，输出通过-不通过+阈值+动作，纯函数可单测） |

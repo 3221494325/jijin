@@ -1,0 +1,108 @@
+{
+ "as_of": "2026-10-30 15:14:59",
+ "industry": [
+  {
+   "code": "SW001",
+   "name": "酒店餐饮",
+   "chg_pct": 4.33735,
+   "amount": 16.03,
+   "leader": "首旅酒店",
+   "leader_chg": 10.0,
+   "count": 0,
+   "avg_chg": 4.33735
+  },
+  {
+   "code": "SW002",
+   "name": "白酒Ⅱ",
+   "chg_pct": 3.74896,
+   "amount": 244.7,
+   "leader": "皇台酒业",
+   "leader_chg": 10.008,
+   "count": 0,
+   "avg_chg": 3.74896
+  },
+  {
+   "code": "SW003",
+   "name": "航运港口",
+   "chg_pct": 3.22216,
+   "amount": 131.1,
+   "leader": "锦江航运",
+   "leader_chg": 10.032,
+   "count": 0,
+   "avg_chg": 3.22216
+  },
+  {
+   "code": "SW004",
+   "name": "白色家电",
+   "chg_pct": 2.49022,
+   "amount": 76.59,
+   "leader": "海尔智家",
+   "leader_chg": 5.655,
+   "count": 0,
+   "avg_chg": 2.49022
+  },
+  {
+   "code": "SW005",
+   "name": "医药商业",
+   "chg_pct": 2.07907,
+   "amount": 62.35,
+   "leader": "百洋医药",
+   "leader_chg": 14.839,
+   "count": 0,
+   "avg_chg": 2.07907
+  },
+  {
+   "code": "SW006",
+   "name": "饮料乳品",
+   "chg_pct": 2.00347,
+   "amount": 86.83,
+   "leader": "新乳业",
+   "leader_chg": 10.014,
+   "count": 0,
+   "avg_chg": 2.00347
+  },
+  {
+   "code": "SW007",
+   "name": "休闲食品",
+   "chg_pct": 1.93814,
+   "amount": 37.05,
+   "leader": "黑芝麻",
+   "leader_chg": 10.084,
+   "count": 0,
+   "avg_chg": 1.93814
+  },
+  {
+   "code": "SW008",
+   "name": "炼化及贸易",
+   "chg_pct": 1.434,
+   "amount": 121.8,
+   "leader": "上海石化",
+   "leader_chg": 8.929,
+   "count": 0,
+   "avg_chg": 1.434
+  },
+  {
+   "code": "SW009",
+   "name": "非白酒",
+   "chg_pct": 1.36825,
+   "amount": 25.81,
+   "leader": "百润股份",
+   "leader_chg": 3.309,
+   "count": 0,
+   "avg_chg": 1.36825
+  },
+  {
+   "code": "SW010",
+   "name": "旅游零售Ⅱ",
+   "chg_pct": 1.16905,
+   "amount": 9.39,
+   "leader": "中国中免",
+   "leader_chg": 1.575,
+   "count": 0,
+   "avg_chg": 1.16905
+  }
+ ],
+ "concept": [],
+ "source": "fiu-mcp-server",
+ "generated_at": "2026-11-01T14:34:21+08:00"
+}

@@ -166,6 +166,18 @@ def fetch_fund_nav_history(code, days=120, *, use_cache=True):
         newest = max(r["date"] for r in local)
         if newest >= datetime.now().strftime("%Y-%m-%d"):
             return local
+    # 外部快照优先（Agent 通过官方连接器拉的净值）；没有或过期就走下面的抓取链路
+    try:
+        import fundos_bridge
+        snap = fundos_bridge.nav_snapshot(code)
+    except Exception:  # noqa: BLE001 — 桥不可用绝不能影响主链路
+        snap = []
+    if snap:
+        merged = {r["date"]: r["nav"] for r in local_all}
+        merged.update({r["date"]: r["nav"] for r in snap})
+        full = [{"date": d, "nav": v} for d, v in sorted(merged.items()) if v > 0]
+        path.write_text(json.dumps(full, ensure_ascii=False), encoding="utf-8")
+        return [r for r in full if r["date"] >= cutoff]
     # 补拉：lsjz 分页(每页49)，最多6页 ≈ 1年，覆盖 120+ 交易日
     fetched = {}
     try:
@@ -359,7 +371,17 @@ def _fetch_boards(url):
 
 
 def fetch_sector_boards(*, use_cache=True):
-    """全市场行业+概念板块。返回 (industries, concepts)。"""
+    """全市场行业+概念板块。返回 (industries, concepts)。
+
+    优先用外部快照（Agent 通过连接器拉的申万行业排行），过期/缺失再回退新浪抓取。
+    """
+    try:
+        import fundos_bridge
+        snap = fundos_bridge.board_snapshot()
+    except Exception:  # noqa: BLE001
+        snap = None
+    if snap and snap.get("industry"):
+        return snap.get("industry"), snap.get("concept") or []
     key = "boards"
     if use_cache:
         cached, hit = _disk_cache(key, ttl_sec=300)
