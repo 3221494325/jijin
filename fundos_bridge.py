@@ -208,5 +208,9 @@ def edb_snapshot():
             "yoy": it.get("yoy"),
             "month": it.get("month") or "",
             "note": it.get("note") or "",
+            # 供 xray「产业周期」规则使用：相关持仓代码 + 近几月同比序列
+            "related": [str(c) for c in (it.get("related") or []) if c],
+            "trend": [t for t in (it.get("trend") or [])
+                      if isinstance(t, dict) and t.get("yoy") is not None],
         })
     return out

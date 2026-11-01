@@ -583,6 +583,7 @@ def collect():
             correlation={"tech_cluster_avg": payload.get("tech_cluster_avg")},
             portfolio=payload.get("portfolio"),
             data_sources=payload.get("data_sources"),
+            industry=payload.get("edb"),
             market=payload.get("market"))
         payload["data_sources"]["xray"] = {"status": "ok",
                                           "score": payload["xray"]["score"]}

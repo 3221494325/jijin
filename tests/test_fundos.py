@@ -805,5 +805,53 @@ class TestDiskCacheWrite(unittest.TestCase):
                 fundos_data.CACHE_DIR = old
 
 
+class TestXrayIndustryRule(unittest.TestCase):
+    """产业周期规则：月频指标同比 vs 相关持仓权重。"""
+
+    HOLDINGS = [
+        {"name": "科技智选", "code": "022364", "weight": 30.0},
+        {"name": "半导体A", "code": "019759", "weight": 10.0},
+    ]
+
+    def _rule(self, industry):
+        import fundos_xray
+        out = fundos_xray.build_xray(holdings=self.HOLDINGS, industry=industry)
+        return next(r for r in out["rules"] if r["key"] == "industry_cycle")
+
+    def test_three_month_negative_with_big_weight_fails(self):
+        r = self._rule([{"name": "智能手机产量", "yoy": -26.6, "related": ["022364"],
+                         "trend": [{"month": "2026-07", "yoy": -22.9},
+                                   {"month": "2026-08", "yoy": -22.3},
+                                   {"month": "2026-09", "yoy": -26.6}]}])
+        self.assertEqual(r["status"], "fail")
+        self.assertIn("连续 3 月", r["evaluation"])
+        self.assertIn("30.0", r["evaluation"])   # 相关持仓 30%
+
+    def test_single_month_negative_warns(self):
+        r = self._rule([{"name": "智能手机产量", "yoy": -3.0, "related": ["022364"],
+                         "trend": [{"month": "2026-08", "yoy": 2.0},
+                                   {"month": "2026-09", "yoy": -3.0}]}])
+        self.assertEqual(r["status"], "warn")
+
+    def test_small_exposure_stays_pass(self):
+        """同一产业转弱，但相关持仓只有 10%，不该拖累体检。"""
+        r = self._rule([{"name": "半导体产量", "yoy": -8.0, "related": ["019759"],
+                         "trend": [{"month": "2026-07", "yoy": -1.0},
+                                   {"month": "2026-08", "yoy": -2.0},
+                                   {"month": "2026-09", "yoy": -8.0}]}])
+        self.assertEqual(r["status"], "pass")
+
+    def test_positive_industry_passes(self):
+        r = self._rule([{"name": "集成电路产量", "yoy": 18.4, "related": ["022364"],
+                         "trend": [{"month": "2026-08", "yoy": 20.6},
+                                   {"month": "2026-09", "yoy": 18.4}]}])
+        self.assertEqual(r["status"], "pass")
+
+    def test_no_industry_is_na(self):
+        r = self._rule([])
+        self.assertEqual(r["status"], "na")
+        self.assertIn("未接入", r["value_text"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

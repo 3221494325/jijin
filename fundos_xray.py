@@ -71,7 +71,7 @@ def _rule(key, name, category, status, *, value=None, value_text="—",
 
 
 def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
-               data_sources=None, market=None, thresholds=None):
+               data_sources=None, market=None, thresholds=None, industry=None):
     """组合体检。
 
     holdings:    [{name, code, weight, ret_pct, today_source, ...}]
@@ -80,6 +80,7 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
     portfolio:   {snapshot_age_days, freshness_status, total_value, ...}
     data_sources:{portfolio/analytics/boards/news: {status}}
     market:      dashboard.market_clock() 输出（用于判断"估算"是否适用）
+    industry:    [{name, yoy, trend:[{month,yoy}], related:[基金代码], month}]（同花顺 EDB 月频）
     返回 {rules, summary, score, counts}
     """
     th = {**XRAY_DEFAULTS, **(thresholds or {})}
@@ -89,6 +90,7 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
     portfolio = portfolio or {}
     data_sources = data_sources or {}
     market = market or {}
+    industry = industry or []
     rules = []
 
     # ---- 1. 集中度：单一基金 ----
@@ -259,7 +261,63 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
         action="如需体检现金比例，需在 portfolio_snapshot.json 增加现金字段。",
         weight=1))
 
-    # ---- 13. 数据源可用性 ----
+    # ---- 13. 产业周期背离（月频产业指标 vs 持仓权重） ----
+    if holdings:
+        wmap = {h.get("code"): float(h.get("weight") or 0) for h in holdings}
+        stats = []
+        for item in industry:
+            codes = item.get("related") or []
+            yoy = item.get("yoy")
+            if yoy is None or not codes:
+                continue
+            weight = sum(wmap.get(c, 0) for c in codes)
+            if weight <= 0:
+                continue
+            trend = [t for t in (item.get("trend") or []) if t.get("yoy") is not None]
+            streak = 0
+            for t in reversed(trend):
+                if float(t["yoy"]) < 0:
+                    streak += 1
+                else:
+                    break
+            stats.append({"name": item.get("name"), "yoy": float(yoy), "weight": weight,
+                          "streak": streak, "month": item.get("month") or ""})
+        stats.sort(key=lambda s: -s["weight"])
+        if not stats:
+            rules.append(_rule(
+                "industry_cycle", "产业周期", "基本面", "na",
+                value=None, value_text="未接入产业指标",
+                evaluation="没有可映射到持仓的月频产业指标，这项不做假结论。",
+                action="接上同花顺 EDB 快照后自动体检（data/external/edb_snapshot.json）。",
+                weight=2))
+        else:
+            # 不是只看最大的那一簇：同类仓位可能有多条产业线同时转弱
+            dead = [s for s in stats if s["streak"] >= 3 and s["weight"] >= 20]
+            soft = [s for s in stats if s["yoy"] < 0 and s["weight"] >= 20]
+            if dead:
+                st = "fail"
+            elif soft:
+                st = "warn"
+            else:
+                st = "pass"
+            focus = (dead or soft or [stats[0]])[:2]
+            names = "、".join(f"{s['name']} {s['yoy']:+.1f}%（{_pct(s['weight'])}）" for s in focus)
+            exposure = (f"对应持仓合计 {_pct(focus[0]['weight'])}" if len(focus) == 1
+                        else f"对应持仓 {names}")
+            dead_text = "、".join(f"{s['name']}连续 {s['streak']} 月同比为负" for s in dead) or "无连续三月为负的产业线"
+            rules.append(_rule(
+                "industry_cycle", "产业周期", "基本面", st,
+                value=round(sum(s["weight"] for s in focus), 1),
+                value_text=names,
+                limit=20.0, limit_text="相关持仓 ≤ 20%",
+                evaluation=(f"{dead_text}；{exposure}。"
+                            "产业需求端没有转正时，价格下跌是估值重定价，不是「跌出便宜」。"),
+                action=("产业面与仓位匹配，可按纪律执行。" if st == "pass"
+                        else f"暂停对 {'、'.join(s['name'] for s in focus)} 相关持仓加仓/摊平；"
+                             "等对应指标同比连续两月收窄或转正再评估。"),
+                weight=2))
+
+    # ---- 14. 数据源可用性 ----
     bad = [k for k, v in data_sources.items() if isinstance(v, dict) and v.get("status") == "error"]
     st = "pass" if not bad else "warn"
     rules.append(_rule(
