@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FundOS">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>FundOS · 投资驾驶舱</title>
 <script src="/static/echarts.min.js"
         onerror="var s=document.createElement('script');s.src='https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js';document.head.appendChild(s);"></script>
@@ -253,9 +259,86 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
 .kpi .k{font-size:10.5px;color:var(--mute)}
 .kpi .v{font-size:16px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
 .card-foot{font-size:11px;color:var(--mute);margin-top:9px;line-height:1.7}
+
+/* ============================================================
+   v5：手机端结构与 PWA（粘性摘要条、紧凑体检、表格横向滚动）
+   ============================================================ */
+.sticky-bar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:14px;
+  padding:7px 14px;background:rgba(7,17,31,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);transform:translateY(-110%);transition:transform .22s ease;
+  font-size:12px;will-change:transform}
+.sticky-bar.show{transform:translateY(0)}
+.sb-brand{font-weight:800;letter-spacing:1px;color:var(--cyan);font-size:12px;white-space:nowrap}
+.sb-kv{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.sb-kv i{font-style:normal;font-size:9.5px;color:var(--mute);letter-spacing:.5px}
+.sb-kv b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sb-market{margin-left:auto;font-size:10.5px;color:var(--mute);text-align:right;max-width:38%;
+  line-height:1.25;overflow:hidden;text-overflow:ellipsis}
+.to-top{position:fixed;right:14px;bottom:18px;z-index:60;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(13,27,45,.92);color:var(--cyan);font-size:17px;
+  cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(6px)}
+.to-top.show{opacity:1;pointer-events:auto}
+.xray-trend{font-size:11px;color:var(--mute);margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.xray-trend svg{display:block}
+.idx-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.idx-grid table{width:100%}
+.breakeven{display:block;font-size:10px;color:var(--mute);margin-top:1px;white-space:nowrap}
+.xr-more{display:none;border:1px solid var(--line);background:#102239;color:var(--cyan);
+  border-radius:6px;padding:6px 10px;font:inherit;font-size:11.5px;cursor:pointer}
+
+@media(max-width:600px){
+  body{padding:10px 10px 64px}
+  h1{font-size:20px;letter-spacing:0}
+  .masthead{padding-bottom:10px}.masthead:after{margin-top:10px;width:80px}
+  .mast-sub{gap:6px;font-size:11px;line-height:2}
+  .mast-sub .badge{padding:2px 8px;max-width:100%;flex-wrap:wrap}
+  .mast-meta,.mast-sep{display:none}
+  .quick-nav{margin:6px 0 12px;gap:6px}
+  .quick-nav a{padding:7px 13px;font-size:12px}
+  .strip{gap:8px}.strip .cell{padding:12px}.strip .v{font-size:20px}
+  .card{padding:12px;border-radius:9px}.card h2{font-size:13.5px;letter-spacing:0;padding-bottom:8px}
+  .cockpit-focus{gap:10px}
+  .xray-grid{gap:7px}
+  .xray-summary{font-size:12px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+  .xr{padding:7px 9px}
+  .xr-val{font-size:14px;margin-top:3px;-webkit-line-clamp:1;display:inline-block;max-width:100%}
+  .xr-lim{font-size:10px;display:inline;margin-left:6px}
+  .xr-eval,.xr-act{display:none}
+  body.xr-expanded .xr-eval{display:-webkit-box}
+  body.xr-expanded .xr-act{display:-webkit-box}
+  body.xr-expanded .xr-lim{display:block;margin-left:0}
+  #nav{height:240px!important}#boards{height:230px!important}#ddChart{height:150px!important}
+  #corrChart{height:300px!important}#contribChart{height:230px!important}#sentGauge{height:160px!important}
+  #sentHist{height:90px!important}
+  .news{max-height:260px}
+  table{font-size:12px}th,td{padding:8px 6px}
+  .area-hold td:first-child,.area-hold th:first-child{position:sticky;left:0;background:#0d1b2d;z-index:2}
+  .btn{padding:10px 16px}.directive-confirm{padding:9px 12px}
+  .execution-item{grid-template-columns:auto 1fr;gap:8px}
+  .execution-item .directive-confirm{grid-column:1/-1;justify-self:start}
+  .idx-grid{grid-template-columns:1fr}
+  .kpi{min-width:calc(50% - 5px)}
+  .sticky-bar{gap:9px;padding:6px 10px}
+  .sb-brand{font-size:11px}
+  .sb-kv b{font-size:12px}
+  .sb-market{font-size:9.5px;max-width:44%}
+  .directives{grid-template-columns:1fr!important}
+  .alert{padding:8px 10px;font-size:12px;overflow-wrap:anywhere}
+  .xr-more{display:inline-block}
+}
 </style>
 </head>
 <body>
+
+<div class="sticky-bar" id="stickyBar">
+  <span class="sb-brand">FundOS</span>
+  <span class="sb-kv"><i>市值</i><b id="sbValue">—</b></span>
+  <span class="sb-kv"><i>收益率</i><b id="sbRet">—</b></span>
+  <span class="sb-kv"><i>体检</i><b id="sbScore">—</b></span>
+  <span class="sb-market" id="sbMarket">—</span>
+</div>
+<button class="to-top" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑</button>
+
 
 <header class="masthead">
   <div class="mast-top">
@@ -264,11 +347,11 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
     <div class="mh-side r">口径：<b class="up-t">红涨</b> / <b class="down-t">绿跌</b></div>
   </div>
   <div class="mast-sub">
-    <span>页面汇总于 <b id="ts">—</b></span><span>|</span>
+    <span>页面汇总于 <b id="ts">—</b></span><span class="mast-sep">|</span>
     <span class="badge" id="marketBadge"><b id="marketLabel">—</b><span id="marketDay">—</span></span>
-    <span>时间口径：北京时间（Asia/Shanghai）</span><span>|</span>
-    <span>每60秒自动刷新</span><span>|</span>
-    <span>本地服务 · 仅自用</span>
+    <span class="mast-meta">时间口径：北京时间（Asia/Shanghai）</span><span class="mast-meta mast-sep">|</span>
+    <span class="mast-meta">每60秒自动刷新</span><span class="mast-meta mast-sep">|</span>
+    <span class="mast-meta">本地服务 · 仅自用</span>
     <button class="btn" id="btnRefresh" onclick="manualRefresh()">刷新数据</button>
     <span class="build-tag" id="buildTag">build —</span>
   </div>
@@ -292,6 +375,8 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
     <div class="xray-summary" id="xraySummary">等待体检数据</div>
     <div class="xray-counts" id="xrayCounts"></div>
   </div>
+  <div class="xray-trend" id="xrayTrend"></div>
+  <button class="xr-more" id="xrMore" onclick="document.body.classList.toggle('xr-expanded');this.textContent=document.body.classList.contains('xr-expanded')?'收起解读':'展开解读'">展开解读</button>
   <div class="xray-grid" id="xrayGrid"></div>
   <div class="card-foot">规则口径与 <b>fundos_config.THRESHOLDS</b> 同源；不通过项只说明结构问题，动作仍以“今日操作指南”为准。<span id="xrayMeta"></span></div>
 </section>
@@ -423,6 +508,15 @@ function draw(d){
   document.getElementById('marketLabel').textContent = mk.label || '时段未知';
   document.getElementById('marketDay').textContent = mk.data_day ? ' · ' + (mk.data_day_label || mk.data_day) : '';
 
+  // 手机粘性摘要条：滚过首屏后常驻，随时能看到最关键三个数
+  const pf = d.portfolio || {};
+  document.getElementById('sbValue').textContent = '¥' + money(pf.total_value);
+  const sbRet = document.getElementById('sbRet');
+  sbRet.textContent = pf.total_ret_pct == null ? '—' : pct(pf.total_ret_pct);
+  sbRet.className = cls(pf.total_ret_pct || 0);
+  document.getElementById('sbScore').textContent = String((d.xray && d.xray.score != null) ? d.xray.score : '—');
+  document.getElementById('sbMarket').textContent = (mk.label||'') + (mk.data_day ? ' · ' + mk.data_day : '');
+
   // 号外：触发提醒（必须带核验日期，旧结论不能冒充今日）
   const am = d.actions_meta || {};
   document.getElementById('alertBox').innerHTML =
@@ -526,7 +620,7 @@ function draw(d){
       <td class="num">${money(h.value)}</td>
       <td class="num">${fmt(h.weight,1)}%</td>
       <td class="num ${cls(h.return)}">${h.return>0?'+':''}${money(h.return)}</td>
-      <td class="num ${cls(h.ret_pct)}">${pct(h.ret_pct)}</td>
+      <td class="num ${cls(h.ret_pct)}">${pct(h.ret_pct)}${(h.ret_pct<0 && h.breakeven_pct!=null)?`<span class="breakeven">回本需 +${fmt(h.breakeven_pct,1)}%</span>`:''}</td>
       <td class="num ${cls(h.nav_day_chg)}">${pct(h.nav_day_chg)}</td>
       <td class="num ${cls(h.today_est)}">${pct(h.today_est)}<span style="color:var(--faint);font-size:10px"> ${h.today_source}</span></td>
       <td style="color:var(--faint)">${h.nav_date}</td></tr>`).join('') + '</table>';
@@ -602,14 +696,14 @@ function draw(d){
     ((d.corr_top&&d.corr_top.length)?` ｜ 最相关: ${d.corr_top.slice(0,2).map(pp=>pp.a+'×'+pp.b+' '+pp.corr).join(' / ')}`:'') +
     `<div class="note">XIRR 由资金流水重建，持有期越短年化放大越明显（数月级别的 -90% 不代表真实年化亏损），只作趋势参考。</div>`;
 
-  // 环球市场
+  // 环球市场（两列栅格，手机上自动堆叠，不再用 float 撑宽页面）
   const rows = (d.indices||[]).concat(d.global_indices||[]);
   const half = Math.ceil(rows.length/2);
-  const mkTable = arr => `<table style="float:left;width:50%">` + arr.map(i=>
+  const mkTable = arr => '<table>' + arr.map(i=>
     `<tr><td>${i.name}</td><td class="num">${money(i.price)}</td>
      <td class="num ${cls(i.chg_pct)}">${pct(i.chg_pct)}</td></tr>`).join('') + '</table>';
-  document.getElementById('idxTable').innerHTML = mkTable(rows.slice(0,half)) + mkTable(rows.slice(half)) +
-    '<div style="clear:both"></div>';
+  document.getElementById('idxTable').innerHTML =
+    '<div class="idx-grid">' + mkTable(rows.slice(0,half)) + mkTable(rows.slice(half)) + '</div>';
 
   // 操作指南（规则引擎）
   const g = d.guide||{};
@@ -696,6 +790,7 @@ function draw(d){
 
   // 体检 / 绩效 / 盈亏贡献 / 相关性
   renderXray(d.xray);
+  renderXrayTrend(d.xray_history);
   renderPerf(d);
   renderContrib(d);
   renderCorr(d);
@@ -773,6 +868,33 @@ function renderXray(x){
       `<div class="xr-eval" title="${escapeHTML(r.evaluation)}">${escapeHTML(r.evaluation)}</div>` +
       (r.status === 'pass' ? '' : `<div class="xr-act" title="${escapeHTML(r.action)}">→ ${escapeHTML(r.action)}</div>`) +
     `</div>`).join('');
+}
+
+// ============ 体检分趋势（回答"结构有没有在改善"） ============
+function renderXrayTrend(hist){
+  const el = document.getElementById('xrayTrend');
+  if(!el) return;
+  const rows = (hist||[]).filter(r=>r && r.score != null);
+  if(rows.length < 2){
+    el.innerHTML = '<span>体检分趋势：积累中（' + rows.length + ' 天，满 2 天出曲线）</span>' +
+      (rows.length ? '<span>当前 ' + rows[rows.length-1].score + ' 分</span>' : '');
+    return;
+  }
+  const W = 150, H = 32, pad = 3;
+  const vals = rows.map(r=>r.score);
+  const min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+  const span = Math.max(1, max - min);
+  const pts = vals.map((v,i)=>{
+    const x = pad + (W - 2*pad) * (i / (rows.length - 1));
+    const y = H - pad - ((v - min) / span) * (H - 2*pad);
+    return x.toFixed(1) + ',' + y.toFixed(1);
+  }).join(' ');
+  const first = vals[0], latest = vals[vals.length-1];
+  const good = latest >= first;
+  el.innerHTML =
+    '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
+    '<polyline points="' + pts + '" fill="none" stroke="' + (good ? '#39d6a0' : '#ff6b7a') + '" stroke-width="1.6"/></svg>' +
+    '<span>体检分 ' + first + ' → ' + latest + '（' + rows[0].date + ' 起 ' + rows.length + ' 个交易日）</span>';
 }
 
 // ============ 绩效：水下曲线 + 月度热力 ============
@@ -963,6 +1085,25 @@ async function cancelDirective(encodedKey){
 load();
 if(!(typeof location !== 'undefined' && (location.hostname||'').endsWith('.github.io'))) setInterval(load, 60000);
 window.addEventListener('resize', ()=>Object.values(charts).forEach(c=>c.resize()));
+
+// 滚过首屏后显示粘性摘要条与回到顶部
+function onScroll(){
+  const y = (typeof window !== 'undefined' && window.scrollY) || 0;
+  const show = y > 240;
+  const bar = document.getElementById('stickyBar');
+  if(bar) bar.className = 'sticky-bar' + (show ? ' show' : '');
+  const top = document.getElementById('toTop');
+  if(top) top.className = 'to-top' + (show ? ' show' : '');
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+// PWA：有 Service Worker 才注册（本地 8899 没 sw.js 时静默失败）
+if(typeof navigator !== 'undefined' && navigator.serviceWorker &&
+   (typeof location === 'undefined' || location.protocol !== 'file:')){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
 if(typeof document.addEventListener === 'function'){
   document.addEventListener('keydown', e=>{
     const tag = (e.target && e.target.tagName) || '';

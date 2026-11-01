@@ -27,6 +27,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
 DIRECTIVE_STATE = ROOT / "data" / "state" / "directive_execution.json"
+XRAY_HISTORY = ROOT / "data" / "state" / "xray_history.json"
 BJ_TZ = ZoneInfo("Asia/Shanghai")
 # 版本号单点定义：页面通过 __FUNDOS_BUILD__ 占位符注入，避免前后端各写一份而错位
 BUILD_ID = "cockpit-xray-v4"
@@ -147,6 +148,54 @@ def market_clock(now=None):
 # ============================================================
 # 数据聚合（全部复用现有引擎与缓存）
 # ============================================================
+def breakeven_pct(ret_pct):
+    """回本所需涨幅：收益率 r 时需涨 -r/(1+r)。比"还差几个点"更贴近直觉。"""
+    try:
+        r = float(ret_pct) / 100.0
+    except (TypeError, ValueError):
+        return None
+    if r <= -0.999:
+        return None
+    return round((1 / (1 + r) - 1) * 100, 1)
+
+
+def load_xray_history():
+    try:
+        rows = json.loads(XRAY_HISTORY.read_text(encoding="utf-8"))
+        return rows if isinstance(rows, list) else []
+    except (OSError, json.JSONDecodeError):
+        return []
+
+
+def _xray_row(day, xray, payload):
+    risk = payload.get("risk") or {}
+    counts = xray.get("counts") or {}
+    return {"date": day, "score": xray.get("score"), "grade": xray.get("grade"),
+            "fail": counts.get("fail", 0), "warn": counts.get("warn", 0),
+            "tech": (payload.get("guide") or {}).get("tech_weight"),
+            "qdii": (payload.get("guide") or {}).get("qdii_weight"),
+            "max_dd": risk.get("max_dd_pct"), "sharpe": risk.get("sharpe")}
+
+
+def record_xray_history(day, xray, payload):
+    """每个数据日只保留一条体检记录，用来回答"结构到底有没有在改善"。"""
+    rows = load_xray_history()
+    row = _xray_row(day, xray, payload)
+    if rows and rows[-1].get("date") == day:
+        rows[-1] = row
+    elif rows and str(rows[-1].get("date", "")) > day:
+        rows = [r for r in rows if r.get("date") != day] + [row]
+        rows.sort(key=lambda r: str(r.get("date", "")))
+    else:
+        rows.append(row)
+    rows = rows[-180:]
+    XRAY_HISTORY.parent.mkdir(parents=True, exist_ok=True)
+    tmp = XRAY_HISTORY.with_suffix(".tmp")
+    tmp.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.replace(XRAY_HISTORY)
+    return rows
+
+
 def collect():
     """聚合面板数据。任何子模块失败都不拖垮整体（优雅降级为缺省块）。"""
     now = datetime.now(BJ_TZ)
@@ -205,6 +254,7 @@ def collect():
             "value": round(f.get("value", 0), 2), "weight": round(f.get("weight", 0), 1),
             "ret_pct": round(f.get("ret_pct", 0), 2),
             "return": round(f.get("return", 0), 2),
+            "breakeven_pct": breakeven_pct(f.get("ret_pct", 0)),
             "nav_date": f.get("nav_date", "-"),
             "nav_day_chg": f.get("nav_day_chg", 0),
             "today_est": round(f.get("today_est", 0), 2),
@@ -464,6 +514,13 @@ def collect():
             market=payload.get("market"))
         payload["data_sources"]["xray"] = {"status": "ok",
                                           "score": payload["xray"]["score"]}
+        # 体检分历史：每个数据日一条，用来回答"结构到底有没有在改善"
+        try:
+            payload["xray_history"] = record_xray_history(
+                payload["market"]["data_day"], payload["xray"], payload)
+        except Exception as exc:  # noqa: BLE001 — 历史写入失败不影响体检本身
+            payload["xray_history"] = load_xray_history()
+            payload["xray_history_error"] = str(exc)[:120]
     except Exception as exc:  # noqa: BLE001
         payload["error_xray"] = str(exc)[:200]
         payload["data_sources"]["xray"] = {"status": "error", "error": str(exc)[:160]}

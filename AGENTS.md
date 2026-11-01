@@ -52,6 +52,8 @@
 | notify.py | 通知（Windows弹窗 + 可选Server酱微信，FUNDOS_SCT_KEY 环境变量启用） |
 | auto_pipeline.py | 自动化流水线（morning晨报/afternoon触发警报/evening晚报；install/uninstall 注册计划任务；catchup 补跑当天遗漏——电脑不常开也能自动追平） |
 | dashboard.py | 可视化面板（python dashboard.py → http://127.0.0.1:8899，红涨绿跌，60秒自刷新；--lan 允许手机同一WiFi访问，图标库已本地化）。页面模板每次请求读盘 + 注入构建号；非交易日按 market_clock() 标注口径 |
+| export_mobile_snapshot.py | 手机端静态快照（data.json + index.html + PWA 三件套 manifest.json/sw.js）；GitHub Actions 定时生成，sync_mobile_snapshot.py 负责提交推送 |
+| tools/make_pwa_icons.py | 生成 PWA 图标（需 Pillow；只在改图标时手动运行） |
 | tests/test_fundos.py | 单元测试（python tests/test_fundos.py） |
 
 **维护红线**: 新增持仓/改成本 → 只改 `fundos_config.FUND_META`（并按其注释重推 cost_nav）；

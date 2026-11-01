@@ -34,7 +34,7 @@ context.v4 = {
   actions: ["🔴 示例标的 当日无条件出清"],
   actions_meta: {state:"stale", label:"2026-10-29 盘后核验", date:"2026-10-29"},
   portfolio: {total_value: 1000, est_ret_pct: -1, total_ret_pct: -5},
-  holdings: [{name:"A", code:"1", value:600, weight:60, ret_pct:-30, sector:"tech", nav_date:"2026-10-30"}],
+  holdings: [{name:"A", code:"1", value:600, weight:60, ret_pct:-30, breakeven_pct:42.9, sector:"tech", nav_date:"2026-10-30"}],
   xray: {score: 41, grade: "需处置", summary: "示例结论",
          counts: {total:2, evaluated:2, pass:1, warn:0, fail:1, na:0},
          rules: [{name:"QDII 海外敞口", status:"fail", status_label:"不通过", value_text:"47.6%",
@@ -66,6 +66,24 @@ assert.ok(elements.corrNote.innerHTML.includes("0.90") || elements.corrNote.inne
 assert.ok(elements.contribNote.innerHTML.includes("-80.00"));
 assert.ok(!elements.xrayGrid.innerHTML.includes("undefined"));
 assert.ok(!elements.perfKpi.innerHTML.includes("NaN"));
+
+// ---- v5：粘性摘要条、回本距离、体检分趋势、环球市场栅格 ----
+assert.equal(elements.sbValue.textContent, "¥1,000.00");
+assert.equal(elements.sbRet.textContent, "-5.00%");
+assert.equal(elements.sbScore.textContent, "41");
+assert.ok(elements.sbMarket.textContent.includes("2026-10-30"));
+assert.ok(elements.holdTable.innerHTML.includes("回本需 +42.9%"), "亏损标的应显示回本所需涨幅");
+assert.ok(elements.idxTable.innerHTML.includes("idx-grid"));
+// 体检分趋势：只有 1 天时只能显示"积累中"，不得画假曲线
+context.hist1 = [{date:"2026-10-30", score:41}];
+vm.runInContext("draw({xray:v4.xray, xray_history:hist1})", context);
+assert.ok(elements.xrayTrend.innerHTML.includes("积累中"));
+assert.ok(!elements.xrayTrend.innerHTML.includes("<svg"));
+// 两天以上才出折线
+context.hist2 = [{date:"2026-10-29", score:35}, {date:"2026-10-30", score:41}];
+vm.runInContext("draw({xray:v4.xray, xray_history:hist2})", context);
+assert.ok(elements.xrayTrend.innerHTML.includes("<svg"), "满两天应渲染趋势折线");
+assert.ok(elements.xrayTrend.innerHTML.includes("35 → 41"));
 
 // 空数据不得抛错，也不得渲染出 undefined
 vm.runInContext("draw({xray:{},perf:{},contribution:[]})", context);

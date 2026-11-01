@@ -565,5 +565,57 @@ class TestPerfSeries(unittest.TestCase):
         self.assertEqual(monthly_returns(["2026-08-01"], [1.0]), [])
 
 
+# ---------- 看板辅助逻辑（交易日历 / 回本距离 / 体检历史） ----------
+class TestDashboardHelpers(unittest.TestCase):
+    def test_breakeven_pct(self):
+        import dashboard
+        self.assertAlmostEqual(dashboard.breakeven_pct(-30), 42.9, places=1)  # 1/0.7-1
+        self.assertAlmostEqual(dashboard.breakeven_pct(0), 0.0, places=1)
+        self.assertAlmostEqual(dashboard.breakeven_pct(25), -20.0, places=1)  # 盈利时"回本"是负数
+        self.assertIsNone(dashboard.breakeven_pct(-100))
+        self.assertIsNone(dashboard.breakeven_pct(None))
+
+    def test_market_clock_weekend(self):
+        from datetime import datetime
+        import dashboard
+        mk = dashboard.market_clock(datetime(2026, 11, 1, 10, 0, tzinfo=dashboard.BJ_TZ))
+        self.assertEqual(mk["session"], "weekend")
+        self.assertFalse(mk["is_trading_day"])
+        self.assertEqual(mk["data_day"], "2026-10-30")     # 周日回落到上周五
+
+    def test_market_clock_trading_sessions(self):
+        from datetime import datetime
+        import dashboard
+        tz = dashboard.BJ_TZ
+
+        def sess(h, m=0):
+            return dashboard.market_clock(datetime(2026, 10, 30, h, m, tzinfo=tz))["session"]
+
+        self.assertEqual(sess(9, 0), "pre_open")
+        self.assertEqual(sess(10), "morning")
+        self.assertEqual(sess(12), "lunch")
+        self.assertEqual(sess(14), "afternoon")
+        self.assertEqual(sess(16), "closed")
+
+    def test_xray_history_keeps_one_row_per_day(self):
+        import tempfile
+        import dashboard
+        with tempfile.TemporaryDirectory() as tmp:
+            old = dashboard.XRAY_HISTORY
+            dashboard.XRAY_HISTORY = Path(tmp) / "xray_history.json"
+            try:
+                xray = {"score": 41, "grade": "需处置", "counts": {"fail": 6, "warn": 0}}
+                payload = {"risk": {"max_dd_pct": -17.9, "sharpe": -2.07},
+                           "guide": {"tech_weight": 35.6, "qdii_weight": 47.6}}
+                dashboard.record_xray_history("2026-10-30", xray, payload)
+                rows = dashboard.record_xray_history("2026-10-30", {**xray, "score": 45}, payload)
+                self.assertEqual(len(rows), 1, "同一天重复刷新应覆盖而不是追加")
+                self.assertEqual(rows[0]["score"], 45)
+                rows = dashboard.record_xray_history("2026-11-02", xray, payload)
+                self.assertEqual([r["date"] for r in rows], ["2026-10-30", "2026-11-02"])
+            finally:
+                dashboard.XRAY_HISTORY = old
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
