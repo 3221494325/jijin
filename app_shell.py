@@ -80,7 +80,41 @@ def _start_server() -> subprocess.Popen | None:
     return proc
 
 
+def _single_instance() -> bool:
+    """同一个用户只允许一个窗口：第二个实例把已有窗口拉到前台后自己退出。
+
+    Windows 命名互斥体（Local\\ 前缀 = 只在当前登录会话内生效），
+    比"按进程名查"可靠——pyinstaller onefile 会有父子两个同名进程。
+    """
+    if not sys.platform.startswith("win"):
+        return True
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel32.CreateMutexW.argtypes = [wintypes.LPVOID, wintypes.BOOL, wintypes.LPCWSTR]
+        kernel32.CreateMutexW.restype = wintypes.HANDLE
+        handle = kernel32.CreateMutexW(None, False, "Local\\FundOS.SingleInstance")
+        if not handle:
+            return True
+        # ERROR_ALREADY_EXISTS = 183
+        if ctypes.get_last_error() != 183:
+            return True
+        user32 = ctypes.WinDLL("user32", use_last_error=True)
+        hwnd = user32.FindWindowW(None, WINDOW_TITLE)
+        if hwnd:
+            user32.ShowWindow(hwnd, 9)          # SW_RESTORE
+            user32.SetForegroundWindow(hwnd)
+        return False
+    except Exception:                            # noqa: BLE001 — 拿不到锁也要能用
+        return True
+
+
 def main() -> int:
+    if not _single_instance():
+        return 0
+
     import webview
 
     server = _start_server()

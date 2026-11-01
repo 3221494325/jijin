@@ -913,5 +913,102 @@ class TestAdvisorIndustryVeto(unittest.TestCase):
         self.assertIsNone(self._veto([self._h("512880", "证券ETF", 10.0)]))
 
 
+class TestPortfolioDates(unittest.TestCase):
+    """持仓申报日期不能被"净值复核时间"顶掉（曾把 18 天的持仓判成 2 天前）。"""
+
+    SNAP = {"date": "2026-10-14", "holdings": [{"code": "019759", "value": 100,
+                                                 "cost": 90, "ret_pct": 11.1}],
+            "total_ret_pct": -1.0}
+    DAILY = {"checked_at": "2026-10-30T20:30:04+08:00",
+             "holdings": [{"code": "019759", "value": 300, "cost": 200,
+                           "ret_pct": 50.0, "weight": 12.0, "sector": "tech"}],
+             "total_ret_pct": -17.0}
+
+    def _load(self, with_daily):
+        import json
+        import tempfile
+        from pathlib import Path as _P
+        import portfolio_data
+        with tempfile.TemporaryDirectory() as tmp:
+            d = _P(tmp)
+            snap, daily = d / "portfolio_snapshot.json", d / "daily_check_result.json"
+            snap.write_text(json.dumps(self.SNAP), encoding="utf-8")
+            if with_daily:
+                daily.write_text(json.dumps(self.DAILY), encoding="utf-8")
+            old = (portfolio_data.SNAPSHOT, portfolio_data.DAILY_RESULT)
+            portfolio_data.SNAPSHOT, portfolio_data.DAILY_RESULT = snap, daily
+            try:
+                return portfolio_data.load_portfolio()
+            finally:
+                portfolio_data.SNAPSHOT, portfolio_data.DAILY_RESULT = old
+
+    def test_daily_does_not_overwrite_holdings_date(self):
+        out = self._load(with_daily=True)
+        self.assertEqual(out["holdings_as_of"], "2026-10-14")   # 持仓是哪天确认的
+        self.assertTrue(out["as_of"].startswith("2026-10-30"))  # 净值算到哪天
+        self.assertEqual(out["data_source"], "daily_check_result.json")
+        self.assertEqual(out["holdings_source"], "portfolio_snapshot.json")
+
+    def test_snapshot_only_uses_same_date(self):
+        out = self._load(with_daily=False)
+        self.assertEqual(out["holdings_as_of"], "2026-10-14")
+        self.assertEqual(out["as_of"], "2026-10-14")
+
+    def test_xray_freshness_uses_holdings_date(self):
+        import fundos_xray
+        out = fundos_xray.build_xray(
+            holdings=[{"name": "半导体A", "code": "019759", "weight": 12, "ret_pct": -37}],
+            portfolio={"snapshot_age_days": 18, "valuation_age_days": 2})
+        r = next(x for x in out["rules"] if x["key"] == "data_freshness")
+        self.assertEqual(r["status"], "fail")
+        self.assertIn("18 天", r["evaluation"])
+        self.assertIn("净值只滞后 2 天", r["evaluation"])   # 必须点明"看起来新鲜"的假象
+        self.assertIn("确认持仓未变", r["action"])
+
+    def test_xray_freshness_pass_when_recent(self):
+        import fundos_xray
+        out = fundos_xray.build_xray(
+            holdings=[{"name": "A", "code": "019759", "weight": 10, "ret_pct": -1}],
+            portfolio={"snapshot_age_days": 2, "valuation_age_days": 2})
+        r = next(x for x in out["rules"] if x["key"] == "data_freshness")
+        self.assertEqual(r["status"], "pass")
+    def test_confirm_moves_date_and_keeps_numbers(self):
+        """确认持仓未变：只改日期，份额/成本/收益率一个字节都不许动，且留备份。"""
+        import json
+        import tempfile
+        from pathlib import Path as _P
+        import dashboard
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _P(tmp)
+            src = json.loads((_P(__file__).resolve().parent.parent
+                              / "portfolio_snapshot.json").read_text(encoding="utf-8"))
+            (root / "portfolio_snapshot.json").write_text(
+                json.dumps(src, ensure_ascii=False), encoding="utf-8")
+            before = json.loads((root / "portfolio_snapshot.json").read_text(encoding="utf-8"))
+            today, prev = dashboard.confirm_holdings(root)
+            after = json.loads((root / "portfolio_snapshot.json").read_text(encoding="utf-8"))
+            self.assertEqual(prev, before["date"])
+            self.assertEqual(after["date"], today)
+            self.assertEqual(after["holdings"], before["holdings"])      # 持仓数字不动
+            self.assertEqual(after["total_value"], before["total_value"])
+            self.assertIn("确认持仓未变", after["source_note"])
+            self.assertEqual(len(list((root / "data/state/backups").glob("*.json"))), 1)
+            self.assertFalse((root / "portfolio_snapshot.json.tmp").exists())
+
+    def test_confirm_refuses_empty_snapshot(self):
+        import json
+        import tempfile
+        from pathlib import Path as _P
+        import dashboard
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _P(tmp)
+            (root / "portfolio_snapshot.json").write_text(
+                json.dumps({"date": "2026-10-14", "holdings": []}), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                dashboard.confirm_holdings(root)
+            got = json.loads((root / "portfolio_snapshot.json").read_text(encoding="utf-8"))
+            self.assertEqual(got["date"], "2026-10-14")      # 拒绝时原文件不变
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

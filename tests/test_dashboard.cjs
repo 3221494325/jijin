@@ -17,7 +17,7 @@ assert.ok(!elements.cards.innerHTML.includes("NaN"));
 context.sample = {portfolio:{as_of:"2026-09-01",total_value:200.08}, holdings:[{name:"B",value:10,weight:10,ret_pct:3,sector:"<tech>",nav_date:"2026-09-01",today_source:"QDII滞后"},{name:"A",value:90,weight:90,ret_pct:-2,sector:"<tech>"}],guide:{directives:[{level:"观察",title:"watch"},{level:"指令",title:"priority",action:"act",evidence:"e",boundary:"b"}]}};
 vm.runInContext("draw(sample)", context);
 assert.equal(elements.focusTitle.textContent, "指令 · priority");
-assert.ok(elements.dataStatus.textContent.includes("明示滞后 1 笔"));
+assert.ok(elements.dataStatus.innerHTML.includes("明示滞后 1 笔"));
 assert.ok(elements.exposure.innerHTML.includes("&lt;tech&gt;"));
 assert.ok(elements.cards.innerHTML.includes("200.08"));
 assert.ok(elements.holdTable.innerHTML.indexOf("<b>A</b>") < elements.holdTable.innerHTML.indexOf("<b>B</b>"));
@@ -191,7 +191,7 @@ context.v9 = {
   holdings: [], portfolio: {}, news: [],
 };
 vm.runInContext("draw(v9)", context);
-const ds = elements.dataStatus.textContent;
+const ds = elements.dataStatus.innerHTML;
 assert.ok(ds.includes("官方快照："), "数据状态要有一行官方快照");
 assert.ok(ds.includes("净值 剩3天"), ds.split("\n").pop());
 assert.ok(ds.includes("板块 已过期→回退抓取"));
@@ -260,5 +260,51 @@ assert.ok(html.includes('id="setMask"') && html.includes('id="setPreset"'), "模
 assert.ok(html.includes("openSettings()") && html.includes("saveModel()"), "设置需可打开可保存");
 assert.ok(html.includes("testModel()"), "设置需可测试连通");
 assert.ok(html.includes("/api/settings/llm"), "设置要读后端配置");
+
+// ---- v12：持仓确认日期 / 一键确认 / 周度归因 ----
+context.v12 = {
+  portfolio: {as_of: "2026-10-30T20:30:04+08:00", holdings_as_of: "2026-10-14",
+              snapshot_age_days: 18, valuation_age_days: 2, freshness_status: "stale",
+              total_value: 2639.11, total_ret_pct: -17.04},
+  holdings: [{name:"半导体A", code:"019759", value:300, weight:12, ret_pct:-37, sector:"tech", nav_date:"2026-10-30"}],
+  week_compare: {d1:-2.2, d5:-4.4, d20:-12.8, from:"2026-10-23", to:"2026-10-30", points:78,
+    attribution: {
+      items: [
+        {code:"019759", name:"半导体A", chg_pct:-9.5, weight:12, contrib:-1.14},
+        {code:"022364", name:"科技智选", chg_pct:-5.2, weight:16.4, contrib:-0.85},
+        {code:"018734", name:"华夏绿电", chg_pct:-1.0, weight:16.8, contrib:-0.17},
+        {code:"017641", name:"标普500", chg_pct:1.2, weight:27.5, contrib:0.33},
+      ],
+      drag: {code:"019759", name:"半导体A", contrib:-1.14},
+      lift: {code:"017641", name:"标普500", contrib:0.33},
+      sum: -1.83,
+      note: "贡献 = 区间涨跌 × 当前权重（静态近似），合计与组合实际涨跌会有小差",
+    }},
+};
+vm.runInContext("draw(v12)", context);
+const ds12 = elements.dataStatus.innerHTML;
+assert.ok(ds12.includes("持仓确认：2026-10-14"), "持仓确认日期要单独一行");
+assert.ok(ds12.includes("18 天前"), "要显示已确认多少天");
+assert.ok(ds12.includes("期间交易未知"), "过期时要说明权重可能失真");
+assert.ok(ds12.includes("confirmHoldings()"), "过期时给一键确认按钮");
+assert.ok(ds12.includes("估值日期："), "估值日期与持仓确认要分开");
+assert.ok(!ds12.includes("undefined"));
+
+const wa = elements.weekAttr.innerHTML;
+assert.ok(wa.includes("半导体A") && wa.includes("-1.14pp"), "归因要点名拖累最大的");
+assert.ok(wa.includes("标普500") && wa.includes("+0.33pp"), "也要给正贡献的那只");
+assert.ok(wa.indexOf("半导体A") < wa.indexOf("华夏绿电"), "按贡献从小到大排");
+assert.ok(wa.includes("贡献 = 区间涨跌 × 当前权重"), "必须说明贡献口径");
+assert.ok(!wa.includes("undefined"));
+
+// 持仓新鲜时不催确认；无归因时不留空壳
+context.v12b = JSON.parse(JSON.stringify(context.v12));
+context.v12b.portfolio.snapshot_age_days = 2;
+context.v12b.portfolio.holdings_as_of = "2026-10-29";
+context.v12b.portfolio.freshness_status = "current";
+context.v12b.week_compare.attribution = {items: []};
+vm.runInContext("draw(v12b)", context);
+assert.ok(!elements.dataStatus.innerHTML.includes("confirmHoldings()"), "新鲜时不要催确认");
+assert.equal(elements.weekAttr.innerHTML, "", "无归因时不留空壳");
 
 console.log("Dashboard rendering contract checks passed");

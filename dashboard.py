@@ -227,6 +227,13 @@ def collect():
     # ---- 持仓 + 指数 + 今日估算（fundos_core，净值带10分钟缓存）----
     try:
         snap_date, funds = fundos_core.load_snapshot()
+        # 估值日期（净值算到哪天）与持仓申报日期（份额/成本哪天确认）是两件事，
+        # 以前混用一个字段，导致 18 天前的持仓被体检判成"2 天前、通过"。
+        try:
+            import portfolio_data
+            holdings_as_of = portfolio_data.load_portfolio().get("holdings_as_of") or snap_date
+        except Exception:  # noqa: BLE001
+            holdings_as_of = snap_date
         indices = fundos_core.fetch_indices()
         proxies, fx_chg = fundos_core.fetch_qdii_proxies()
         manual = {}
@@ -248,6 +255,7 @@ def collect():
                 daily_checked_at = ""
         payload["portfolio"] = {
             "as_of": snap_date, "total_cost": round(total_cost, 2),
+            "holdings_as_of": holdings_as_of,
             "total_value": round(total_value, 2),
             "total_ret": round(total_value - total_cost, 2),
             "total_ret_pct": round((total_value / total_cost - 1) * 100, 2) if total_cost else 0,
@@ -257,10 +265,18 @@ def collect():
             "daily_checked_at": daily_checked_at,
         }
         try:
-            snapshot_age = (datetime.now(BJ_TZ).date() - datetime.fromisoformat(str(snap_date)[:10]).date()).days
+            # 持仓申报新鲜度：这一项决定"权重/成本还准不准"，必须用快照日期而不是净值日期
+            snapshot_age = (datetime.now(BJ_TZ).date()
+                            - datetime.fromisoformat(str(holdings_as_of)[:10]).date()).days
         except (TypeError, ValueError):
             snapshot_age = None
+        try:
+            valuation_age = (datetime.now(BJ_TZ).date()
+                             - datetime.fromisoformat(str(snap_date)[:10]).date()).days
+        except (TypeError, ValueError):
+            valuation_age = None
         payload["portfolio"]["snapshot_age_days"] = snapshot_age
+        payload["portfolio"]["valuation_age_days"] = valuation_age
         payload["portfolio"]["freshness_status"] = (
             "current" if snapshot_age is not None and snapshot_age <= 7 else "stale"
         )
@@ -434,6 +450,34 @@ def collect():
         series.append(item)
     payload["nav_series"] = {"series": series}
     payload["data_sources"]["nav_history"] = {"status": "ok" if series else "empty", "funds": len(series)}
+
+    # ---- 周度归因：这 5 个交易日，谁在拖、谁在扛 ----
+    # 用归一序列算（data 以各自起点归一，比值里基数抵消），贡献 = 区间涨跌 × 权重。
+    # 权重是当前静态权重，不是期间平均权重，所以合计只会"≈"组合涨跌，页面要标近似。
+    try:
+        wmap = {h["code"]: h for h in (payload.get("holdings") or [])}
+        attr = []
+        for s in series:
+            data = s.get("data") or []
+            if len(data) < 6 or not data[-6]:
+                continue
+            h = wmap.get(s["code"]) or {}
+            w = float(h.get("weight") or 0)
+            chg = (data[-1] / data[-6] - 1) * 100
+            attr.append({"code": s["code"], "name": s["name"],
+                         "chg_pct": round(chg, 2), "weight": round(w, 1),
+                         "contrib": round(chg * w / 100, 2)})
+        if attr:
+            attr.sort(key=lambda x: x["contrib"])
+            payload.setdefault("week_compare", {})["attribution"] = {
+                "items": attr,
+                "drag": attr[0] if attr[0]["contrib"] < 0 else None,
+                "lift": attr[-1] if attr[-1]["contrib"] > 0 else None,
+                "sum": round(sum(a["contrib"] for a in attr), 2),
+                "note": "贡献 = 区间涨跌 × 当前权重（静态近似），合计与组合实际涨跌会有小差",
+            }
+    except Exception as exc:  # noqa: BLE001 — 归因失败不影响主数据
+        payload["error_attribution"] = str(exc)[:160]
 
     # ---- 板块榜（实时抓取，fundos_data 自带5分钟缓存防爬） ----
     try:
@@ -660,6 +704,43 @@ def collect():
 def _directive_key(directive):
     raw = "{}\n{}".format(directive.get("title", ""), directive.get("rule", ""))
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def confirm_holdings(root=None):
+    """「确认持仓未变」：只把确认日期推到今天，不动份额/成本/收益率。
+
+    抽成模块级函数是为了能在测试里对着临时目录跑一遍——
+    这个动作会写用户的权威持仓文件，不能只靠"看起来对"。
+    写前备份到 data/state/backups/（滚动 5 份），写用临时文件 + os.replace。
+    返回 (新日期, 原日期)；任何校验失败抛 ValueError，原文件保持不变。
+    """
+    root = Path(root or ROOT)
+    path = root / "portfolio_snapshot.json"
+    if not path.exists():
+        raise ValueError("portfolio_snapshot.json 不存在")
+    snap = json.loads(path.read_text(encoding="utf-8"))
+    if not (snap.get("holdings") or []):
+        raise ValueError("快照里没有持仓，拒绝改日期")
+    today = datetime.now(BJ_TZ).strftime("%Y-%m-%d")
+    prev = str(snap.get("date") or "未知")
+
+    bdir = root / "data" / "state" / "backups"
+    bdir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(BJ_TZ).strftime("%Y%m%d_%H%M%S")
+    (bdir / f"portfolio_snapshot_{stamp}.json").write_text(
+        json.dumps(snap, ensure_ascii=False, indent=1), encoding="utf-8")
+    for old in sorted(bdir.glob("portfolio_snapshot_*.json"))[:-5]:
+        old.unlink(missing_ok=True)
+
+    snap["date"] = today
+    snap["source"] = snap.get("source") or "user_confirmed"
+    note = str(snap.get("source_note") or "").strip()
+    snap["source_note"] = (note + f"；用户于{today}确认持仓未变（原快照日 {prev}）").lstrip("；")
+    snap["needs_confirmation"] = False
+    tmp = path.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(snap, ensure_ascii=False, indent=1), encoding="utf-8")
+    os.replace(tmp, path)
+    return today, prev
 
 
 def _load_directive_state():
@@ -934,10 +1015,26 @@ class Handler(BaseHTTPRequestHandler):
                                        ensure_ascii=False),
                        "application/json; charset=utf-8")
 
-    def do_POST(self):
+    def _handle_portfolio_confirm(self):
+        """把「确认持仓未变」的写入逻辑交给 confirm_holdings（可单测）。"""
+        try:
+            today, prev = confirm_holdings(ROOT)
+            with _cache_lock:            # 让下次请求立刻重算
+                _cache["ts"] = 0.0
+            self._send(200, json.dumps({"ok": True, "date": today, "previous": prev},
+                                       ensure_ascii=False),
+                       "application/json; charset=utf-8")
+        except Exception as exc:  # noqa: BLE001
+            self._send(400, json.dumps({"ok": False, "error": str(exc)[:200]},
+                                       ensure_ascii=False),
+                       "application/json; charset=utf-8")
+
         path = urlparse(self.path).path
         if path in ("/api/settings/llm", "/api/settings/llm/test"):
             self._handle_llm_settings(path)
+            return
+        if path == "/api/portfolio/confirm":
+            self._handle_portfolio_confirm()
             return
         if path not in ("/api/directive/confirm", "/api/directive/cancel"):
             self._send(404, "not found", "text/plain; charset=utf-8")

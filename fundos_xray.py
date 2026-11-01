@@ -220,15 +220,26 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
                 else "不要在负夏普结构上增加风险预算；先削减高波动低相关性的无效敞口。"),
         weight=1))
 
-    # ---- 10. 数据新鲜度 ----
+    # ---- 10. 持仓申报新鲜度（口径：份额/成本哪一天确认的，不是净值算到哪天） ----
     age = portfolio.get("snapshot_age_days")
+    v_age = portfolio.get("valuation_age_days")
     st = _judge_max(age, th["snapshot_age_max_days"], warn_ratio=0.6) if age is not None else "na"
+    if age is None:
+        eval_text = "没有可用的持仓申报日期，这项不做假结论。"
+    elif st == "pass":
+        eval_text = "份额与成本是近期确认的，权重和收益率可以直接拿来判断。"
+    else:
+        eval_text = (f"份额与成本已 {age} 天未确认；期间若有申赎或换仓，权重、成本、收益率都会失真，"
+                     "而净值（估值）再新也补不回来。")
+        if v_age is not None and v_age <= 3:
+            eval_text += f"注意区分：净值只滞后 {v_age} 天，看起来一切新鲜，问题在持仓口径。"
     rules.append(_rule(
         "data_freshness", "持仓快照新鲜度", "数据", st,
         value=age, value_text=(f"{age} 天前" if age is not None else "—"),
         limit=th["snapshot_age_max_days"], limit_text=f"≤ {th['snapshot_age_max_days']} 天",
-        evaluation="所有收益与权重都基于这份快照；快照过期时，结论只对过去有效。",
-        action=("快照可用。" if st == "pass" else "更新 portfolio_snapshot.json 后再看操作建议。"),
+        evaluation=eval_text,
+        action=("快照可用。" if st == "pass" else
+                "持仓没变就点「确认持仓未变」刷新日期；有变动则先改 portfolio_snapshot.json 再复核。"),
         weight=1))
 
     # ---- 11. 估算口径占比 ----

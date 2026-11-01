@@ -34,6 +34,7 @@
 | 脚本 | 功能 |
 |------|------|
 | fundos_config.py | 统一配置层（持仓/成本基准/阈值 单一事实来源，勿在其他脚本复制持仓表） |
+| portfolio_data.py | 持仓读取入口。**两个日期必须分开**：`as_of` = 估值日期（daily_check 的 checked_at）、`holdings_as_of` = 持仓申报日期（snapshot 的 date）。曾把前者当后者用，导致 18 天未确认的持仓被判"2 天前、通过" |
 | fundos_data.py | 统一数据层（重试/多源回退/净值历史与板块快照沉淀）。优先读 `fundos_bridge` 的官方快照，缺失或过期才走抓取链路 |
 | fundos_bridge.py | 官方连接器快照桥：读 `data/external/{nav,board,index,fund_state}_snapshot.json`（Agent 用盈米/融聚汇/同花顺 MCP 拉取后写入，带 generated_at）。净值/申赎留 4 天、板块/指数留 5 天，过期即退回抓取。指数快照**只补缺不覆盖**；`write_snapshot` 对未知 kind 直接报错（曾因默认值冲掉净值快照） |
 | fundos_analytics.py | 组合风险分析（回撤/夏普/波动率/相关性/分位/XIRR） |

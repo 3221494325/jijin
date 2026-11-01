@@ -552,6 +552,18 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
 .week-cell .k{font-size:10.5px;color:var(--mute)}
 .week-cell .v{font-size:17px;font-weight:700;font-family:var(--num);margin-top:2px}
 .week-foot{margin-top:7px;font-size:10.5px;color:var(--mute)}
+/* 周度归因：这几行回答"到底是谁拖的" */
+.week-attr{margin-top:9px}
+.week-attr .wa-head{font-size:10.5px;color:var(--mute);margin-bottom:5px}
+.week-attr .wa-row{display:grid;grid-template-columns:1fr auto auto auto;gap:9px;align-items:baseline;
+  padding:4px 0;border-top:1px dashed rgba(255,255,255,.06);font-size:11.5px}
+.week-attr .wa-row b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.week-attr .wa-w{color:var(--mute);font-size:10.5px;font-family:var(--num)}
+.week-attr .wa-c{font-family:var(--num);font-weight:700;min-width:52px;text-align:right}
+.week-attr .wa-more{margin-top:5px;font-size:10.5px;color:var(--mute)}
+.btn-inline{margin-top:6px;background:transparent;border:1px solid var(--line);border-radius:6px;
+  color:var(--warn);font-size:11px;padding:4px 10px;cursor:pointer;font-family:inherit}
+.btn-inline:hover{border-color:var(--warn)}
 .xray-delta{margin-top:8px;font-size:11.5px;color:var(--warn)}
 .xray-delta .r{color:var(--mute)}
 </style>
@@ -642,6 +654,7 @@ td.num,th.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-sp
     <div class="week-block">
       <h2 style="font-size:13px;margin-bottom:8px">周度对比<small id="weekMeta">—</small></h2>
       <div class="week-grid" id="weekGrid"></div>
+      <div class="week-attr" id="weekAttr"></div>
       <div class="week-foot" id="weekFoot"></div>
     </div>
     <div class="card-foot">水下曲线 = 相对历史峰值的回撤深度；回撤 20% 需上涨 25% 才回本，这是仓位比选基更重要的原因。</div>
@@ -825,18 +838,28 @@ function draw(d){
                 : x.status==='missing' ? '未接入' : '时间戳异常';
     return (x.label||x.kind)+' '+state;
   }).join(' · ') : '未接入';
-  document.getElementById('dataStatus').textContent = [
-    '服务质量：'+(d.data_quality==='fresh'?'实时快照':d.data_quality==='partial'?'部分数据':d.data_quality==='stale'?'缓存快照':'不可用')+' ｜ 缓存年龄：'+(d.cache_age_seconds==null?'未知':d.cache_age_seconds+'秒'),
-    '快照来源：'+(d.snapshot_meta?.source==='local_computer'?'电脑同步':'云端生成')+' ｜ 生成于：'+shortTs(d.snapshot_meta?.generated_at||d.updated_at||'未知'),
-    '持仓基准：'+shortTs(p.as_of||'未知'),
-    '持仓新鲜度：'+(p.snapshot_age_days==null?'未知':p.snapshot_age_days+'天')+' ｜ '+(p.freshness_status==='stale'?'需重新确认':'已确认'),
-    '盘后核验：'+shortTs(p.daily_checked_at||'未提供'),
-    '净值日期：'+(dates.length ? dates[0]+' ～ '+dates[dates.length-1] : '未知'),
-    '估算 '+holdings.filter(h=>h.freshness==='估算').length+' 笔 · 明示滞后 '+delayed+' 笔',
-    '新闻截至：'+(d.news_time||'未知')+' ｜ 板块日期：'+(d.boards?.date||'未知'),
-    '官方快照：'+bhText,
-    '各来源日期不一致；已公布不等于今日，估算不等于结算收益。'
-  ].join('\n');
+  document.getElementById('dataStatus').innerHTML = (function(){
+    const holdDate = p.holdings_as_of ? String(p.holdings_as_of).slice(0,10) : '未知';
+    const age = p.snapshot_age_days;
+    const stale = p.freshness_status === 'stale';
+    const lines = [
+      '服务质量：'+(d.data_quality==='fresh'?'实时快照':d.data_quality==='partial'?'部分数据':d.data_quality==='stale'?'缓存快照':'不可用')+' ｜ 缓存年龄：'+(d.cache_age_seconds==null?'未知':d.cache_age_seconds+'秒'),
+      '快照来源：'+(d.snapshot_meta?.source==='local_computer'?'电脑同步':'云端生成')+' ｜ 生成于：'+shortTs(d.snapshot_meta?.generated_at||d.updated_at||'未知'),
+      '估值日期：'+shortTs(p.as_of||'未知'),
+      '持仓确认：'+holdDate+(age==null?'':'（'+age+' 天前）')+(stale?' · 期间交易未知，权重与成本可能失真':''),
+      '盘后核验：'+shortTs(p.daily_checked_at||'未提供'),
+      '净值日期：'+(dates.length ? dates[0]+' ～ '+dates[dates.length-1] : '未知'),
+      '估算 '+holdings.filter(h=>h.freshness==='估算').length+' 笔 · 明示滞后 '+delayed+' 笔',
+      '新闻截至：'+(d.news_time||'未知')+' ｜ 板块日期：'+(d.boards?.date||'未知'),
+      '官方快照：'+bhText,
+      '各来源日期不一致；已公布不等于今日，估算不等于结算收益。'
+    ];
+    let html = lines.map(escapeHTML).join('\n');
+    if(age != null && age > 7){
+      html += '\n<button class="btn-inline" onclick="confirmHoldings()">确认持仓未变（只改确认日期）</button>';
+    }
+    return html;
+  })();
   const sectors = {};
   holdings.forEach(h=>{
     const key=h.sector_label||h.sector||'未分类';
@@ -1196,6 +1219,29 @@ function renderWeek(d){
   if(foot) foot.textContent = (xd && xd.score_prev != null && xd.score_cur != null)
     ? ('同期体检分 ' + xd.score_prev + ' → ' + xd.score_cur + '（对比 ' + xd.date_prev + '）')
     : '';
+
+  // 归因：谁在这 5 天里拖后腿、谁在扛（贡献 = 区间涨跌 × 当前权重）
+  const attrEl = document.getElementById('weekAttr');
+  if(attrEl){
+    const at = w.attribution || {};
+    const items = at.items || [];
+    if(!items.length){
+      attrEl.innerHTML = '';
+    } else {
+      const downs = items.filter(i=>i.contrib < 0).slice(0, 3);
+      const up = items.filter(i=>i.contrib > 0).slice(-1);
+      const show = downs.concat(up);
+      const row = i => '<div class="wa-row"><b>' + escapeHTML(String(i.name||'')) + '</b>' +
+        '<span class="' + cls(i.chg_pct) + '">' + pct(i.chg_pct) + '</span>' +
+        '<span class="wa-w">仓位 ' + i.weight + '%</span>' +
+        '<span class="wa-c ' + cls(i.contrib) + '">' + (i.contrib > 0 ? '+' : '') + i.contrib + 'pp</span></div>';
+      attrEl.innerHTML =
+        '<div class="wa-head">这 5 个交易日谁在拖后腿 · 贡献 = 区间涨跌 × 当前权重</div>' +
+        show.map(row).join('') +
+        '<div class="wa-more">合计 ' + (at.sum > 0 ? '+' : '') + at.sum + 'pp（' +
+        escapeHTML(String(at.note||'')) + '）</div>';
+    }
+  }
 }
 
 function renderXrayDelta(d){
@@ -1239,7 +1285,20 @@ async function openSettings(){
   } catch(e) { _setNote('读取失败：' + e.message, 'bad'); }
 }
 function closeSettings(){ document.getElementById('setMask').classList.remove('show'); }
-function applyPreset(){
+
+// 确认持仓未变：只把确认日期推到今天，不动份额与成本（后端会先备份快照）
+async function confirmHoldings(){
+  const ok = window.confirm
+    ? window.confirm('确认当前持仓与上次快照一致？\n只会把确认日期改成今天，不改任何份额、成本、收益率。')
+    : true;
+  if(!ok) return;
+  try{
+    const r = await fetch('/api/portfolio/confirm', {method:'POST'});
+    const d = await r.json();
+    if(!r.ok || !d.ok) throw new Error(d.error || '保存失败');
+    await load();
+  }catch(e){ alert('确认失败：' + e.message); }
+}function applyPreset(){
   const p = SET_PRESETS.find(x => x.id === _val('setPreset'));
   if(p && p.base_url){ document.getElementById('setBase').value = p.base_url; document.getElementById('setModel').value = p.model; }
 }
