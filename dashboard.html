@@ -303,7 +303,8 @@ h1 .sub{color:var(--cyan);font-size:11px;letter-spacing:3px}
 .edb{margin-top:14px;padding-top:12px;border-top:1px dashed #24384f}
 .edb h3{font-size:12px;font-weight:700;color:#b9c9dd;letter-spacing:.5px;margin-bottom:9px}
 .edb h3 .small{font-weight:400;color:var(--mute)}
-.edb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.edb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:1100px){.edb-grid{grid-template-columns:1fr}}
 .edb-item{display:flex;align-items:baseline;gap:8px;padding:7px 10px;border-radius:8px;min-width:0;
   background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:11.5px;color:#cfe0f5}
 .edb-item b{flex:1 1 auto;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

@@ -15,6 +15,7 @@ Agent 拉到数据后写这两个文件（带 generated_at），fundos_data 优�
 from __future__ import annotations
 
 import json
+import math
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -132,13 +133,15 @@ def health():
         if ts.tzinfo is None:
             ts = ts.replace(tzinfo=BJ_TZ)
         left = max_age - (now - ts)
+        # 向上取整：刚写入时显示"剩4天"而不是"剩3天"（3.99 天说成 3 天会让人误判紧迫度）
+        days_left = 0 if left.total_seconds() <= 0 else math.ceil(left.total_seconds() / 86400)
         out.append({
             "kind": kind, "label": label,
             "status": "ok" if left.total_seconds() > 0 else "expired",
             "source": data.get("source"),
             "as_of": data.get("as_of") or (data.get("funds") and None) or None,
             "generated_at": ts.isoformat(timespec="seconds"),
-            "days_left": max(0, int(left.total_seconds() // 86400)),
+            "days_left": days_left,
         })
     return out
 
