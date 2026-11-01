@@ -85,6 +85,41 @@ vm.runInContext("draw({xray:v4.xray, xray_history:hist2})", context);
 assert.ok(elements.xrayTrend.innerHTML.includes("<svg"), "满两天应渲染趋势折线");
 assert.ok(elements.xrayTrend.innerHTML.includes("35 → 41"));
 
+// ---- v6：止损温度计、风险预算、净值口径切换 ----
+context.v6 = {
+  build: "cockpit-xray-v4",
+  thresholds: {eval_line: -15, hard_stop: -25},
+  holdings: [
+    {name:"半导体A", code:"019759", value:129, weight:4.9, ret_pct:-37.7, breakeven_pct:60.5, sector:"tech"},
+    {name:"全球成长", code:"012922", value:122, weight:4.6, ret_pct:-29.8, breakeven_pct:42.5, sector:"qdii"},
+    {name:"标普500", code:"017641", value:726, weight:27.5, ret_pct:0.9, breakeven_pct:-0.9, sector:"qdii"},
+  ],
+  risk_contrib: [
+    {code:"019759", name:"半导体A", sector:"tech", weight:4.9, risk_share_pct:7.0, risk_gap_pp:2.1},
+    {code:"017641", name:"标普500", sector:"qdii", weight:27.5, risk_share_pct:20.8, risk_gap_pp:-6.7},
+    {code:"022364", name:"科技智选", sector:"tech", weight:16.4, risk_share_pct:27.2, risk_gap_pp:10.8},
+  ],
+  nav_series: {series:[{name:"半导体A", code:"019759", dates:["2026-10-29","2026-10-30"],
+                        data:[1, 0.98], cost_nav: 2.42, data_cost:[1.02, 0.99]}]},
+  xray: context.v4.xray, perf: context.v4.perf,
+};
+vm.runInContext("draw(v6)", context);
+// 温度计：只统计已破 / 区间内数量，且标记点位置按 -40% 刻度换算
+assert.ok(elements.thermoMeta.textContent.includes("已破 -25%：2 只"), elements.thermoMeta.textContent);
+assert.ok(elements.thermoList.innerHTML.includes("th-mark"));
+assert.ok(elements.thermoList.innerHTML.includes('left:94.3%'), "−37.7% 应在 −40 刻度上落在 94.3%");
+assert.ok(!elements.thermoList.innerHTML.includes("undefined"));
+// 风险预算：科技簇权重→风险份额对照
+assert.ok(elements.rbMeta.textContent.includes("科技簇"));
+assert.ok(elements.riskBudget.innerHTML.includes("rb-tick"));
+assert.ok(elements.riskBudget.innerHTML.includes("27.2%"));
+// 净值口径切换：切到"相对成本"时说明文字必须跟着变
+vm.runInContext("setNavMode('cost')", context);
+assert.ok(elements.navMeta.textContent.includes("成本净值"));
+assert.ok(elements.navLegend.innerHTML.includes("成本线"));
+vm.runInContext("setNavMode('norm')", context);
+assert.ok(elements.navMeta.textContent.includes("起点=1"));
+
 // 空数据不得抛错，也不得渲染出 undefined
 vm.runInContext("draw({xray:{},perf:{},contribution:[]})", context);
 assert.ok(elements.xraySummary.textContent.includes("暂无体检数据"));

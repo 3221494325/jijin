@@ -4,6 +4,24 @@
 
 ---
 
+## 2026-11-01 · 手机端下线 + 电脑端深化（v6）
+
+**下线（用户决定：常年不在家，为一块看板养服务器不值）**
+- 删除 `mobile_site/`、`.github/workflows/mobile-snapshot.yml`、`export_mobile_snapshot.py`、`sync_mobile_snapshot.py`、`MOBILE_DEPLOYMENT.md`、`tools/make_pwa_icons.py`。
+- `dashboard.html` 去掉 PWA 三件套引用、Service Worker 注册与"静态快照"分支；`dashboard.py` 去掉 `--lan`，固定只绑 `127.0.0.1` —— 这是私人看板，不该有第二个入口。
+- 响应式样式与粘性摘要条**保留**：它们服务的是窄窗口，不是手机发布链路。
+- ⚠️ 线上 `https://3221494325.github.io/jijin/` 仍可访问（GitHub 上的旧部署不会因为删代码自动消失），要下线需在仓库 Settings → Pages 关闭，或推送一次空部署。
+
+**电脑端新增（都服务于当前最大的问题：深亏 + 科技超配）**
+- **净值走势双口径**：`归一`（起点=1，比走势）与`相对成本`（各自成本净值=1.00，低于 1 即浮亏，带成本虚线）。后端在 `nav_series` 里附 `cost_nav` / `data_cost`。
+- **距止损线温度计**：0 → −40% 刻度，安全/评估/止损三段底色，白标=当前收益率位置，附"已破 −25%：5 只"计数；阈值从 `payload.thresholds` 取（与 advisor/xray 同源，前端不再写死）。
+- **风险预算：权重 vs 风险份额**：把 `risk_contribution` 归一化到 100%，用白竖线标出权重位置。当前结论——科技簇 **35.6% 权重吃掉 56.6% 风险预算**，华夏绿电 16.8% 权重只占很小风险份额（低相关的真实价值）。
+
+**验证**
+- `tests/test_fundos.py` 56 项通过；`tests/test_dashboard.cjs` 新增 9 组断言（温度计 −37.7%→94.3% 刻度换算、风险预算渲染、净值口径切换文案）；`tests/test_snapshot_schema.py` 改为校验 payload 不含明文密钥。
+
+---
+
 ## 2026-11-01 · 手机端可用性 + PWA + 迭代（v5）
 
 **手机端（这次的主线，目标：手机上真的能用）**

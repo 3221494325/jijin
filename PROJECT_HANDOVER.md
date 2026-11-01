@@ -129,7 +129,7 @@
 ```
 python auto_pipeline.py status     # 全家桶状态：任务注册/看板在线/执行记录
 python auto_pipeline.py catchup    # 补跑当天遗漏
-python dashboard.py                # 启动看板（自动开浏览器）；--lan 手机访问
+python dashboard.py                # 启动看板（自动开浏览器，仅监听 127.0.0.1）
 python fund_engine.py run          # 手动全链路；--offline 离线重建批示
 python daily_check.py              # 盘后触发线复核
 python fundos_core.py              # 持仓诊断

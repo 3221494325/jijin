@@ -44,7 +44,7 @@ if __import__("sys").stdout is None:
     __import__("sys").stderr = __import__("sys").stdout
 
 from fundos_config import (  # noqa: E402
-    DAILY_RESULT, NEWS_JSON, DATA_DIR, FUND_META, SECTOR_LABEL,
+    DAILY_RESULT, NEWS_JSON, DATA_DIR, FUND_META, SECTOR_LABEL, THRESHOLDS,
 )
 import fundos_analytics  # noqa: E402
 import fundos_data  # noqa: E402
@@ -270,6 +270,11 @@ def collect():
              for h in payload["holdings"]],
             key=lambda x: x["pl"])
         payload["contribution_total"] = round(total_pl, 2)
+        # 止损距离用的阈值（与 advisor/xray 同源，前端不再自己写死）
+        payload["thresholds"] = {
+            "eval_line": round(THRESHOLDS["eval_line"] * 100, 1),
+            "hard_stop": round(THRESHOLDS["hard_stop"] * 100, 1),
+        }
         payload["indices"] = [{"name": v["name"], "price": v["price"],
                                "chg_pct": round(v["chg_pct"], 2)}
                               for v in indices.values()]
@@ -297,6 +302,18 @@ def collect():
         payload["corr_bottom"] = corr.get("bottom_pairs", [])
         payload["tech_cluster_avg"] = corr.get("tech_cluster_avg")
         payload["xirr"] = (ana.get("xirr") or {}).get("portfolio")
+        # 风险预算：原始贡献是"权重×与组合相关性"，加总不等于 100，
+        # 所以再给一份归一化份额，才能和权重直接比"谁占的风险预算更多"
+        rc = [dict(x) for x in (ana.get("risk_contribution") or [])]
+        rc_total = sum(max(float(x.get("risk_contrib_pct") or 0), 0.0) for x in rc) or 0.0
+        for x in rc:
+            x["risk_share_pct"] = (round(max(float(x.get("risk_contrib_pct") or 0), 0.0)
+                                         / rc_total * 100, 1) if rc_total else None)
+            x["risk_gap_pp"] = (round(x["risk_share_pct"] - float(x.get("weight") or 0), 1)
+                                if x["risk_share_pct"] is not None else None)
+            x["sector"] = FUND_META.get(x.get("code"), {}).get("sector", "other")
+            x["sector_label"] = SECTOR_LABEL.get(x["sector"], x["sector"])
+        payload["risk_contrib"] = rc
         # 绩效面板：组合净值曲线 / 水下曲线 / 月度收益 / 相关性矩阵
         payload["perf"] = {
             "curve": ana.get("curve") or {},
@@ -325,10 +342,16 @@ def collect():
         d = [r["date"] for r in hist]
         navs = [r["nav"] for r in hist]
         base = navs[0]
+        cost_nav = meta.get("cost_nav")
         if dates is None or d[-1] > (dates[-1] if dates else ""):
             dates = d
-        series.append({"name": meta["name"], "dates": d,
-                       "data": [round(v / base, 4) for v in navs]})
+        item = {"name": meta["name"], "code": code, "dates": d,
+                "data": [round(v / base, 4) for v in navs]}
+        # 相对成本口径：1.0 = 自己的成本净值，>1 盈利、<1 亏损（一眼看谁在水下）
+        if cost_nav:
+            item["cost_nav"] = cost_nav
+            item["data_cost"] = [round(v / cost_nav, 4) for v in navs]
+        series.append(item)
     payload["nav_series"] = {"series": series}
     payload["data_sources"]["nav_history"] = {"status": "ok" if series else "empty", "funds": len(series)}
 
@@ -772,27 +795,6 @@ class Handler(BaseHTTPRequestHandler):
                        "application/json; charset=utf-8")
 
 
-def _lan_ips():
-    """本机局域网 IPv4 列表（供手机同一 WiFi 访问）。"""
-    import socket
-    ips = set()
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))          # 不发数据，仅取本机出口网卡地址
-        ips.add(s.getsockname()[0])
-        s.close()
-    except OSError:
-        pass
-    try:
-        for info in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET):
-            ip = info[4][0]
-            if not ip.startswith("127."):
-                ips.add(ip)
-    except OSError:
-        pass
-    return sorted(ips)
-
-
 def main():
     # 无控制台模式守卫（pythonw 自启动时 stdout/stderr 为 None，print 会崩）
     if sys.stdout is None:
@@ -803,10 +805,9 @@ def main():
     parser = argparse.ArgumentParser(description="FundOS 可视化面板")
     parser.add_argument("--port", type=int, default=PORT_DEFAULT)
     parser.add_argument("--no-browser", action="store_true")
-    parser.add_argument("--lan", action="store_true",
-                        help="允许手机同一WiFi访问（绑定0.0.0.0，打印局域网地址）")
     args = parser.parse_args()
-    host = "0.0.0.0" if args.lan else "127.0.0.1"
+    # 只绑本机回环：这是纯私人看板，不对外提供访问（手机端方案已下线）
+    host = "127.0.0.1"
     url = f"http://127.0.0.1:{args.port}"
     try:
         server = ThreadingHTTPServer((host, args.port), Handler)
@@ -823,12 +824,7 @@ def main():
             _cache["refreshing"] = True
         threading.Thread(target=_refresh_payload, daemon=True,
                          name="fundos-prewarm").start()
-    if args.lan:
-        print("📱 手机访问（需同一 WiFi，微信里打开亦可）:")
-        for ip in _lan_ips():
-            print(f"    http://{ip}:{args.port}")
-        print("    ⚠️ 局域网内任何人可查看，请勿在公共网络使用")
-    log = f"[{datetime.now(BJ_TZ):%Y-%m-%d %H:%M:%S %z}] [INFO] 面板启动 {url} (lan={args.lan})"
+    log = f"[{datetime.now(BJ_TZ):%Y-%m-%d %H:%M:%S %z}] [INFO] 面板启动 {url}"
     try:
         (DATA_DIR / "logs").mkdir(parents=True, exist_ok=True)
         with (DATA_DIR / "logs" / f"auto_{datetime.now(BJ_TZ):%Y-%m-%d}.log").open("a", encoding="utf-8") as fh:
