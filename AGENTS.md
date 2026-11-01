@@ -37,6 +37,7 @@
 | fundos_data.py | 统一数据层（重试/多源回退/净值历史与板块快照沉淀） |
 | fundos_analytics.py | 组合风险分析（回撤/夏普/波动率/相关性/分位/XIRR） |
 | fundos_advisor.py | 操作指南引擎（规则化批示：分级指令/单基金建议/禁止清单，纯函数可单测） |
+| fundos_xray.py | 组合体检引擎（13 条静态规则：集中度/分散度/风险/数据健康，输出通过-不通过+阈值+动作，纯函数可单测） |
 | fundos_llm.py | 大模型接入层（OpenAI兼容，默认智谱GLM；FUNDOS_LLM_API_KEY 启用，未配置自动降级纯规则模式） |
 | backtest.py | 策略回测（触发线规则 vs 死扛；--aip 定投对照） |
 | fund_engine.py | 总编排引擎（run 支持并行与 --offline） |
@@ -50,7 +51,7 @@
 | fundos_console_v2.py | 交互控制台（[1]行情 [2]诊断 [5]新闻 [7]扫描 [8]记录 [9]技能库） |
 | notify.py | 通知（Windows弹窗 + 可选Server酱微信，FUNDOS_SCT_KEY 环境变量启用） |
 | auto_pipeline.py | 自动化流水线（morning晨报/afternoon触发警报/evening晚报；install/uninstall 注册计划任务；catchup 补跑当天遗漏——电脑不常开也能自动追平） |
-| dashboard.py | 可视化面板（python dashboard.py → http://127.0.0.1:8899，红涨绿跌，60秒自刷新；--lan 允许手机同一WiFi访问，图标库已本地化） |
+| dashboard.py | 可视化面板（python dashboard.py → http://127.0.0.1:8899，红涨绿跌，60秒自刷新；--lan 允许手机同一WiFi访问，图标库已本地化）。页面模板每次请求读盘 + 注入构建号；非交易日按 market_clock() 标注口径 |
 | tests/test_fundos.py | 单元测试（python tests/test_fundos.py） |
 
 **维护红线**: 新增持仓/改成本 → 只改 `fundos_config.FUND_META`（并按其注释重推 cost_nav）；

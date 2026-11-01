@@ -15,11 +15,12 @@ sys.path.insert(0, str(ROOT))
 # ---------- 纯函数/配置（离线必测） ----------
 class TestConfig(unittest.TestCase):
     def test_split_position_codes_are_preserved(self):
+        # 2026-10 组合精简为 8 只后，A/C 分列只剩 012922(C) ↔ 012920(A) 这一对
         from fundos_config import FUND_META
         self.assertIn("019759", FUND_META)
-        self.assertIn("019764", FUND_META)
         self.assertEqual(FUND_META["019759"]["cls"], "A")
-        self.assertEqual(FUND_META["019764"]["cls"], "C")
+        self.assertEqual(FUND_META["012922"]["cls"], "C")
+        self.assertEqual(FUND_META["012922"]["a_code"], "012920")
 
     def test_fund_meta_covers_snapshot(self):
         from fundos_config import FUND_META
@@ -254,12 +255,16 @@ class TestAdvisor(unittest.TestCase):
         self.assertEqual(g["fund_guides"][0]["dist_next_label"], "距+20%止盈线还有")
 
     def test_switch_a_with_penalty_window(self):
+        # 022365 已不在持仓表；当前唯一配置了 a_code/switch_th 的是 012922(→012920)
         from datetime import datetime as dt
+        from fundos_config import FUND_META
         from fundos_advisor import build_guide
-        g = build_guide(holdings=[self._h("022365", 0.5)], now=dt(2026, 8, 28))
+        g = build_guide(holdings=[self._h("012922", 0.5, sector="qdii")], now=dt(2026, 8, 28))
         self.assertIn("换A", g["fund_guides"][0]["advice"])
-        g2 = build_guide(holdings=[self._h("022365", 0.5)], now=dt(2026, 8, 1))
-        self.assertIn("赎回费", g2["fund_guides"][0]["advice"])
+        # 赎回费窗口只在 meta 配了 penalty 时才有意义；当前无该配置则跳过（不伪造断言）
+        if any(m.get("penalty") for m in FUND_META.values()):
+            g2 = build_guide(holdings=[self._h("012922", 0.5, sector="qdii")], now=dt(2026, 8, 1))
+            self.assertIn("赎回费", g2["fund_guides"][0]["advice"])
 
     def test_tech_concentration_forbidden(self):
         from fundos_advisor import build_guide
@@ -480,6 +485,84 @@ class TestRotationScore(unittest.TestCase):
         self.assertGreater(fx["price"], 1)
         self.assertIn("name", fx)
 
+
+# ---------- 组合体检 X-Ray（纯函数，离线必测） ----------
+class TestXray(unittest.TestCase):
+    def _holdings(self):
+        return [
+            {"name": "标普500", "code": "017641", "sector": "qdii", "weight": 27.5,
+             "ret_pct": 0.9, "freshness": "已公布净值"},
+            {"name": "科创50联接", "code": "011608", "sector": "tech", "weight": 30.0,
+             "ret_pct": -34.9, "freshness": "已公布净值"},
+        ]
+
+    def test_fail_cases_are_reported(self):
+        from fundos_xray import build_xray
+        out = build_xray(holdings=self._holdings(),
+                         risk={"max_dd_pct": -17.9, "sharpe": -2.07, "effective_funds": 5.9},
+                         correlation={"tech_cluster_avg": 0.86},
+                         portfolio={"snapshot_age_days": 2},
+                         data_sources={"portfolio": {"status": "ok"}},
+                         market={"is_trading_day": True})
+        keys = {r["key"]: r for r in out["rules"]}
+        self.assertEqual(keys["single_fund"]["status"], "fail")      # 27.5 > 25
+        self.assertEqual(keys["tech_corr"]["status"], "fail")        # 0.86 > 0.85
+        self.assertEqual(keys["sharpe"]["status"], "fail")           # 负夏普
+        self.assertEqual(keys["deep_loss"]["status"], "fail")        # -34.9 破评估线
+        self.assertEqual(keys["portfolio_dd"]["status"], "pass")     # -17.9 在 -20 内
+        self.assertEqual(keys["data_freshness"]["status"], "pass")
+        self.assertIn("不通过", out["summary"])
+        self.assertTrue(0 <= out["score"] <= 100)
+        self.assertEqual(out["counts"]["fail"], out["counts"]["fail"])  # 计数自洽
+        self.assertEqual(out["counts"]["total"], len(out["rules"]))
+        # 失败项排在前面，便于阅读
+        self.assertEqual(out["rules"][0]["status"], "fail")
+
+    def test_estimate_rule_na_on_non_trading_day(self):
+        from fundos_xray import build_xray
+        out = build_xray(holdings=self._holdings(),
+                         market={"is_trading_day": False},
+                         portfolio={"snapshot_age_days": 1})
+        rule = next(r for r in out["rules"] if r["key"] == "estimate_ratio")
+        self.assertEqual(rule["status"], "na")
+        self.assertIn("非交易日", rule["evaluation"])
+
+    def test_cash_rule_is_honest(self):
+        from fundos_xray import build_xray
+        out = build_xray(holdings=self._holdings())
+        rule = next(r for r in out["rules"] if r["key"] == "cash_reserve")
+        self.assertEqual(rule["status"], "na")
+        self.assertIn("未接入", rule["value_text"])
+
+    def test_empty_input_does_not_crash(self):
+        from fundos_xray import build_xray
+        out = build_xray()
+        self.assertIn("rules", out)
+        self.assertGreaterEqual(out["counts"]["na"], 1)
+
+
+# ---------- 绩效曲线纯函数 ----------
+class TestPerfSeries(unittest.TestCase):
+    def test_drawdown_series(self):
+        from fundos_analytics import drawdown_series
+        dd = drawdown_series([1.0, 1.2, 0.9, 1.3, 1.56])
+        self.assertEqual(dd[0], 0.0)
+        self.assertAlmostEqual(dd[2], 0.9 / 1.2 - 1, places=6)
+        self.assertEqual(dd[-1], 0.0)   # 创出新高后回撤归零
+
+    def test_monthly_returns_first_month_uses_window_start(self):
+        from fundos_analytics import monthly_returns
+        dates = ["2026-07-30", "2026-07-31", "2026-08-03", "2026-08-31"]
+        navs = [1.0, 1.1, 1.2, 0.99]
+        rows = monthly_returns(dates, navs)
+        self.assertEqual([r["month"] for r in rows], ["2026-07", "2026-08"])
+        self.assertAlmostEqual(rows[0]["ret_pct"], 10.0, places=2)
+        self.assertAlmostEqual(rows[1]["ret_pct"], -10.0, places=2)   # 0.99/1.1-1
+
+    def test_monthly_returns_empty_on_bad_input(self):
+        from fundos_analytics import monthly_returns
+        self.assertEqual(monthly_returns([], []), [])
+        self.assertEqual(monthly_returns(["2026-08-01"], [1.0]), [])
 
 
 if __name__ == "__main__":

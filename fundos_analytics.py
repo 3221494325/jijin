@@ -65,6 +65,41 @@ def corr(xs, ys):
     return cov / math.sqrt(vx * vy) if vx > 0 and vy > 0 else 0.0
 
 
+def drawdown_series(navs):
+    """水下曲线：每个点相对历史峰值的回撤（小数，≤0）。"""
+    if not navs:
+        return []
+    peak, out = navs[0], []
+    for v in navs:
+        peak = max(peak, v)
+        out.append(v / peak - 1 if peak else 0.0)
+    return out
+
+
+def monthly_returns(dates, navs):
+    """按自然月聚合区间收益（借鉴 Portfolio Performance 的月度收益面板）。
+
+    首月以区间起点为基准，避免把窗口之前的历史算进来。
+    返回 [{"month": "2026-07", "ret_pct": -3.2}] 升序。
+    """
+    if not dates or len(dates) != len(navs) or len(navs) < 2:
+        return []
+    rows, order = {}, []
+    for d, v in zip(dates, navs):
+        key = str(d)[:7]
+        if key not in rows:
+            rows[key] = {"first": v, "last": v}
+            order.append(key)
+        else:
+            rows[key]["last"] = v
+    out, base = [], navs[0]
+    for key in order:
+        last = rows[key]["last"]
+        out.append({"month": key, "ret_pct": round((last / base - 1) * 100, 2)})
+        base = last
+    return out
+
+
 def fund_metrics(dates, navs):
     rets = daily_returns(navs)
     n = len(navs)
@@ -247,6 +282,17 @@ def analyze(days=120):
         "effective_funds": round(1 / hhi, 1) if hhi > 0 else 0,
     }
 
+    # 组合净值曲线 + 水下曲线 + 月度收益（看板绩效面板用；不影响已有字段）
+    curve_dates = common_dates[1:]
+    dd = drawdown_series(port_curve)
+    result["curve"] = {
+        "dates": curve_dates,
+        "nav": [round(v, 4) for v in port_curve],
+        "drawdown_pct": [round(x * 100, 2) for x in dd],
+        "weight_mode": "当前权重静态近似（非逐日再平衡真实净值）",
+    }
+    result["monthly"] = monthly_returns(curve_dates, port_curve)
+
     # 相关性矩阵 + 风险贡献
     rets_by_code = {c: daily_returns(v) for c, v in aligned.items()}
     contribs = []
@@ -275,6 +321,12 @@ def analyze(days=120):
         "top_pairs": pairs[:3],
         "bottom_pairs": pairs[-3:],
         "tech_cluster_avg": round(sum(tech_pairs) / len(tech_pairs), 2) if tech_pairs else None,
+        "matrix": {
+            "codes": codes,
+            "labels": [meta[c]["name"] for c in codes],
+            "values": [[round(corr(rets_by_code[a], rets_by_code[b]), 2) for b in codes]
+                       for a in codes],
+        },
     }
 
     # XIRR（真实资金加权收益）

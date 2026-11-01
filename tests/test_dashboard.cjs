@@ -25,4 +25,50 @@ elements.holdSort.value = "ret_pct";
 vm.runInContext("draw(sample)", context);
 assert.ok(elements.holdTable.innerHTML.indexOf("<b>A</b>") < elements.holdTable.innerHTML.indexOf("<b>B</b>"));
 vm.runInContext("draw({llm_status:{configured:true}})", context);
+
+// ---- v4：体检 / 绩效 / 相关性 / 盈亏贡献 的渲染契约 ----
+context.v4 = {
+  build: "cockpit-xray-v4",
+  market: {session:"weekend", label:"休市 · 周末", is_trading_day:false, in_session:false,
+           data_day:"2026-10-30", data_day_label:"最近交易日 2026-10-30"},
+  actions: ["🔴 示例标的 当日无条件出清"],
+  actions_meta: {state:"stale", label:"2026-10-29 盘后核验", date:"2026-10-29"},
+  portfolio: {total_value: 1000, est_ret_pct: -1, total_ret_pct: -5},
+  holdings: [{name:"A", code:"1", value:600, weight:60, ret_pct:-30, sector:"tech", nav_date:"2026-10-30"}],
+  xray: {score: 41, grade: "需处置", summary: "示例结论",
+         counts: {total:2, evaluated:2, pass:1, warn:0, fail:1, na:0},
+         rules: [{name:"QDII 海外敞口", status:"fail", status_label:"不通过", value_text:"47.6%",
+                  limit_text:"≤ 40%", evaluation:"说明", action:"动作", weight:2},
+                 {name:"有效基金数", status:"pass", status_label:"通过", value_text:"5.9 只",
+                  limit_text:"≥ 4 只", evaluation:"说明", action:"动作", weight:1}]},
+  perf: {window_days: 120,
+         curve: {dates:["2026-10-29","2026-10-30"], nav:[0.99,0.97], drawdown_pct:[-1,-3]},
+         monthly: [{month:"2026-09", ret_pct:-2.27},{month:"2026-10", ret_pct:-10.85}],
+         corr_matrix: {labels:["A","B"], values:[[1,0.9],[0.9,1]]}},
+  contribution: [{name:"A", code:"1", pl:-100},{name:"B", code:"2", pl:20}],
+  contribution_total: -80,
+};
+vm.runInContext("draw(v4)", context);
+assert.equal(elements.marketLabel.textContent, "休市 · 周末");
+assert.ok(elements.marketDay.textContent.includes("最近交易日"));
+assert.equal(elements.xrayScore.textContent, 41);
+assert.equal(elements.xrayGrade.textContent, "需处置");
+assert.ok(elements.xrayGrid.innerHTML.includes("QDII 海外敞口"));
+assert.ok(elements.xrayGrid.innerHTML.includes("不通过"));
+assert.ok(elements.xrayCounts.innerHTML.includes("不通过 1"));
+assert.ok(elements.buildTag.textContent === "build cockpit-xray-v4");
+assert.ok(elements.alertBox.innerHTML.includes("上一交易日"), "陈旧号外必须带日期提示");
+assert.ok(elements.perfKpi.innerHTML.includes("最大回撤"));
+assert.ok(elements.perfKpi.innerHTML.includes("-3.00%"), "当前回撤应取曲线末值");
+assert.ok(elements.perfMeta.textContent.includes("2个交易日"));
+assert.ok(elements.monthHeat.innerHTML.includes("2026-10"));
+assert.ok(elements.corrNote.innerHTML.includes("0.90") || elements.corrNote.innerHTML.includes("≥0.85"));
+assert.ok(elements.contribNote.innerHTML.includes("-80.00"));
+assert.ok(!elements.xrayGrid.innerHTML.includes("undefined"));
+assert.ok(!elements.perfKpi.innerHTML.includes("NaN"));
+
+// 空数据不得抛错，也不得渲染出 undefined
+vm.runInContext("draw({xray:{},perf:{},contribution:[]})", context);
+assert.ok(elements.xraySummary.textContent.includes("暂无体检数据"));
+assert.ok(elements.perfKpi.innerHTML.includes("—"));
 console.log("Dashboard rendering contract checks passed");
