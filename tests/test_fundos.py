@@ -704,6 +704,31 @@ class TestExternalBridge(unittest.TestCase):
             self.assertEqual(out["gb_hsi"]["source"], "ifind")
             self.assertNotIn("gb_$n225", out)   # 快照里没有的，保持缺失
 
+    def test_health_reports_ok_expired_missing(self):
+        """连接器掉线时，health() 是判断"数据还能撑几天"的唯一依据。"""
+        import json
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            b = self._bridge(tmp)
+            h = {x["kind"]: x for x in b.health()}
+            self.assertEqual(h["nav"]["status"], "missing")
+            self.assertEqual(h["nav"]["label"], "净值")
+
+            b.write_snapshot("nav", {"funds": {"019759": [{"date": "2026-10-30", "nav": 1.5}]}},
+                             "yingmi-mcp")
+            h = {x["kind"]: x for x in b.health()}
+            self.assertEqual(h["nav"]["status"], "ok")
+            self.assertGreaterEqual(h["nav"]["days_left"], 3)
+            self.assertEqual(h["nav"]["source"], "yingmi-mcp")
+
+            (Path(tmp) / "board_snapshot.json").write_text(json.dumps({
+                "generated_at": "2020-01-01T00:00:00+08:00",
+                "industry": [{"name": "酒店餐饮"}],
+            }), encoding="utf-8")
+            h = {x["kind"]: x for x in b.health()}
+            self.assertEqual(h["board"]["status"], "expired")
+            self.assertEqual(h["board"]["days_left"], 0)
+
 
 # ---------- 磁盘缓存写入必须是原子的 ----------
 class TestDiskCacheWrite(unittest.TestCase):

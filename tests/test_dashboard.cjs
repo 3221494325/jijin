@@ -180,4 +180,22 @@ assert.ok(elements.worldTable.innerHTML.includes("恒生指数"), "主要指数�
 assert.ok(elements.worldTable.innerHTML.includes("主要指数"));
 assert.ok(!elements.fstateList.innerHTML.includes("undefined"));
 
+// ---- v9：快照时效体检写进「数据状态」 ----
+context.v9 = {
+  build: "cockpit-xray-v4",
+  bridge_health: [
+    {kind:"nav", label:"净值", status:"ok", days_left:3, source:"yingmi-mcp"},
+    {kind:"board", label:"板块", status:"expired", days_left:0},
+    {kind:"index", label:"指数", status:"missing"},
+  ],
+  holdings: [], portfolio: {}, news: [],
+};
+vm.runInContext("draw(v9)", context);
+const ds = elements.dataStatus.textContent;
+assert.ok(ds.includes("官方快照："), "数据状态要有一行官方快照");
+assert.ok(ds.includes("净值 剩3天"), ds.split("\n").pop());
+assert.ok(ds.includes("板块 已过期→回退抓取"));
+assert.ok(ds.includes("指数 未接入"));
+assert.ok(!ds.includes("undefined"));
+
 console.log("Dashboard rendering contract checks passed");

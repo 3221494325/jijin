@@ -96,6 +96,47 @@ KIND_FILES = {
     "fund_state": FUND_STATE_FILE,
 }
 
+# kind -> (文件, 最大陈旧度, 中文标签)
+KIND_META = {
+    "nav": (NAV_FILE, NAV_MAX_AGE, "净值"),
+    "board": (BOARD_FILE, BOARD_MAX_AGE, "板块"),
+    "index": (INDEX_FILE, INDEX_MAX_AGE, "指数"),
+    "fund_state": (FUND_STATE_FILE, NAV_MAX_AGE, "申赎"),
+}
+
+
+def health():
+    """四类快照的时效体检：连接器掉线时，这是"还能撑几天"的唯一依据。
+
+    返回 [{kind,label,status,source,as_of,generated_at,days_left}]
+    status: ok | expired | missing | invalid
+    """
+    now = datetime.now(BJ_TZ)
+    out = []
+    for kind, (name, max_age, label) in KIND_META.items():
+        data = _load(name)
+        if not data:
+            out.append({"kind": kind, "label": label, "status": "missing"})
+            continue
+        stamp = data.get("generated_at")
+        try:
+            ts = datetime.fromisoformat(str(stamp))
+        except (TypeError, ValueError):
+            out.append({"kind": kind, "label": label, "status": "invalid"})
+            continue
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=BJ_TZ)
+        left = max_age - (now - ts)
+        out.append({
+            "kind": kind, "label": label,
+            "status": "ok" if left.total_seconds() > 0 else "expired",
+            "source": data.get("source"),
+            "as_of": data.get("as_of") or (data.get("funds") and None) or None,
+            "generated_at": ts.isoformat(timespec="seconds"),
+            "days_left": max(0, int(left.total_seconds() // 86400)),
+        })
+    return out
+
 
 def write_snapshot(kind, payload, source):
     """写快照（供 Agent 侧调用）。kind: nav / board / index / fund_state

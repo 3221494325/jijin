@@ -308,6 +308,12 @@ def collect():
         payload["indices"] = [{"name": v["name"], "price": v["price"],
                                "chg_pct": round(v["chg_pct"], 2)}
                               for v in indices.values()]
+        # 官方快照时效体检：连接器掉线时，用它判断"数据还能撑几天"
+        try:
+            import fundos_bridge
+            payload["bridge_health"] = fundos_bridge.health()
+        except Exception:  # noqa: BLE001
+            payload["bridge_health"] = []
         payload["global_indices"] = [{"name": v["name"], "price": v["price"],
                                       "chg_pct": round(v["chg_pct"], 2)}
                                      for v in proxies.values()]

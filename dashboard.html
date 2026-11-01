@@ -746,6 +746,13 @@ function draw(d){
   const dates = [...new Set(holdings.map(h=>h.nav_date).filter(Boolean))].sort();
   const delayed = holdings.filter(h=>(h.today_source||'').includes('滞后')).length;
   const shortTs = v => String(v||'').replace('T',' ').slice(0,16);
+  const bh = d.bridge_health || [];
+  const bhText = bh.length ? bh.map(x=>{
+    const state = x.status==='ok' ? '剩'+(x.days_left||0)+'天'
+                : x.status==='expired' ? '已过期→回退抓取'
+                : x.status==='missing' ? '未接入' : '时间戳异常';
+    return (x.label||x.kind)+' '+state;
+  }).join(' · ') : '未接入';
   document.getElementById('dataStatus').textContent = [
     '服务质量：'+(d.data_quality==='fresh'?'实时快照':d.data_quality==='partial'?'部分数据':d.data_quality==='stale'?'缓存快照':'不可用')+' ｜ 缓存年龄：'+(d.cache_age_seconds==null?'未知':d.cache_age_seconds+'秒'),
     '快照来源：'+(d.snapshot_meta?.source==='local_computer'?'电脑同步':'云端生成')+' ｜ 生成于：'+shortTs(d.snapshot_meta?.generated_at||d.updated_at||'未知'),
@@ -755,6 +762,7 @@ function draw(d){
     '净值日期：'+(dates.length ? dates[0]+' ～ '+dates[dates.length-1] : '未知'),
     '估算 '+holdings.filter(h=>h.freshness==='估算').length+' 笔 · 明示滞后 '+delayed+' 笔',
     '新闻截至：'+(d.news_time||'未知')+' ｜ 板块日期：'+(d.boards?.date||'未知'),
+    '官方快照：'+bhText,
     '各来源日期不一致；已公布不等于今日，估算不等于结算收益。'
   ].join('\n');
   const sectors = {};
