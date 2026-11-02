@@ -295,11 +295,17 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
                           "streak": streak, "month": item.get("month") or ""})
         stats.sort(key=lambda s: -s["weight"])
         if not stats:
+            # 区分"没接数据"和"接了但没有一条能映射到持仓"——后者是真结论，不是缺数据
             rules.append(_rule(
                 "industry_cycle", "产业周期", "基本面", "na",
-                value=None, value_text="未接入产业指标",
-                evaluation="没有可映射到持仓的月频产业指标，这项不做假结论。",
-                action="接上同花顺 EDB 快照后自动体检（data/external/edb_snapshot.json）。",
+                value=None,
+                value_text=("有产业指标，但持仓无可映射链条" if industry else "未接入产业指标"),
+                evaluation=("月频指标已接入，但当前持仓不在这几条产业链上；硬套会得出假结论，所以留空。"
+                            if industry else
+                            "没有可映射到持仓的月频产业指标，这项不做假结论。"),
+                action=("换一条与持仓同链条的指标再挂（绿电用发电量/利用小时，别用太阳能电池产量）。"
+                        if industry else
+                        "接上同花顺 EDB 快照后自动体检（data/external/edb_snapshot.json）。"),
                 weight=2))
         else:
             # 不是只看最大的那一簇：同类仓位可能有多条产业线同时转弱

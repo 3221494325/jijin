@@ -60,6 +60,8 @@
 
 **维护红线**: 新增持仓/改成本 → 只改 `fundos_config.FUND_META`（并按其注释重推 cost_nav）；
 取数据 → 只走 `fundos_data`（禁止脚本内裸 except、禁止硬编码 `D:\` 路径）。
+**清仓**：从 `FUND_META` 移除并写进 `RETIRED_HOLDINGS`（含清仓日期/成本/回收额/已实现亏损），
+同时改 `portfolio_snapshot.json` 的持仓列表——两处不一致会导致 `portfolio_data` 静默回退或拿错成本。
 
 ## 强制工作流（每次分析必走）
 

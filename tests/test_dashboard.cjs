@@ -307,4 +307,12 @@ vm.runInContext("draw(v12b)", context);
 assert.ok(!elements.dataStatus.innerHTML.includes("confirmHoldings()"), "新鲜时不要催确认");
 assert.equal(elements.weekAttr.innerHTML, "", "无归因时不留空壳");
 
+// 换仓后历史曲线失真：副标题必须标出权重口径日期
+context.v13 = {portfolio: {holdings_as_of: "2026-11-02"},
+               holdings: [], perf: {curve: {dates: ["2026-10-29", "2026-10-30"],
+                                           nav: [1, 1.01], drawdown_pct: [0, -1]}, monthly: []}};
+vm.runInContext("draw(v13)", context);
+assert.ok(elements.perfMeta.textContent.includes("2026-11-02 口径"), "权重口径日期要写明");
+assert.ok(elements.perfMeta.textContent.includes("换仓/申赎"), "要提醒左侧按今天权重回推");
+
 console.log("Dashboard rendering contract checks passed");

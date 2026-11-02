@@ -12,3 +12,4 @@ dist/
 build/
 build_v2/
 dist_v2/
+data/state/backups/

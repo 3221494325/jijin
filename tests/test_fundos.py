@@ -15,12 +15,16 @@ sys.path.insert(0, str(ROOT))
 # ---------- 纯函数/配置（离线必测） ----------
 class TestConfig(unittest.TestCase):
     def test_split_position_codes_are_preserved(self):
-        # 2026-10 组合精简为 8 只后，A/C 分列只剩 012922(C) ↔ 012920(A) 这一对
-        from fundos_config import FUND_META
-        self.assertIn("019759", FUND_META)
-        self.assertEqual(FUND_META["019759"]["cls"], "A")
+        # 2026-11-02 组合缩到 4 只；A/C 分列只剩 012922(C) ↔ 012920(A) 这一对
+        from fundos_config import FUND_META, RETIRED_HOLDINGS
+        self.assertEqual(FUND_META["018734"]["cls"], "A")
         self.assertEqual(FUND_META["012922"]["cls"], "C")
         self.assertEqual(FUND_META["012922"]["a_code"], "012920")
+        # 清仓的四只从 FUND_META 移出（不再抓净值），但在 RETIRED_HOLDINGS 留档
+        for code in ("022364", "011608", "001513", "019759"):
+            self.assertNotIn(code, FUND_META)
+            self.assertIn(code, RETIRED_HOLDINGS)
+            self.assertIn("realized", RETIRED_HOLDINGS[code])
 
     def test_fund_meta_covers_snapshot(self):
         from fundos_config import FUND_META
@@ -255,15 +259,19 @@ class TestAdvisor(unittest.TestCase):
         self.assertEqual(g["fund_guides"][0]["dist_next_label"], "距+20%止盈线还有")
 
     def test_switch_a_with_penalty_window(self):
-        # 022365 已不在持仓表；当前唯一配置了 a_code/switch_th 的是 012922(→012920)
+        # 换A提示只在 meta 配了 switch_th 时才有意义。2026-11-02 起 012922 已提交全额赎回，
+        # switch_th 置空（避免对正在赎回的仓位喊"换A"），所以这里按配置存在与否跳过。
         from datetime import datetime as dt
         from fundos_config import FUND_META
         from fundos_advisor import build_guide
-        g = build_guide(holdings=[self._h("012922", 0.5, sector="qdii")], now=dt(2026, 8, 28))
+        cands = [c for c, m in FUND_META.items() if m.get("switch_th") is not None]
+        if not cands:
+            self.skipTest("当前无配置换A窗口的持仓（012922 赎回在途）")
+        code = cands[0]
+        g = build_guide(holdings=[self._h(code, 0.5, sector="qdii")], now=dt(2026, 8, 28))
         self.assertIn("换A", g["fund_guides"][0]["advice"])
-        # 赎回费窗口只在 meta 配了 penalty 时才有意义；当前无该配置则跳过（不伪造断言）
         if any(m.get("penalty") for m in FUND_META.values()):
-            g2 = build_guide(holdings=[self._h("012922", 0.5, sector="qdii")], now=dt(2026, 8, 1))
+            g2 = build_guide(holdings=[self._h(code, 0.5, sector="qdii")], now=dt(2026, 8, 1))
             self.assertIn("赎回费", g2["fund_guides"][0]["advice"])
 
     def test_tech_concentration_forbidden(self):

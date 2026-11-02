@@ -191,34 +191,33 @@ rmdir /s /q D:\基金项目
 
 ---
 
-## 接力点（2026-11-01 17:40，v14）
+## 接力点（2026-11-02 19:40，v15）
 
 > 换会话/换人继续时先读这一节，能省掉重新摸地形的时间。
 
 ### 现在在哪
-- 看板是**真桌面程序**：`dist/FundOS.exe`（pyinstaller onefile + pywebview/WebView2 原生窗口，无地址栏、不开浏览器），双击即用，**重复双击只会把已有窗口拉前台**（单实例互斥体）；`启动FundOS.cmd` 是带控制台的排查入口。
-- 外壳逻辑在 `app_shell.py`：端口没起就先 `pythonw dashboard.py --no-browser`，窗口关闭只杀自己拉起的进程；找不到解释器时读同目录 `desktop.json`。
-- 数据源是**官方连接器 + 文件桥**：`fundos_bridge.py` 读 `data/external/{nav,board,index,fund_state,edb}_snapshot.json`，缺失/过期自动回退抓取。兜底已实测：板块退回新浪 49 行业口径、全球少恒生与日经、申赎与景气空着。
-- 页面模块：净值双口径、止损温度计、风险预算、申赎状态（限购红标）、主要指数、产业景气、快照时效体检、周度对比**+归因**、体检分趋势（标规则数跳台阶）、模型设置弹窗、**确认持仓未变**。
-- 测试基线：`python tests/test_fundos.py` **83 项**；`node tests/test_dashboard.cjs` 契约断言。
+- 看板是**真桌面程序**：`dist/FundOS.exe`（pywebview + WebView2，无浏览器），重复双击只拉前已有窗口；`启动FundOS.cmd` 是带控制台的排查入口。
+- **当前持仓 4 只**（2026-11-02 用户确认）：017641 标普500 / 019172 纳指100 / 018734 华夏绿电 / 012922 全球成长（赎回在途）。市值 ≈1,659，成本 ≈1,703，收益 -2.60%。
+- 清仓的 4 只（科技智选/科创50/信息产业/半导体）记在 `fundos_config.RETIRED_HOLDINGS`，已实现亏损约 -247 元；**不要再把它们加回 FUND_META**。
+- 数据源 = 官方连接器 + 文件桥（`data/external/*.json`，过期自动回退抓取）。
+- 测试基线：`python tests/test_fundos.py` **83 项**（1 项按配置 skip）；`node tests/test_dashboard.cjs` 契约断言。
 
-### 立刻要做的两件事
-1. **快照续期**：净值/申赎 11-04 到期、板块/指数 11-05 到期（页面"官方快照：剩 N 天"就是它）。数据源：盈米 `BatchGetFundNavHistory` + `BatchGetFundTradeRules`、融聚汇 `market_structure.get_industry_data(rank)`、同花顺 `get_security_indicators(market=指数)` + `fetch_edb`，再用 `fundos_bridge.write_snapshot()` 写入。**20:45 的自动化「FundOS 盘后快照刷新 + 简报」已按这个流程配好，正常会自动续**。
-2. **改完代码要重启服务**：`dashboard.py` 不是热加载。用 `Get-NetTCPConnection -LocalPort 8899` 找 pid → `Stop-Process` → `Start-Process pythonw dashboard.py --no-browser`；改前端（`dashboard.html`）只刷新页面即可，**只有改了 `app_shell.py` 才需要重打 exe**。
-   - 打包坑：`build/` 里残留会让 PyInstaller 删旧文件时撞上沙箱 safe-delete 而失败；改用 `--workpath build_v2 --distpath dist_v2` 再覆盖 `dist/FundOS.exe`（覆盖前必须先停掉正在运行的 exe）。
+### 立刻要做的三件事
+1. **等全球成长到账**：81.08 元到账后，从 `portfolio_snapshot.json` 删掉 012922，并从 `FUND_META` 移除（这是目前唯一没走完的流程）。
+2. **快照续期**：净值/申赎/板块/指数都快到期，20:45 的自动化「FundOS 盘后快照刷新 + 简报」已按 4 只重建；若发现快照没续，手工按 `fundos_bridge.write_snapshot()` 补。
+3. **补现金**：本工具完全看不到现金账户（现金弹药长期 na）。用户 10 月卖出约 950 元，权重是"占在投资产"而非"占总资产"，这是当前最大的口径缺口。
 
 ### 踩过的坑（别重踩）
-- **连接器只在会话启动时挂载**：连接器页显示"已连接"不代表当前会话能用。先 `ToolSearch` 验证工具在不在；`ListMcpResources` 里没有对应 server 就是没挂上，需新开会话。
-- **持仓日期 vs 估值日期**：`portfolio_data.load_portfolio()` 返回两个日期，`as_of` 是净值算到哪天，`holdings_as_of` 才是份额确认日。体检的新鲜度必须用后者，混用会让过期持仓看起来"很新鲜"。
-- `write_snapshot()` 对未知 kind 直接抛错（曾用默认值把 `nav_snapshot.json` 冲掉）。
-- 指数快照**只补缺不覆盖**：快照是上一交易日收盘，盘中覆盖会写脏当天行情。
-- EDB 是月频、次月中旬才发布，陈旧度按 40 天算；指标必须用官方全名（"太阳能电池:产量"能命中，"光伏电池产量"不行）。
-- Windows 下 `_disk_cache_put` 必须"临时文件 + os.replace"，否则并发写报 Permission denied 并把 payload 拖成 partial。
-- **体检分不可跨规则数比较**：分母变了分值就跳台阶。历史行里存了 `rules`，页面已标竖线。
-- 前端契约测试的 `document` stub 必须带 `addEventListener`；`dataStatus` 已是 HTML 渲染，断言要读 `innerHTML`。
+- **持仓日期 vs 估值日期**：`as_of` 是净值算到哪天，`holdings_as_of` 才是份额确认日；体检新鲜度必须用后者。
+- **产业指标别乱映射**：太阳能电池（制造端）≠ 绿电（运营端）；映射错了会产出"产业面不支持摊平"这种假否决。`edb` 的 `related` 清空后，规则会明确说"有指标但对不上持仓"。
+- **换仓后历史曲线失真**：组合曲线用当前权重回推，换仓前那段只能看形状；副标题已标口径日期。
+- **连接器只在会话启动时挂载**：先 `ToolSearch` 确认工具在，再动手。
+- `write_snapshot()` 未知 kind 直接抛错；指数快照只补缺不覆盖；EDB 陈旧度 40 天且必须用官方全名。
+- Windows `_disk_cache_put` 必须原子写；PyInstaller 遇 `build/` 残留会撞沙箱 safe-delete，改用 `--workpath build_v2 --distpath dist_v2` 再覆盖 exe（覆盖前停掉运行中的 exe）。
+- 前端契约测试的 `document` stub 要带 `addEventListener`；`dataStatus` 是 HTML 渲染，断言读 `innerHTML`。
 
 ### 一句话接力指令（贴给新会话即可）
-> 读 D:\基金项目\PROJECT_HANDOVER.md 的「接力点」一节；先确认 20:45 自动化有没有正常续期五类快照，再问用户要不要点「确认持仓未变」把体检分恢复。
+> 读 D://基金项目//PROJECT_HANDOVER.md 的「接力点」一节；先确认 012922 是否已到账并从快照移除，再问用户能不能给出账户现金余额（现在体检的权重分母只含在投部分）。
 
 ---
 

@@ -1534,8 +1534,10 @@ function renderPerf(d){
   const metaEl = document.getElementById('perfMeta');
   const heatEl = document.getElementById('monthHeat');
   const ddEl = document.getElementById('ddChart');
+  const wAsOf = (d.portfolio && d.portfolio.holdings_as_of) ? String(d.portfolio.holdings_as_of).slice(0,10) : null;
   metaEl.textContent = dates.length
-    ? `近${dates.length}个交易日 · ${dates[0]}→${dates[dates.length-1]} · 当前权重静态近似`
+    ? `近${dates.length}个交易日 · ${dates[0]}→${dates[dates.length-1]} · 当前权重静态近似` +
+      (wAsOf ? `（${wAsOf} 口径：换仓/申赎之前的那段按今天权重回推，只作形状参考）` : '')
     : '暂无组合净值曲线';
 
   if(!dates.length || !nav.length){
