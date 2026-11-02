@@ -6,6 +6,8 @@
  "previous_snapshot_date": "2026-10-14",
  "realized_pnl": null,
  "cumulative_return_user_reported": null,
+ "cash": 1234.6,
+ "cash_note": "按截图可见卖出成交额合计（1,234.60）录入；与\"本金 3,181.33 - 在投成本 1,703.38 - 已实现亏损 247.62 = 1,230.33\"两条独立算法只差 4.27 元（手续费/净值差），可认为对平。用户 2026-11-02 确认\"基本都是本金了\"。",
  "holdings": [
   {
    "name": "摩根标普500指数（QDII）A",

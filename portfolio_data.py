@@ -9,6 +9,15 @@ SNAPSHOT = ROOT / "portfolio_snapshot.json"
 DAILY_RESULT = ROOT / "daily_check_result.json"
 
 
+def _cash_of(snap):
+    """现金余额（元）。没录就是 None —— 不要用 0 冒充，否则"现金 0%"会被当成结论。"""
+    v = snap.get("cash")
+    try:
+        return None if v is None else float(v)
+    except (TypeError, ValueError):
+        return None
+
+
 def load_portfolio():
     """Load the latest daily result, falling back to the static snapshot.
 
@@ -47,6 +56,8 @@ def load_portfolio():
                 "holdings_as_of": snap_date,
                 "data_source": DAILY_RESULT.name,
                 "holdings_source": SNAPSHOT.name,
+                # 现金余额只存在快照里（daily 不重算），始终从 snap 取，缺失就是 None
+                "cash": _cash_of(snap),
                 "holdings": holdings,
                 "total_ret_pct": float(data.get("total_ret_pct", 0)),
                 "tech_weight": float(data.get("tech_weight", 0)),
@@ -59,6 +70,7 @@ def load_portfolio():
         "holdings_as_of": snap_date,
         "data_source": SNAPSHOT.name,
         "holdings_source": SNAPSHOT.name,
+        "cash": _cash_of(snap),
         "holdings": snap.get("holdings", []),
         "total_ret_pct": float(snap.get("total_ret_pct", 0)),
         "tech_weight": float(snap.get("tech_weight", 0)),

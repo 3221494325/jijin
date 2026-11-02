@@ -315,4 +315,25 @@ vm.runInContext("draw(v13)", context);
 assert.ok(elements.perfMeta.textContent.includes("2026-11-02 口径"), "权重口径日期要写明");
 assert.ok(elements.perfMeta.textContent.includes("换仓/申赎"), "要提醒左侧按今天权重回推");
 
+// ---- v14：现金（分母改成总资产） ----
+context.v14 = {
+  portfolio: {total_value: 1659.17, total_ret: -44.21, total_ret_pct: -2.6,
+              cash: 1234.60, cash_pct: 42.7, total_assets: 2893.77,
+              invested_pct: 57.3, holdings_as_of: "2026-11-02"},
+  holdings: [{name:"标普500", code:"017641", value:743.41, weight:44.8, weight_total:25.7,
+              ret_pct:-0.88, sector:"qdii", sector_label:"QDII海外", nav_date:"2026-10-30"}],
+};
+vm.runInContext("draw(v14)", context);
+assert.ok(elements.cards.innerHTML.includes("现金（占总资产）"), "顶部要有一格现金");
+assert.ok(elements.cards.innerHTML.includes("42.7%"));
+assert.ok(elements.cards.innerHTML.includes("1,234.60"), "现金金额要显示");
+assert.ok(elements.exposure.innerHTML.includes("现金（未投资）"), "暴露度要含现金这一块");
+assert.ok(elements.holdTable.innerHTML.includes("占总资产 25.7%"), "权重悬停要给出总资产口径");
+
+// 没录现金时不能凭空出现"现金 0%"
+context.v14b = {portfolio: {total_value: 100, total_ret: 0, total_ret_pct: 0}, holdings: []};
+vm.runInContext("draw(v14b)", context);
+assert.ok(!elements.cards.innerHTML.includes("现金（占总资产）"), "无现金数据不要显示占位");
+assert.ok(!elements.exposure.innerHTML.includes("现金（未投资）"));
+
 console.log("Dashboard rendering contract checks passed");

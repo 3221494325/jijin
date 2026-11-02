@@ -871,13 +871,22 @@ function draw(d){
   document.getElementById('exposure').innerHTML = Object.entries(sectors).sort((a,b)=>b[1].w-a[1].w).map(([name,s])=>
     '<div class="exposure-row"><div class="exposure-label"><span>'+escapeHTML(name)+
     ' <span class="small">'+s.n+' 只 · ¥'+money(s.v)+'</span></span><b>'+fmt(s.w,1)+'%</b></div>'+
-    '<div class="exposure-track"><span style="width:'+Math.max(0,Math.min(100,s.w))+'%"></span></div></div>').join('') || '<div class="note">暂无持仓分布数据</div>';
+    '<div class="exposure-track"><span style="width:'+Math.max(0,Math.min(100,s.w))+'%"></span></div></div>').join('') +
+    (p.cash != null
+      ? '<div class="exposure-row"><div class="exposure-label"><span>现金（未投资）'+
+        ' <span class="small">¥'+money(p.cash)+'</span></span><b>'+fmt(p.cash_pct,1)+'%</b></div>'+
+        '<div class="exposure-track"><span style="width:'+Math.max(0,Math.min(100,p.cash_pct||0))+
+        '%;background:var(--mute)"></span></div></div>'
+      : '') ||
+    '<div class="note">暂无持仓分布数据</div>';
   const estLabel = mk.in_session || mk.session === 'closed' ? '今日估算'
                  : (mk.is_trading_day ? '盘前口径' : '上一交易日估算');
   const cells = [
     ['组合市值','¥'+money(p.total_value),''],
     ['组合盈亏',(p.total_ret>0?'+':'')+money(p.total_ret), cls(p.total_ret)],
     ['收益率', pct(p.total_ret_pct), cls(p.total_ret_pct)],
+    ...(p.cash != null ? [['现金（占总资产）','¥'+money(p.cash)+' · '+fmt(p.cash_pct,1)+'%',
+                           p.cash_pct>50?'down':'']] : []),
     [estLabel, pct(p.est_ret_pct), cls(p.est_ret_pct)],
     ['XIRR 资金加权', d.xirr!=null? pct(d.xirr):'-', cls(d.xirr||0)],
     ['最大回撤', pct(d.risk?.max_dd_pct), 'down'],
@@ -911,7 +920,7 @@ function draw(d){
      <th class="num">盈亏%</th><th class="num">前日</th><th class="num">今估</th><th>净值日</th></tr>` +
     hs.map(h=>`<tr><td><b>${h.name}</b><span style="color:var(--faint);font-size:11px"> ${h.code}</span></td>
       <td class="num">${money(h.value)}</td>
-      <td class="num">${fmt(h.weight,1)}%</td>
+      <td class="num" title="${h.weight_total!=null?'占在投 '+fmt(h.weight,1)+'% · 占总资产 '+fmt(h.weight_total,1)+'%':''}">${fmt(h.weight,1)}%</td>
       <td class="num ${cls(h.return)}">${h.return>0?'+':''}${money(h.return)}</td>
       <td class="num ${cls(h.ret_pct)}">${pct(h.ret_pct)}${(h.ret_pct<0 && h.breakeven_pct!=null)?`<span class="breakeven">回本需 +${fmt(h.breakeven_pct,1)}%</span>`:''}</td>
       <td class="num ${cls(h.nav_day_chg)}">${pct(h.nav_day_chg)}</td>

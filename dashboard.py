@@ -280,10 +280,29 @@ def collect():
         payload["portfolio"]["freshness_status"] = (
             "current" if snapshot_age is not None and snapshot_age <= 7 else "stale"
         )
+        # 现金：没有就用 None（不是 0）。有现金时权重才有"占总资产"这个第二口径，
+        # 否则"QDII 73%"只是占在投资产的比例，容易把自己的风险看高。
+        cash = None
+        try:
+            import portfolio_data
+            cash = portfolio_data.load_portfolio().get("cash")
+        except Exception:  # noqa: BLE001
+            cash = None
+        total_assets = round(total_value + (cash or 0), 2)
+        payload["portfolio"]["cash"] = round(cash, 2) if cash is not None else None
+        payload["portfolio"]["total_assets"] = total_assets
+        payload["portfolio"]["cash_pct"] = (
+            round(cash / total_assets * 100, 1) if cash is not None and total_assets else None
+        )
+        payload["portfolio"]["invested_pct"] = (
+            round(total_value / total_assets * 100, 1) if total_assets else None
+        )
         payload["holdings"] = [{
             "name": f["name"], "code": f["code"], "sector": f.get("sector", ""),
             "sector_label": SECTOR_LABEL.get(f.get("sector"), f.get("sector") or "未分类"),
             "value": round(f.get("value", 0), 2), "weight": round(f.get("weight", 0), 1),
+            "weight_total": (round(f.get("value", 0) / total_assets * 100, 1)
+                             if total_assets else None),
             "ret_pct": round(f.get("ret_pct", 0), 2),
             "return": round(f.get("return", 0), 2),
             "breakeven_pct": breakeven_pct(f.get("ret_pct", 0)),
@@ -633,7 +652,8 @@ def collect():
             indices={"sh000688": idx688},
             sector_news=sector_news,
             industry=industry_in,
-            edb=payload.get("edb") or [])
+            edb=payload.get("edb") or [],
+            invested_pct=(payload.get("portfolio") or {}).get("invested_pct"))
         state = _load_directive_state()
         for directive in payload["guide"].get("directives", []):
             key = _directive_key(directive)

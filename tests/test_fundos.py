@@ -540,7 +540,7 @@ class TestXray(unittest.TestCase):
         out = build_xray(holdings=self._holdings())
         rule = next(r for r in out["rules"] if r["key"] == "cash_reserve")
         self.assertEqual(rule["status"], "na")
-        self.assertIn("未接入", rule["value_text"])
+        self.assertIn("未录入", rule["value_text"])   # 没给现金就说没给，不假装 0%
 
     def test_empty_input_does_not_crash(self):
         from fundos_xray import build_xray
@@ -1016,6 +1016,65 @@ class TestPortfolioDates(unittest.TestCase):
                 dashboard.confirm_holdings(root)
             got = json.loads((root / "portfolio_snapshot.json").read_text(encoding="utf-8"))
             self.assertEqual(got["date"], "2026-10-14")      # 拒绝时原文件不变
+
+    def test_cash_is_passed_through(self):
+        """现金从快照透出；没有就是 None，不能用 0 冒充。"""
+        import json
+        import tempfile
+        from pathlib import Path as _P
+        import portfolio_data
+        with tempfile.TemporaryDirectory() as tmp:
+            d = _P(tmp)
+            snap, daily = d / "portfolio_snapshot.json", d / "daily_check_result.json"
+            for cash in (1234.60, None):
+                body = dict(self.SNAP)
+                if cash is not None:
+                    body["cash"] = cash
+                else:
+                    body.pop("cash", None)
+                snap.write_text(json.dumps(body), encoding="utf-8")
+                daily.write_text(json.dumps(self.DAILY), encoding="utf-8")
+                old = (portfolio_data.SNAPSHOT, portfolio_data.DAILY_RESULT)
+                portfolio_data.SNAPSHOT, portfolio_data.DAILY_RESULT = snap, daily
+                try:
+                    out = portfolio_data.load_portfolio()
+                finally:
+                    portfolio_data.SNAPSHOT, portfolio_data.DAILY_RESULT = old
+                self.assertEqual(out["cash"], cash)
+
+
+class TestCashReserveRule(unittest.TestCase):
+    """现金弹药：分母是"现金+在投资产"，上下限都要管。"""
+
+    def _rule(self, cash, total_assets):
+        import fundos_xray
+        pct = round(cash / total_assets * 100, 1) if cash is not None else None
+        out = fundos_xray.build_xray(
+            holdings=[{"name": "标普500", "code": "017641", "weight": 100, "ret_pct": -1}],
+            portfolio={"snapshot_age_days": 0, "cash": cash,
+                       "total_assets": total_assets, "cash_pct": pct})
+        return next(r for r in out["rules"] if r["key"] == "cash_reserve")
+
+    def test_reasonable_cash_passes(self):
+        r = self._rule(600.0, 3000.0)          # 20%
+        self.assertEqual(r["status"], "pass")
+        self.assertIn("20.0%", r["value_text"])
+
+    def test_too_little_cash_fails(self):
+        r = self._rule(90.0, 3000.0)           # 3%
+        self.assertEqual(r["status"], "fail")
+        self.assertIn("没有加仓能力", r["evaluation"])
+
+    def test_too_much_cash_warns(self):
+        r = self._rule(1234.6, 2893.77)        # 42.7% > 30
+        self.assertEqual(r["status"], "warn")
+        self.assertIn("购买力损耗", r["evaluation"])
+        self.assertIn("不算仓位也不算现金", r["action"])
+
+    def test_no_cash_is_na_not_zero(self):
+        r = self._rule(None, 3000.0)
+        self.assertEqual(r["status"], "na")
+        self.assertIn("未录入", r["value_text"])
 
 
 if __name__ == "__main__":

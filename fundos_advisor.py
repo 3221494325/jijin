@@ -153,7 +153,7 @@ def edb_signals(edb, holdings=None):
 
 
 def build_guide(*, holdings, sentiment=None, nav_pct=None, indices=None,
-                sector_news=None, industry=None, edb=None, now=None):
+                sector_news=None, industry=None, edb=None, invested_pct=None, now=None):
     """规则引擎主入口。所有参数可注入，便于测试与复用。
 
     holdings:    [{name, code, ret_pct, sector, weight}]（fundos_core 口径）
@@ -163,6 +163,7 @@ def build_guide(*, holdings, sentiment=None, nav_pct=None, indices=None,
     sector_news: {新闻板块名: {"up": 利好条数, "down": 利空条数}}
     industry:    行业前瞻输入（见 build_industry_outlook），缺省跳过
     edb:         月频产业指标 []{name,yoy,month,related,trend}，用于否决"摊平/加仓"
+    invested_pct: 在投资产占总资产的百分比（有现金时传），用于同时给出总资产口径
     """
     now = now or datetime.now()
     holdings = holdings or []
@@ -209,8 +210,10 @@ def build_guide(*, holdings, sentiment=None, nav_pct=None, indices=None,
             f"单次调整 ≤ 相关仓位的 {THRESHOLDS['batch_max_pct']}%",
             "position-size-framework / 铁律3")
     if qdii_w > THRESHOLDS["qdii_max"]:
+        _tot = (f"；把现金算进来占总资产 {qdii_w * invested_pct / 100:.1f}%"
+                if invested_pct else "")
         add("警告", f"QDII 占比超限（{qdii_w:.1f}% > {THRESHOLDS['qdii_max']:.0f}%）",
-            "海外敞口含汇率与隔夜跳空风险",
+            f"海外敞口含汇率与隔夜跳空风险{_tot}",
             "暂不新增 QDII；已有仓位按各自触发线管理",
             "不因超配恐慌性清仓，按线执行", "仓位经理规则")
 

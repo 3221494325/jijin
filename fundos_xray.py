@@ -30,6 +30,7 @@ XRAY_DEFAULTS = {
     "sharpe_min": 0.0,               # 夏普下限（rf=0 口径）
     "snapshot_age_max_days": 7,      # 持仓快照最长可接受天数
     "estimate_ratio_max_pct": 60.0,  # 估算口径（非公布净值）占比上限
+    "reserve_max_pct": 30.0,         # 现金上限：>30% 视为"未部署"，不是"很稳健"（战术现金常见上限）
 }
 
 STATUS_LABEL = {"pass": "通过", "warn": "留意", "fail": "不通过", "na": "无数据"}
@@ -93,6 +94,19 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
     industry = industry or []
     rules = []
 
+    # 有现金时，权重会同时存在两个口径：占在投 / 占总资产。
+    # 集中度规则仍按"占在投"判（那是你主动选择的风险结构），但要把总资产口径一并说出来，
+    # 否则 42% 现金躺账上时，页面会把人吓成"73% 全押美股"。
+    _inv_ratio = (portfolio.get("invested_pct") or 100) / 100.0
+    _has_cash = portfolio.get("cash") is not None
+
+    def _w_total(w):
+        return round(float(w) * _inv_ratio, 1) if _has_cash else None
+
+    def _dual(w):
+        t = _w_total(w)
+        return f"（占总资产 {_pct(t)}）" if t is not None else ""
+
     # ---- 1. 集中度：单一基金 ----
     if holdings:
         top = max(holdings, key=lambda h: float(h.get("weight") or 0))
@@ -100,9 +114,9 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
         st = _judge_max(w, th["single_fund_max_pct"])
         rules.append(_rule(
             "single_fund", "单一基金占比", "集中度", st,
-            value=round(w, 1), value_text=f"{top.get('name')} {_pct(w)}",
+            value=round(w, 1), value_text=f"{top.get('name')} {_pct(w)}" + _dual(w),
             limit=th["single_fund_max_pct"], limit_text=f"≤ {_pct(th['single_fund_max_pct'], 0)}",
-            evaluation=(f"最大单只为 {top.get('name')}（{_pct(w)}）。"
+            evaluation=(f"最大单只为 {top.get('name')}（{_pct(w)}）{_dual(w)}。"
                         "单只占比过高时，这只基金的一次错误就等价于整个组合的错误。"),
             action=("无需调整；新增资金优先补给低占比品种。" if st == "pass"
                     else f"后续新增不再加仓 {top.get('name')}；用新增资金稀释占比，不做被动赎回。"),
@@ -128,9 +142,10 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
     st = _judge_max(qdii_w if holdings else None, th["qdii_max_pct"], warn_ratio=0.95)
     rules.append(_rule(
         "qdii_cluster", "QDII 海外敞口", "集中度", st,
-        value=round(qdii_w, 1), value_text=_pct(qdii_w),
+        value=round(qdii_w, 1), value_text=_pct(qdii_w) + _dual(qdii_w),
         limit=th["qdii_max_pct"], limit_text=f"≤ {_pct(th['qdii_max_pct'], 0)}",
-        evaluation="海外敞口自带汇率与隔夜跳空两个额外风险源，且净值滞后1-2天。",
+        evaluation=("海外敞口自带汇率与隔夜跳空两个额外风险源，且净值滞后1-2天。"
+                    + ("把现金算进来后占比会低一些，但风险敞口的绝对额没变。" if _has_cash else "")),
         action=("暂不新增 QDII；已有仓位按各自触发线管理。" if st != "pass"
                 else "维持；新增海外仓位需同时确认汇率方向与溢价。"),
         weight=2))
@@ -263,14 +278,48 @@ def build_xray(*, holdings=None, risk=None, correlation=None, portfolio=None,
                     ("估算比例正常。" if st == "pass" else "当日以“已公布净值”为准，估算仅用于提前预警。")),
             weight=1))
 
-    # ---- 12. 现金弹药（诚实标注不可用） ----
-    rules.append(_rule(
-        "cash_reserve", "现金弹药", "流动性", "na",
-        value=None, value_text="未接入",
-        limit=THRESHOLDS["reserve_min_pct"], limit_text=f"≥ {THRESHOLDS['reserve_min_pct']:.0f}%",
-        evaluation="当前数据层没有现金账户数据，这项不做假结论。",
-        action="如需体检现金比例，需在 portfolio_snapshot.json 增加现金字段。",
-        weight=1))
+    # ---- 12. 现金弹药（分母 = 现金 + 在投资产；没录现金就明确说没录） ----
+    cash = portfolio.get("cash")
+    cash_pct = portfolio.get("cash_pct")
+    lo = THRESHOLDS["reserve_min_pct"]
+    hi = th["reserve_max_pct"]
+    if cash_pct is None:
+        rules.append(_rule(
+            "cash_reserve", "现金弹药", "流动性", "na",
+            value=None, value_text="未录入现金",
+            limit=lo, limit_text=f"建议 {lo:.0f}% ~ {hi:.0f}%",
+            evaluation="快照里没有现金余额，权重只能按在投资产算——所有占比都会偏高。",
+            action="在 portfolio_snapshot.json 增加 cash 字段（元），页面会用总资产做分母。",
+            weight=1))
+    else:
+        if cash_pct < lo * 0.5:
+            st = "fail"
+        elif cash_pct < lo:
+            st = "warn"
+        elif cash_pct > hi:
+            st = "warn"
+        else:
+            st = "pass"
+        if cash_pct < lo:
+            eval_text = (f"现金 {cash:,.0f} 元只占 {_pct(cash_pct)}：真跌下来时没有加仓能力，"
+                         "只能被动扛或者割在低位。")
+            act_text = f"把现金补到 {lo:.0f}% 以上再谈加仓。"
+        elif cash_pct > hi:
+            eval_text = (f"现金 {cash:,.0f} 元占 {_pct(cash_pct)}，超过 {hi:.0f}% 的上限："
+                         "这部分完全不参与市场，长期是确定的购买力损耗；但它同时是你唯一的下跌缓冲。")
+            act_text = ("要么按计划分批部署（每次不超过计划仓位 1/3），要么明确写下"
+                        "「这笔钱不是投资资金」，别让它既不算仓位也不算现金。")
+        else:
+            eval_text = f"现金 {cash:,.0f} 元占 {_pct(cash_pct)}，在 {lo:.0f}%~{hi:.0f}% 的合理区间。"
+            act_text = "维持即可，现金只用于按纪律补仓，不用于追涨。"
+        rules.append(_rule(
+            "cash_reserve", "现金弹药", "流动性", st,
+            value=round(cash_pct, 1),
+            value_text=f"{cash_pct:.1f}% · {cash:,.0f} 元（分母=总资产）",
+            limit=lo, limit_text=f"建议 {lo:.0f}% ~ {hi:.0f}%",
+            evaluation=eval_text,
+            action=act_text,
+            weight=1))
 
     # ---- 13. 产业周期背离（月频产业指标 vs 持仓权重） ----
     if holdings:
